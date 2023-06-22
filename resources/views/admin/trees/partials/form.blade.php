@@ -35,8 +35,8 @@
 <div class="form-row">
 
     <div class="form-group col-6">
-        {!! Form::label('birthdate', 'Nacimiento') !!}
-        {!! Form::date('birthdate', null, [
+        {!! Form::label('birth_date', 'Nacimiento') !!}
+        {!! Form::date('birth_date', null, [
             'class' => 'form-control',
         
             'required',
