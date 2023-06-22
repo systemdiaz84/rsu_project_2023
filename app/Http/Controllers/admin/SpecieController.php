@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Admin\Family;
-use App\Models\Admin\Specie;
+use App\Models\admin\Family;
+use App\Models\admin\Specie;
 use Illuminate\Http\Request;
 
 class SpecieController extends Controller

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Admin\Family;
-use App\Models\Admin\Specie;
-use App\Models\Admin\Tree;
-use App\Models\Admin\Zone;
+use App\Models\admin\Family;
+use App\Models\admin\Specie;
+use App\Models\admin\Tree;
+use App\Models\admin\Zone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

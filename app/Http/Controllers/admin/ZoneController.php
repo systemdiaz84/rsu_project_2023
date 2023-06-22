@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Admin\Zone;
+use App\Models\admin\Zone;
 use Illuminate\Http\Request;
 
 class ZoneController extends Controller
