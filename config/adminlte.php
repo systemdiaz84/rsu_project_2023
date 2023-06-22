@@ -353,7 +353,7 @@ return [
                 [
                     'text' => 'Estados de Evolución',
                     'icon' => 'fas fa-fw fa-thermometer-half',
-                    'url'  => 'users.index',
+                    'route'  => 'admin.states.index',
 
                 ],
             ],
