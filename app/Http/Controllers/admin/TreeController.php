@@ -8,6 +8,7 @@ use App\Models\Admin\Specie;
 use App\Models\Admin\Tree;
 use App\Models\Admin\Zone;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TreeController extends Controller
 {
@@ -55,9 +56,7 @@ class TreeController extends Controller
     public function store(Request $request)
     {
 
-        $request->validate([
-            'name' => 'required'
-        ]);
+        $request->merge(['user_id' => Auth::user()->id]);
 
         Tree::create($request->all());
         return redirect()->route('admin.trees.index')->with('action', 'Arbol Registrado');
