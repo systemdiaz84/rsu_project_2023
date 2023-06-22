@@ -57,7 +57,7 @@
         {!! Form::text('latitude', null, [
             'class' => 'form-control',
             'placeholder' => 'Latitud',
-        
+            'readonly',
             'required',
         ]) !!}
     </div>
@@ -66,7 +66,7 @@
         {!! Form::text('longitude', null, [
             'class' => 'form-control',
             'placeholder' => 'Longitud',
-        
+            'readonly',
             'required',
         ]) !!}
     </div>
@@ -115,7 +115,8 @@
             navigator.geolocation.getCurrentPosition(function(position) {
                 lat = position.coords.latitude;
                 lng = position.coords.longitude;
-
+                latInput.value = lat;
+                lonInput.value = lng;
                 displayMap(lat, lng);
             });
         } else {
@@ -152,7 +153,6 @@
             lonInput.value = latLng.lng();
         });
     }
-
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&callback=initMap" async defer>
 </script>
