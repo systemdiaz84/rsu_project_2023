@@ -21,8 +21,9 @@ class TreeController extends Controller
     {
 
         $trees = Tree::select('trees.id', 'trees.name', 'families.name as familyname', 'species.name as speciename', 'zones.name as zonename')
-            ->join('families', 'species.family_id', '=', 'families.id')
+            
             ->join('species', 'trees.specie_id', '=', 'species.id')
+            ->join('families', 'species.family_id', '=', 'families.id')
             ->join('zones', 'trees.zone_id', '=', 'zones.id')->get();
 
         return view('admin.trees.index', compact('trees'));
