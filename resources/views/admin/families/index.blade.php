@@ -7,9 +7,9 @@
     <div class="card">
         <div class="card-header">
 
+
             <button type="button" class="btn btn-success float-right" id="btnRegistrar">
-                <i class="bi bi-plus-circle"></i>&nbsp;&nbsp;Registrar Familia
-            </button>
+                <i class="fas fa-plus-circle"></i>&nbsp;&nbsp;Registrar</button>
 
             <h4>Listado de Familias</h4>
         </div>
@@ -20,8 +20,8 @@
                         <th>ID</th>
                         <th>NOMBRE</th>
                         <th>DESCRIPCIÓN</th>
-                        <th>EDITAR</th>
-                        <th>ELIMINAR</th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -33,7 +33,7 @@
                             <td>{{ $family->description }}</td>
                             <td width="10px">
                                 <button class="btn btn-secondary btn-sm btnEditar" data-id={{ $family->id }}><i
-                                        class="bi bi-pencil-square"></i></button>
+                                        class="fas fa-edit"></i></button>
 
                             <td width="10px">
                                 <form action={{ route('admin.families.destroy', $family->id) }} method='post'
@@ -41,7 +41,7 @@
                                     @method('delete')
                                     @csrf
                                     <button type="submit" class="btn btn-danger btn-sm"><i
-                                            class="bi bi-trash3"></i></button>
+                                            class="fas fa-trash"></i></button>
                                 </form>
                             </td>
                         </tr>
@@ -76,8 +76,6 @@
 @stop
 
 @section('js')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-
     <script>
         $(document).ready(function() {
 

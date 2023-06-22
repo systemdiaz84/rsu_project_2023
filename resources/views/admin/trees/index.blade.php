@@ -12,8 +12,7 @@
         <div class="card-header">
 
             <button type="button" class="btn btn-success float-right" id="btnRegistrar">
-                <i class="bi bi-plus-circle"></i>&nbsp;&nbsp;Registrar Árbol</a>
-            </button>
+                <i class="fas fa-plus-circle"></i>&nbsp;&nbsp;Registrar</button>
 
             <h4>Listado de Árboles</h4>
 
@@ -28,8 +27,8 @@
                         <th>FAMILIA</th>
                         <th>ESPECIE</th>
                         <th>ZONA</th>
-                        <th>EDITAR</th>
-                        <th>ELIMINAR</th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,14 +42,14 @@
                             <td>{{ $tree->zonename }}</td>
                             <td width="10px">
                                 <button class="btn btn-secondary btn-sm btnEditar" data-id={{ $tree->id }}><i
-                                        class="bi bi-pencil-square"></i></button>
+                                        class="fas fa-edit"></i></button>
 
                             <td width="10px">
                                 <form action={{ route('admin.trees.destroy', $tree->id) }} method='post' class="frmDelete">
                                     @method('delete')
                                     @csrf
                                     <button type="submit" class="btn btn-danger btn-sm"><i
-                                            class="bi bi-trash3"></i></button>
+                                            class="fas fa-trash"></i></button>
                                 </form>
                             </td>
                         </tr>
@@ -84,8 +83,6 @@
 @stop
 
 @section('js')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-
     <script>
         $(document).ready(function() {
 

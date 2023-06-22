@@ -11,10 +11,9 @@
     <div class="card">
         <div class="card-header">
 
-            <button type="button" class="btn btn-success float-right" id="btnRegistrar">
-                <i class="bi bi-plus-circle"></i>&nbsp;&nbsp;Registrar Especie</a>
-            </button>
 
+            <button type="button" class="btn btn-success float-right" id="btnRegistrar">
+                <i class="fas fa-plus-circle"></i>&nbsp;&nbsp;Registrar</button>
             <h4>Listado de Especies</h4>
 
 
@@ -27,8 +26,8 @@
                         <th>NOMBRE</th>
                         <th>FAMILIA</th>
                         <th>DESCRIPCIÓN</th>
-                        <th>EDITAR</th>
-                        <th>ELIMINAR</th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,7 +40,7 @@
                             <td>{{ $specie->description }}</td>
                             <td width="10px">
                                 <button class="btn btn-secondary btn-sm btnEditar" data-id={{ $specie->id }}><i
-                                        class="bi bi-pencil-square"></i></button>
+                                        class="fas fa-edit"></i></button>
 
                             <td width="10px">
                                 <form action={{ route('admin.species.destroy', $specie->id) }} method='post'
@@ -49,7 +48,7 @@
                                     @method('delete')
                                     @csrf
                                     <button type="submit" class="btn btn-danger btn-sm"><i
-                                            class="bi bi-trash3"></i></button>
+                                            class="fas fa-trash"></i></button>
                                 </form>
                             </td>
                         </tr>
@@ -83,8 +82,6 @@
 @stop
 
 @section('js')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-
     <script>
         $(document).ready(function() {
 

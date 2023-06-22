@@ -12,7 +12,7 @@
         <div class="card-header">
 
             <button type="button" class="btn btn-success float-right" id="btnRegistrar">
-                <i class="fas fa-plus-circle"></i> </button>
+                <i class="fas fa-plus-circle"></i>&nbsp;&nbsp;Registrar</button>
 
             <h4>Listado de Zonas</h4>
 
@@ -26,8 +26,8 @@
                         <th>NOMBRE</th>
                         <th>ÁREA</th>
                         <th>DESCRIPCIÓN</th>
-                        <th>EDITAR</th>
-                        <th>ELIMINAR</th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -38,14 +38,14 @@
                             <td>{{ $zone->name }}</td>
                             <td>{{ $zone->area }}</td>
                             <td>{{ $zone->description }}</td>
-                            <td width="10px" align="center">
-                                <button class="btn btn-secondary btnEditar" data-id={{ $zone->id }}><i
+                            <td width="10px">
+                                <button class="btn btn-secondary btnEditar btn-sm" data-id={{ $zone->id }}><i
                                         class="fas fa-edit"></i></button>
-                            <td width="10px" align="center">
+                            <td width="10px">
                                 <form action={{ route('admin.zones.destroy', $zone->id) }} method='post' class="frmDelete">
                                     @method('delete')
                                     @csrf
-                                    <button type="submit" class="btn btn-danger "><i class="fas fa-trash"></i></button>
+                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
                                 </form>
                             </td>
                         </tr>
