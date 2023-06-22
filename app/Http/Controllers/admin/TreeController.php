@@ -55,9 +55,7 @@ class TreeController extends Controller
      */
     public function store(Request $request)
     {
-
         $request->merge(['user_id' => Auth::user()->id]);
-
         Tree::create($request->all());
         return redirect()->route('admin.trees.index')->with('action', 'Arbol Registrado');
     }
