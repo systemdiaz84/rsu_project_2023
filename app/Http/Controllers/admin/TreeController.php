@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\admin\Family;
-use App\Models\admin\Specie;
+use App\Models\Admin\Family;
+use App\Models\Admin\Specie;
 use App\Models\Admin\Tree;
 use App\Models\Admin\Zone;
 use Illuminate\Http\Request;
