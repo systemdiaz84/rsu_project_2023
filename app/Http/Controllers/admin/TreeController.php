@@ -38,12 +38,8 @@ class TreeController extends Controller
 
         $zones = Zone::all()->pluck('name', 'id');
         $familySQL = Family::whereRaw('id IN (Select family_id from species)')->get();
-        //$familiesFirst = Family::select('id')->whereRaw('id IN (Select family_id from species)')->first();
-
         $families = $familySQL->pluck('name', 'id');
-
         $species = Specie::where('family_id', $familySQL->first()->id)->pluck('name', 'id');
-
         return view('admin.trees.create', compact('zones', 'families', 'species'));
     }
 
