@@ -2,10 +2,10 @@
 
 use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\FamilyController;
-use App\Http\Controllers\Admin\FamilyphotoController;
+use App\Http\Controllers\admin\FamilyphotoController;
 use App\Http\Controllers\admin\SpecieController;
-use App\Http\Controllers\Admin\TreeController;
-use App\Http\Controllers\Admin\ZoneController;
+use App\Http\Controllers\admin\TreeController;
+use App\Http\Controllers\admin\ZoneController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/',[AdminController::class,'index'])->name('admin.index');
