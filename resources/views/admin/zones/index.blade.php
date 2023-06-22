@@ -136,33 +136,13 @@
         });
     </script>
 
-    @if (session('action') == 'delete')
-        <script>
-            Swal.fire(
-                'Eliminado!',
-                'La zona ha sido eliminada.',
-                'success'
-            )
-        </script>
-    @endif
-
-    @if (session('action') == 'update')
-        <script>
-            Swal.fire(
-                'Actualizado!',
-                'La zona ha sido actualizada.',
-                'success'
-            )
-        </script>
-    @endif
-
-    @if (session('action') == 'store')
-        <script>
-            Swal.fire(
-                'Registrado!',
-                'La zona ha sido registrada.',
-                'success'
-            )
-        </script>
-    @endif
+@if (null !== session('action'))
+<script>
+    Swal.fire(
+        'Proceso Exitoso',
+        '{{ session("action") }}',
+        'success'
+    )
+</script>
+@endif
 @endsection
