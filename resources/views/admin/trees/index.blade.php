@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Árboles')
+@section('title', 'Listado de Árboles')
 
 @section('content_header')
 

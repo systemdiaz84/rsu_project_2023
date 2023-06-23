@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Zonas')
+@section('title', 'Listado de Zonas')
 
 @section('content_header')
 

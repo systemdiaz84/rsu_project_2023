@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Listado de Familias')
 
 @section('content')
     <div class="p-2"></div>
