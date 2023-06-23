@@ -3,6 +3,7 @@
 use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\FamilyController;
 use App\Http\Controllers\admin\FamilyphotoController;
+use App\Http\Controllers\admin\MapController;
 use App\Http\Controllers\admin\SpecieController;
 use App\Http\Controllers\admin\StateController;
 use App\Http\Controllers\admin\TreeController;
@@ -24,5 +25,7 @@ Route::resource('zones', ZoneController::class)->names('admin.zones');
 Route::resource('trees', TreeController::class)->names('admin.trees');
 
 Route::resource('states', StateController::class)->names('admin.states');
+
+Route::resource('maps', MapController::class)->names('admin.maps');
 
 ?>

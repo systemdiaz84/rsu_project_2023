@@ -324,7 +324,7 @@ return [
         ],
         [
             'text'  => 'Visualización en Mapa',
-            'url'   => 'admin/pages',
+            'route'   => 'admin.maps.index',
             'icon'  => 'fas fa-fw fa-map-marked',
 
         ],
