@@ -18,7 +18,7 @@ class AuthController extends Controller
             $token = $user->createToken('api-token')->plainTextToken;
             return response()->json(['token' => $token, 'user' => $user, 'status' => 1], 200);
         } else {
-            return response()->json(['error' => 'No Autorizado', 'status' => 0], 401);
+            return response()->json(['error' => 'No Autorizado', 'status' => 0], 200);
         }
     }
 
