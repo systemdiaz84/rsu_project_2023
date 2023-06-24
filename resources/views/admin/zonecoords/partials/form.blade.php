@@ -1,5 +1,4 @@
 <div class="form-row">
-{{ $zone->id}}
     <div class="form-group col-6">
         {!! Form::label('latitude', 'Latitud') !!}
         {!! Form::text('latitude', null, [
