@@ -28,6 +28,7 @@
                         <th>DESCRIPCIÓN</th>
                         <th></th>
                         <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -42,10 +43,14 @@
                                 <button class="btn btn-secondary btnEditar btn-sm" data-id={{ $zone->id }}><i
                                         class="fas fa-edit"></i></button>
                             <td width="10px">
+                                <a href={{ route('admin.zones.show',$zone) }} class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
+                            </td>
+                            <td width="10px">
                                 <form action={{ route('admin.zones.destroy', $zone->id) }} method='post' class="frmDelete">
                                     @method('delete')
                                     @csrf
-                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                                    <button type="submit" class="btn btn-danger btn-sm"><i
+                                            class="fas fa-trash"></i></button>
                                 </form>
                             </td>
                         </tr>
@@ -54,8 +59,6 @@
             </table>
         </div>
     </div>
-
-
 
     <!-- Modal -->
     <div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -136,13 +139,13 @@
         });
     </script>
 
-@if (null !== session('action'))
-<script>
-    Swal.fire(
-        'Proceso Exitoso',
-        '{{ session("action") }}',
-        'success'
-    )
-</script>
-@endif
+    @if (null !== session('action'))
+        <script>
+            Swal.fire(
+                'Proceso Exitoso',
+                '{{ session('action') }}',
+                'success'
+            )
+        </script>
+    @endif
 @endsection

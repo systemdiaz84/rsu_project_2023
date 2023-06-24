@@ -8,6 +8,7 @@ use App\Http\Controllers\admin\SpecieController;
 use App\Http\Controllers\admin\StateController;
 use App\Http\Controllers\admin\TreeController;
 use App\Http\Controllers\admin\ZoneController;
+use App\Http\Controllers\admin\ZoneCoordsController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/',[AdminController::class,'index'])->name('admin.index');
@@ -27,5 +28,7 @@ Route::resource('trees', TreeController::class)->names('admin.trees');
 Route::resource('states', StateController::class)->names('admin.states');
 
 Route::resource('maps', MapController::class)->names('admin.maps');
+
+Route::resource('zonecoords', ZoneCoordsController::class)->names('admin.zonecoords');
 
 ?>

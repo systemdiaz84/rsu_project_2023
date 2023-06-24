@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\admin\Zone;
-use App\Models\admin\ZoneCoord;
+use App\Models\Admin\Zone;
 use Illuminate\Http\Request;
 
-class ZoneController extends Controller
+class ZoneCoordsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +15,7 @@ class ZoneController extends Controller
      */
     public function index()
     {
-        $zones = Zone::all();
-        return view('admin.zones.index', compact('zones'));
+        return Zone::all();
     }
 
     /**
@@ -27,7 +25,7 @@ class ZoneController extends Controller
      */
     public function create()
     {
-        return view('admin.zones.create');
+        return view('admin.zonecoords.create');
     }
 
     /**
@@ -38,8 +36,7 @@ class ZoneController extends Controller
      */
     public function store(Request $request)
     {
-        Zone::create($request->all());
-        return redirect()->route('admin.zones.index')->with('action','Zona Registrada');
+        //
     }
 
     /**
@@ -50,9 +47,7 @@ class ZoneController extends Controller
      */
     public function show($id)
     {
-        $zone = Zone::find($id);
-        $coords = ZoneCoord::where('zone_id',$id);
-        return view('admin.zones.show', compact('zone','coords'));
+        //
     }
 
     /**
@@ -63,8 +58,10 @@ class ZoneController extends Controller
      */
     public function edit($id)
     {
+        
         $zone = Zone::find($id);
-        return view('admin.zones.edit',compact('zone'));
+        
+        return view('admin.zonecoords.create', compact('zone'));
     }
 
     /**
@@ -76,11 +73,7 @@ class ZoneController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $zone = Zone::find($id);
-        $zone->update($request->all());
-
-        return redirect()->route('admin.zones.index')->with('action','Zona Actualizada');
- 
+        //
     }
 
     /**
@@ -91,9 +84,6 @@ class ZoneController extends Controller
      */
     public function destroy($id)
     {
-        $zone = Zone::find($id);
-        $zone->delete();
-
-        return redirect()->route('admin.zones.index')->with('action','Zona Eliminada');
+        //
     }
 }
