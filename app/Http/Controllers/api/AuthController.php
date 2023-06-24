@@ -16,9 +16,9 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
             $token = $user->createToken('api-token')->plainTextToken;
-            return response()->json(['token' => $token, 'user'=>$user->name], 200);
+            return response()->json(['token' => $token, 'user' => $user, 'status' => 1], 200);
         } else {
-            return response()->json(['error' => 'Unauthorized'], 200);
+            return response()->json(['error' => 'No Autorizado', 'status' => 0], 401);
         }
     }
 
