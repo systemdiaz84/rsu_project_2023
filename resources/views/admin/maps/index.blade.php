@@ -19,6 +19,9 @@
 @stop
 
 @section('js')
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&callback=initMap" async defer>
+    </script>
+
     <script>
         var coordenadas = @json($trees); // Obtener el array de coordenadas desde PHP
 
@@ -69,7 +72,3 @@
         }
     </script>
 @endsection
-
-
-<script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&callback=initMap" async defer>
-</script>
