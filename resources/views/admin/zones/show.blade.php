@@ -88,57 +88,54 @@
 @stop
 
 
-@if (null !== session('action'))
-    <script>
-        Swal.fire(
-            'Proceso Exitoso',
-            '{{ session('action') }}',
-            'success'
-        )
-    </script>
-@endif
 
 @section('js')
+    @if (null !== session('action'))
+        <script>
+            Swal.fire(
+                'Proceso Exitoso',
+                '{{ session('action') }}',
+                'success'
+            )
+        </script>
+    @endif
+
     <script>
-        $(document).ready(function() {
+        $('#btnRegistrar').click(function() {
+            var id = $(this).attr('data-id');
+            $.ajax({
+                url: "{{ route('admin.zonecoords.edit', ':id') }}".replace(':id', id),
+                type: 'GET',
+                success: function(response) {
 
-
-            $('#btnRegistrar').click(function() {
-                var id = $(this).attr('data-id');
-                $.ajax({
-                    url: "{{ route('admin.zonecoords.edit', ':id') }}".replace(':id', id),
-                    type: 'GET',
-                    success: function(response) {
-
-                        $("#Modal .modal-body").html(response);
-                        $("#Modal").modal('show');
-                    }
-                })
+                    $("#Modal .modal-body").html(response);
+                    $("#Modal").modal('show');
+                }
             })
+        })
 
 
-            $('.frmDelete').submit(function(e) {
-                e.preventDefault();
-                Swal.fire({
-                    title: '¿Seguro de eliminar?',
-                    text: "Este proceso es irreversible",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Si, eliminar'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        this.submit();
-                    }
-                })
+        $('.frmDelete').submit(function(e) {
+            e.preventDefault();
+            Swal.fire({
+                title: '¿Seguro de eliminar?',
+                text: "Este proceso es irreversible",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, eliminar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.submit();
+                }
             })
+        })
 
-            var table = $('#coords_table').DataTable({
-                language: {
-                    url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
-                },
-            });
+        var table = $('#coords_table').DataTable({
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
+            },
         });
 
         var coordenadas = @json($coords); // Obtener el array de coordenadas desde PHP
