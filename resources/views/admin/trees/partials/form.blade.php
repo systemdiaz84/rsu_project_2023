@@ -82,6 +82,9 @@
 </div>
 
 <script>
+    var latInput = document.getElementById('latitude');
+    var lonInput = document.getElementById('longitude');
+
     $('#family_id').change(function() {
         var id = $(this).val();
         $.ajax({
@@ -96,57 +99,97 @@
                     $('#specie_id').append('<option value="' + value.id + '">' + value
                         .name + '</option>');
                 });
-
-
             }
         })
     })
 
-    var latInput = document.getElementById('latitude');
-    var lonInput = document.getElementById('longitude');
+    $(document).ready(function() {
+        verPerimetro();
+    });
 
-    function initMap() {
 
+    $('#zone_id').change(function() {
+        latInput.value = "";
+        lonInput.value = "";
+
+        verPerimetro();
+    });
+
+    function verPerimetro() {
+        var id = $('#zone_id').val();
+
+        $.ajax({
+            url: "{{ route('admin.zonecoords.show', ':id') }}".replace(':id', id),
+            type: 'GET',
+            dataType: 'json',
+            contentType: 'application/json;chartset=utf-8',
+            success: function(response) {
+                initMap(response);
+            }
+        });
+    }
+
+    function initMap(coordenadas) {
         var lat = parseFloat(latInput.value);
         var lng = parseFloat(lonInput.value);
 
-        if (isNaN(lat) || isNaN(lng)) {
-            // Obtener ubicación actual si los campos están vacíos o no contienen valores numéricos válidos
-            navigator.geolocation.getCurrentPosition(function(position) {
-                lat = position.coords.latitude;
-                lng = position.coords.longitude;
-                latInput.value = lat;
-                lonInput.value = lng;
-                displayMap(lat, lng);
-            });
-        } else {
-            // Utilizar las coordenadas de los campos de entrada
-            displayMap(lat, lng);
-        }
-    }
-
-    function displayMap(lat, lng) {
         var mapOptions = {
-            center: {
+            /*center: {
                 lat: lat,
                 lng: lng
-            },
-            zoom: 12
+            },*/
+            zoom: 18
         };
-
         var map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
-        var marker = new google.maps.Marker({
-            position: {
-                lat: lat,
-                lng: lng
-            },
-            map: map,
-            title: 'Ubicación',
-            draggable: true // Permite arrastrar el marcador
+        // Crea un objeto de polígono con los puntos del perímetro
+        var perimeterPolygon = new google.maps.Polygon({
+            paths: coordenadas,
+            strokeColor: '#FF0000',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#FF0000',
+            fillOpacity: 0.35
         });
 
-        // Actualizar las coordenadas al mover el marcador
+        perimeterPolygon.setMap(map);
+
+        var bounds = new google.maps.LatLngBounds();
+
+        // Obtener los límites (bounds) del polígono
+        perimeterPolygon.getPath().forEach(function(coord) {
+            bounds.extend(coord);
+        });
+
+        // Obtener el centro de los límites (bounds)
+        var centro = bounds.getCenter();
+
+        // Mover el mapa para centrarse en el centro del perímetro
+        map.panTo(centro);
+
+        if (isNaN(lat) || isNaN(lng)) {
+            var marker = new google.maps.Marker({
+                position: centro,
+                map: map,
+                title: 'Ubicación',
+                draggable: true // Permite arrastrar el marcador
+            });
+
+            latInput.value = centro.lat();
+            lonInput.value = centro.lng();
+
+        } else {
+            var marker = new google.maps.Marker({
+                position: {
+                    lat: lat,
+                    lng: lng
+                },
+                map: map,
+                title: 'Ubicación',
+                draggable: true // Permite arrastrar el marcador
+            });
+        }
+
         google.maps.event.addListener(marker, 'dragend', function(event) {
             var latLng = event.latLng;
             latInput.value = latLng.lat();
@@ -154,5 +197,4 @@
         });
     }
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&callback=initMap" async defer>
-</script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}" async defer></script>
