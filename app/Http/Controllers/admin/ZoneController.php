@@ -39,7 +39,7 @@ class ZoneController extends Controller
     public function store(Request $request)
     {
         Zone::create($request->all());
-        return redirect()->route('admin.zones.index')->with('action','Zona Registrada');
+        return redirect()->route('admin.zones.index')->with('action', 'Zona Registrada');
     }
 
     /**
@@ -51,8 +51,18 @@ class ZoneController extends Controller
     public function show($id)
     {
         $zone = Zone::find($id);
-        $coords = ZoneCoord::where('zone_id',$id);
-        return view('admin.zones.show', compact('zone','coords'));
+
+        $coords = ZoneCoord::where('zone_id', $id)->get();
+
+        $vertice = ZoneCoord::select(
+            'latitude as lat',
+            'longitude as lng'
+        )->where('zone_id', $id)->get();
+
+        return view(
+            'admin.zones.show',
+            compact('zone', 'coords', 'vertice')
+        );
     }
 
     /**
@@ -64,7 +74,7 @@ class ZoneController extends Controller
     public function edit($id)
     {
         $zone = Zone::find($id);
-        return view('admin.zones.edit',compact('zone'));
+        return view('admin.zones.edit', compact('zone'));
     }
 
     /**
@@ -79,8 +89,7 @@ class ZoneController extends Controller
         $zone = Zone::find($id);
         $zone->update($request->all());
 
-        return redirect()->route('admin.zones.index')->with('action','Zona Actualizada');
- 
+        return redirect()->route('admin.zones.index')->with('action', 'Zona Actualizada');
     }
 
     /**
@@ -94,6 +103,6 @@ class ZoneController extends Controller
         $zone = Zone::find($id);
         $zone->delete();
 
-        return redirect()->route('admin.zones.index')->with('action','Zona Eliminada');
+        return redirect()->route('admin.zones.index')->with('action', 'Zona Eliminada');
     }
 }

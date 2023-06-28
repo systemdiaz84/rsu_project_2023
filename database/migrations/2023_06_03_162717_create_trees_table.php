@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('trees', function (Blueprint $table) {
             $table->id();
             $table->string('name', 50);
-            $table->date('birthdate');
+            $table->date('birth_date');
             $table->date('planting_date');
             $table->double('latitude');
             $table->double('longitude');

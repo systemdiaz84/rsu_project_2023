@@ -13,29 +13,24 @@
             <h4>Vista de Zonas</h4>
         </div>
         <div class="card-body">
-
             <div class="row">
-                <div class="col-6">
+                <div class="col-3">
                     <label for="">Zona</label>
                     <p>{{ $zone->name }}</p>
-
                     <label for="">Area en m2</label>
                     <p>{{ $zone->area }}</p>
-
                     <label for="">Descripción</label>
                     <p>{{ $zone->description }}</p>
                 </div>
-                <div class="col-6" style="background-color: blueviolet">
-             
+                <div class="col-9" id="map" style="height: 300px;">
                 </div>
             </div>
             <br>
-
             <div class="card">
                 <div class="card-header">
-                    <button type="button" class="btn btn-sm btn-success float-right" id="btnRegistrar" data-id={{ $zone->id }}>
+                    <button type="button" class="btn btn-sm btn-success float-right" id="btnRegistrar"
+                        data-id={{ $zone->id }}>
                         <i class="fas fa-plus-circle"></i>&nbsp;&nbsp;Agregar Coordenada</button>
-
                     <h5>Coodenadas del perímetro</h5>
                 </div>
                 <div class="card-body">
@@ -54,9 +49,8 @@
                                     <td>{{ $coord->id }}</td>
                                     <td>{{ $coord->latitude }}</td>
                                     <td>{{ $coord->longitude }}</td>
-
                                     <td width="10px">
-                                        <form action={{ route('admin.zonecoords.destroy', $zone->id) }} method='post'
+                                        <form action={{ route('admin.zonecoords.destroy', $coord->id) }} method='post'
                                             class="frmDelete">
                                             @method('delete')
                                             @csrf
@@ -70,8 +64,6 @@
                     </table>
                 </div>
             </div>
-
-
         </div>
     </div>
 
@@ -89,7 +81,6 @@
                 <div class="modal-body">
                     ...
                 </div>
-
             </div>
         </div>
     </div>
@@ -102,9 +93,7 @@
 
 
             $('#btnRegistrar').click(function() {
-           
                 var id = $(this).attr('data-id');
-
                 $.ajax({
                     url: "{{ route('admin.zonecoords.edit', ':id') }}".replace(':id', id),
                     type: 'GET',
@@ -139,7 +128,6 @@
                     url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
                 },
             });
-
         });
     </script>
 
@@ -153,3 +141,64 @@
         </script>
     @endif
 @endsection
+<script>
+    var coordenadas = @json($coords); // Obtener el array de coordenadas desde PHP
+
+    var currentInfoWindow = null;
+
+    function initMap2() {
+        var perimeterCoords = @json($vertice)
+
+        if (Object.keys(perimeterCoords).length === 0) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var lat = position.coords.latitude;
+                var lng = position.coords.longitude;
+
+                var mapOptions = {
+                    center: {
+                        lat: lat,
+                        lng: lng
+                    },
+                    zoom: 18
+                };
+                var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+            })
+        } else {
+            var mapOptions = {
+                zoom: 18
+            }
+            var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+            //var perimeterCoords = @json($vertice);
+            // Crea un objeto de polígono con los puntos del perímetro
+            var perimeterPolygon = new google.maps.Polygon({
+                paths: perimeterCoords,
+                strokeColor: '#FF0000',
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: '#FF0000',
+                fillOpacity: 0.35
+            });
+
+            perimeterPolygon.setMap(map);
+
+            var bounds = new google.maps.LatLngBounds();
+
+            // Obtener los límites (bounds) del polígono
+            perimeterPolygon.getPath().forEach(function(coord) {
+                bounds.extend(coord);
+            });
+
+            // Obtener el centro de los límites (bounds)
+            var centro = bounds.getCenter();
+
+            // Mover el mapa para centrarse en el centro del perímetro
+            map.panTo(centro);
+
+            //});
+        }
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&callback=initMap2" async
+    defer></script>

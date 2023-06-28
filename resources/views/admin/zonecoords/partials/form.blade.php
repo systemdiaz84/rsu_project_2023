@@ -1,7 +1,8 @@
 <div class="form-row">
+    {!! Form::hidden('zone_id', $zone->id, null) !!}
     <div class="form-group col-6">
         {!! Form::label('latitude', 'Latitud') !!}
-        {!! Form::text('latitude', null, [
+        {!! Form::text('latitude', optional($lastcoords)->lat, [
             'class' => 'form-control',
             'placeholder' => 'Latitud',
             'readonly',
@@ -10,7 +11,7 @@
     </div>
     <div class="form-group col-6">
         {!! Form::label('longitude', 'Longitud') !!}
-        {!! Form::text('longitude', null, [
+        {!! Form::text('longitude', optional($lastcoords)->lng, [
             'class' => 'form-control',
             'placeholder' => 'Longitud',
             'readonly',
@@ -18,7 +19,7 @@
         ]) !!}
     </div>
 </div>
-<div id="map" style="height: 400px;width: 100%;"></div>
+<div id="map2" style="height: 400px;width: 100%;"></div>
 <br>
 <script>
     var latInput = document.getElementById('latitude');
@@ -50,10 +51,10 @@
                 lat: lat,
                 lng: lng
             },
-            zoom: 15
+            zoom: 18
         };
 
-        var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+        var map = new google.maps.Map(document.getElementById('map2'), mapOptions);
 
         var marker = new google.maps.Marker({
             position: {
@@ -64,6 +65,19 @@
             title: 'Ubicación',
             draggable: true // Permite arrastrar el marcador
         });
+
+        var perimeterCoords = @json($vertice);
+            // Crea un objeto de polígono con los puntos del perímetro
+            var perimeterPolygon = new google.maps.Polygon({
+                paths: perimeterCoords,
+                strokeColor: '#FF0000',
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: '#FF0000',
+                fillOpacity: 0.35
+            });
+
+            perimeterPolygon.setMap(map);
 
         // Actualizar las coordenadas al mover el marcador
         google.maps.event.addListener(marker, 'dragend', function(event) {

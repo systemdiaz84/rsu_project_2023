@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin\Zone;
+use App\Models\admin\ZoneCoord;
 use Illuminate\Http\Request;
 
 class ZoneCoordsController extends Controller
@@ -25,7 +26,6 @@ class ZoneCoordsController extends Controller
      */
     public function create()
     {
-        return view('admin.zonecoords.create');
     }
 
     /**
@@ -36,7 +36,8 @@ class ZoneCoordsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        ZoneCoord::create($request->all());
+        return redirect()->route('admin.zones.show', $request->zone_id)->with('action', 'Coordena Agregada');
     }
 
     /**
@@ -47,7 +48,12 @@ class ZoneCoordsController extends Controller
      */
     public function show($id)
     {
-        //
+        $vertice = ZoneCoord::select(
+            'latitude as lat',
+            'longitude as lng'
+        )->where('zone_id', $id)->get();
+
+        return $vertice;
     }
 
     /**
@@ -58,10 +64,23 @@ class ZoneCoordsController extends Controller
      */
     public function edit($id)
     {
-        
+
         $zone = Zone::find($id);
-        
-        return view('admin.zonecoords.create', compact('zone'));
+
+        $vertice = ZoneCoord::select(
+            'latitude as lat',
+            'longitude as lng'
+        )->where('zone_id', $id)->get();
+
+        $lastcoords = ZoneCoord::select(
+            'latitude as lat',
+            'longitude as lng'
+        )
+            ->where('zone_id', $id)
+            ->latest()
+            ->first();
+
+        return view('admin.zonecoords.create', compact('zone', 'vertice','lastcoords'));
     }
 
     /**
@@ -84,6 +103,9 @@ class ZoneCoordsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $zonecoord = ZoneCoord::find($id);
+        $zone_id = $zonecoord->zone_id;
+        $zonecoord->delete();
+        return redirect()->route('admin.zones.show', $zone_id)->with('action', 'Coordena Eliminada');
     }
 }
