@@ -18,54 +18,58 @@
     </div>
 @stop
 
-<script>
-    var coordenadas = @json($trees); // Obtener el array de coordenadas desde PHP
+@section('js')
+    <script>
+        var coordenadas = @json($trees); // Obtener el array de coordenadas desde PHP
 
-    var currentInfoWindow = null;
+        var currentInfoWindow = null;
 
-    function initMap() {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            var lat = position.coords.latitude;
-            var lng = position.coords.longitude;
+        function initMap() {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var lat = position.coords.latitude;
+                var lng = position.coords.longitude;
 
-            var mapOptions = {
-                center: {
-                    lat: lat,
-                    lng: lng
-                },
-                zoom: 15
-            };
-
-            var map = new google.maps.Map(document.getElementById('map'), mapOptions);
-
-            coordenadas.forEach(function(coordenada) {
-                var marker = new google.maps.Marker({
-                    position: {
-                        lat: coordenada.latitude,
-                        lng: coordenada.longitude
+                var mapOptions = {
+                    center: {
+                        lat: lat,
+                        lng: lng
                     },
-                    map: map,
-                    title: 'Mi ubicación'
-                });
+                    zoom: 15
+                };
 
-                marker.addListener('click', function() {
+                var map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
-                    if (currentInfoWindow) {
-                        currentInfoWindow.close(); // Cerrar el InfoWindow anterior si existe
-                    }
-
-                    var infowindow = new google.maps.InfoWindow({
-                        content: coordenada.name
+                coordenadas.forEach(function(coordenada) {
+                    var marker = new google.maps.Marker({
+                        position: {
+                            lat: coordenada.latitude,
+                            lng: coordenada.longitude
+                        },
+                        map: map,
+                        title: 'Mi ubicación'
                     });
-                    infowindow.open(map, marker);
 
-                    currentInfoWindow = infowindow;
+                    marker.addListener('click', function() {
+
+                        if (currentInfoWindow) {
+                            currentInfoWindow.close(); // Cerrar el InfoWindow anterior si existe
+                        }
+
+                        var infowindow = new google.maps.InfoWindow({
+                            content: coordenada.name
+                        });
+                        infowindow.open(map, marker);
+
+                        currentInfoWindow = infowindow;
+                    });
                 });
+
+
             });
+        }
+    </script>
+@endsection
 
 
-        });
-    }
-</script>
 <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&callback=initMap" async defer>
 </script>
