@@ -24,6 +24,7 @@
 
     <script>
         var coordenadas = @json($trees); // Obtener el array de coordenadas desde PHP
+        var perimeters = @json($perimeter);
 
         var currentInfoWindow = null;
 
@@ -41,6 +42,8 @@
                 };
 
                 var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+
 
                 coordenadas.forEach(function(coordenada) {
                     var marker = new google.maps.Marker({
@@ -65,9 +68,27 @@
 
                         currentInfoWindow = infowindow;
                     });
+
                 });
 
+                var colors = ['#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF', '#00FFFF'];
 
+
+                perimeters.forEach(function(perimeter,index) {
+                    var perimeterCoords = perimeter.coords;
+                    var color = colors[index % colors.length]; // Obtiene un color de la matriz de colores
+
+                    // Crea un objeto de polígono con los puntos del perímetro
+                    var perimeterPolygon = new google.maps.Polygon({
+                        paths: perimeterCoords,
+                        strokeColor: color,
+                        strokeOpacity: 0.8,
+                        strokeWeight: 2,
+                        fillColor: color,
+                        fillOpacity: 0.35,
+                        map: map // Asigna el mapa al polígono para mostrarlo
+                    });
+                });
             });
         }
     </script>
