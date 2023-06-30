@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\AuthController;
+use App\Http\Controllers\api\MapController;
 use App\Http\Controllers\api\TreeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,5 +23,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
-Route::resource('trees', TreeController::class)->names('admin.trees')->middleware('auth:sanctum');
-
+Route::resource('/trees', TreeController::class)->names('api.trees');
+Route::resource('/maps', MapController::class)->names('api.map');
