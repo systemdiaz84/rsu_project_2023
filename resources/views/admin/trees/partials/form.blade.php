@@ -43,7 +43,7 @@
         ]) !!}
     </div>
     <div class="form-group col-6">
-        {!! Form::label('planting_date', 'Fecha de Plantado') !!}
+        {!! Form::label('planting_date', 'Fecha de plantado') !!}
         {!! Form::date('planting_date', null, [
             'class' => 'form-control',
             'required',

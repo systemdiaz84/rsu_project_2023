@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Visualización en Mapa')
+@section('title', 'Visualización en mapa')
 
 @section('content_header')
 

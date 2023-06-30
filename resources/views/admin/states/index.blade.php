@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Estados de Evolución')
+@section('title', 'Estados de evolución')
 
 @section('content')
     <div class="p-2"></div>

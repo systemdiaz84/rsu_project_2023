@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Proyecto RSU')
 
 @section('content_header')
     <h3>Dashboard del Proyecto</h3>

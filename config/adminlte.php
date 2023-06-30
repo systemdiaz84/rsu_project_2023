@@ -317,13 +317,13 @@ return [
         ],
         ['header' => 'ARBORIZACIÓN'],
         [
-            'text'  => 'Registro de Árboles',
+            'text'  => 'Registro de árboles',
             'route'   => 'admin.trees.index',
             'icon'  => 'fas fa-fw fa-tree',
 
         ],
         [
-            'text'  => 'Visualización en Mapa',
+            'text'  => 'Visualización en mapa',
             'route'   => 'admin.maps.index',
             'icon'  => 'fas fa-fw fa-map-marked',
 
@@ -351,7 +351,7 @@ return [
             'url'     => 'users.index',
             'submenu' => [
                 [
-                    'text' => 'Estados de Evolución',
+                    'text' => 'Estados de evolución',
                     'icon' => 'fas fa-fw fa-thermometer-half',
                     'route'  => 'admin.states.index',
 

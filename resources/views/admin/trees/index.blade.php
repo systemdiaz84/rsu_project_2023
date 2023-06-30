@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Listado de Árboles')
+@section('title', 'Listado de árboles')
 
 @section('content_header')
 
@@ -14,7 +14,7 @@
             <button type="button" class="btn btn-success float-right" id="btnRegistrar">
                 <i class="fas fa-plus-circle"></i>&nbsp;&nbsp;Registrar</button>
 
-            <h4>Listado de Árboles</h4>
+            <h4>Listado de árboles</h4>
 
 
         </div>

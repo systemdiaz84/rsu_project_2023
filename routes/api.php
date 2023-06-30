@@ -3,6 +3,7 @@
 use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\MapController;
 use App\Http\Controllers\api\TreeController;
+use App\Http\Controllers\api\TreephotoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,3 +26,4 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 Route::resource('/trees', TreeController::class)->names('api.trees');
 Route::resource('/maps', MapController::class)->names('api.map');
+Route::resource('/treephoto', TreephotoController::class)->names('api.treephotos');
