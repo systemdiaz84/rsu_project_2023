@@ -15,7 +15,34 @@ class MapController extends Controller
      */
     public function index()
     {
-        //
+        $zones = DB::table('zones')
+            ->leftJoin('zone_coords', 'zones.id', '=', 'zone_coords.zone_id')
+            ->select('zones.name as zone', 'zone_coords.latitude', 'zone_coords.longitude')
+            
+            ->get();
+
+        // Agrupa las coordenadas por zona
+        $groupedZones = $zones->groupBy('zone');
+
+        // Formatea los datos en un formato JSON
+        $perimeter = $groupedZones->map(function ($zone) {
+            $coords = $zone->map(function ($item) {
+                return [
+                    'lat' => $item->latitude,
+                    'lng' => $item->longitude,
+                ];
+            })->toArray(); // Convertir la colección de coordenadas en una matriz
+
+            return [
+                //'name' => $zone[0]->zone, // Cambiar 'zone' por 'name'
+                'coords' => $coords,
+            ];
+        })->values(); // Reindexar las claves numéricas del resultado
+
+        // Convertir los datos a formato JSON
+
+
+        return $perimeter;
     }
 
     /**
