@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Models\admin\Treephoto;
+use App\Models\admin\TreePhotos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -61,7 +62,7 @@ class TreephotoController extends Controller
             Storage::disk('public')->put('images/' . $imageName, $imageData);
 
             // Guarda la URL de la imagen en la base de datos
-            $treePhoto = new Treephoto();
+            $treePhoto = new TreePhotos();
             $treePhoto->url = 'images/' . $imageName;
             $treePhoto->tree_id = $request->input('tree_id');
             $treePhoto->save();
