@@ -56,14 +56,14 @@ class TreephotoController extends Controller
                 mkdir($storagePath, 0755, true);
             }
 
-            $url = 'storage/images/trees/' . $request->input('tree_id') . '/' . $imageName;
+            $url = 'images/trees/' . $request->input('tree_id') . '/' . $imageName;
 
             // Guarda la imagen en el servidor utilizando el almacenamiento de Laravel
             Storage::disk('public')->put($url, $imageData);
 
             // Guarda la URL de la imagen en la base de datos
             $treePhoto = new TreePhotos();
-            $treePhoto->url = $url;
+            $treePhoto->url ='storage/'.$url;
             $treePhoto->tree_id = $request->input('tree_id');
             $treePhoto->save();
 
