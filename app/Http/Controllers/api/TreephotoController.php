@@ -81,7 +81,7 @@ class TreephotoController extends Controller
      */
     public function show($id)
     {
-        $treephotos = TreePhotos::where('tree_id',$id);
+        $treephotos = TreePhotos::where('tree_id',$id)->get();
         return $treephotos;
     }
 
