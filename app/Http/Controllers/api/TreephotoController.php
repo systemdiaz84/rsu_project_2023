@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Models\admin\Treephoto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class TreephotoController extends Controller
 {
@@ -49,7 +50,15 @@ class TreephotoController extends Controller
             $storagePath = public_path('images');
 
             // Guarda la imagen en el servidor
-            file_put_contents($storagePath . '/' . $imageName, $imageData);
+            $storagePath = public_path('images');
+
+            // Verifica si el directorio de almacenamiento existe, si no, créalo
+            if (!file_exists($storagePath)) {
+                mkdir($storagePath, 0755, true);
+            }
+
+            // Guarda la imagen en el servidor utilizando el almacenamiento de Laravel
+            Storage::disk('public')->put('images/' . $imageName, $imageData);
 
             // Guarda la URL de la imagen en la base de datos
             $treePhoto = new Treephoto();
