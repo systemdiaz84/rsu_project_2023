@@ -48,7 +48,7 @@ class TreephotoController extends Controller
             $imageName = uniqid() . '.jpg';
 
             // Ruta de almacenamiento de las imágenes
-            $storagePath = public_path('images/' . $request->input('tree_id'));
+            $storagePath = public_path('public/images/' . $request->input('tree_id'));
 
 
             // Verifica si el directorio de almacenamiento existe, si no, créalo
