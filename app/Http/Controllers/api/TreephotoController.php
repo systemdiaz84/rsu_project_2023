@@ -38,28 +38,28 @@ class TreephotoController extends Controller
     {
         if ($request->has('image')) {
             $base64Image = $request->input('image');
-            
+
             // Decodifica la imagen en base64
             $imageData = base64_decode($base64Image);
-            
+
             // Genera un nombre único para la imagen
             $imageName = uniqid() . '.jpg';
-            
+
             // Ruta de almacenamiento de las imágenes
             $storagePath = public_path('images');
-            
+
             // Guarda la imagen en el servidor
             file_put_contents($storagePath . '/' . $imageName, $imageData);
-            
+
             // Guarda la URL de la imagen en la base de datos
             $treePhoto = new Treephoto();
             $treePhoto->url = 'images/' . $imageName;
             $treePhoto->tree_id = $request->input('tree_id');
             $treePhoto->save();
-            
+
             return response()->json(['message' => 'Imagen almacenada correctamente']);
         }
-        
+
         return response()->json(['message' => 'Error al almacenar la imagen'], 400);
     }
 
