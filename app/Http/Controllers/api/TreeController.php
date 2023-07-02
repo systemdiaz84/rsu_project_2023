@@ -52,7 +52,15 @@ class TreeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $trees = Tree::create($request->all());
+
+        $name = $trees->name . ' ' . $trees::find($trees->id);
+
+        $trees::update([
+            'name' => $name
+        ]);
+
+        return response()->json(['message' => 'Árbol registrado correctamente']);
     }
 
     /**
@@ -77,7 +85,7 @@ class TreeController extends Controller
             'families.name as family_name',
             'species.name as species_name',
         )->join('species', 'species.id', '=', 'specie_id')
-            ->join('families', 'families.id', '=', 'species.family_id')->where('trees.id',$id)->get();
+            ->join('families', 'families.id', '=', 'species.family_id')->where('trees.id', $id)->get();
 
         return $trees;
     }
