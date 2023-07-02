@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\Tree;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TreeController extends Controller
 {
@@ -60,7 +61,7 @@ class TreeController extends Controller
             'name' => $name
         ]);
 
-        return response()->json(['message' => 'Árbol registrado correctamente','tree_id'=>$trees->id]);
+        return response()->json(['message' => 'Árbol registrado correctamente', 'tree_id' => $trees->id]);
     }
 
     /**
@@ -84,8 +85,11 @@ class TreeController extends Controller
             'trees.user_id',
             'families.name as family_name',
             'species.name as species_name',
-        )->join('species', 'species.id', '=', 'specie_id')
-            ->join('families', 'families.id', '=', 'species.family_id')->where('trees.id', $id)->get();
+            (DB::raw('select url from tree_photos where tree_id = trees.id limit 1'))
+        )
+            ->join('species', 'species.id', '=', 'specie_id')
+            ->join('families', 'families.id', '=', 'species.family_id')
+            ->where('trees.id', $id)->get();
 
         return $trees;
     }
