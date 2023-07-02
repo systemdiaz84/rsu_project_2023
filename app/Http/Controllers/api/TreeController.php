@@ -56,7 +56,7 @@ class TreeController extends Controller
 
         $name = $trees->name . ' ' . $trees::find($trees->id);
 
-        $trees::update([
+        $trees->update([
             'name' => $name
         ]);
 
