@@ -116,6 +116,10 @@ class TreephotoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $treephoto = TreePhotos::find($id);
+        $treephoto->delete();
+
+        return response()->json(['message' => 'Imagen eliminada correctamente']);
+
     }
 }
