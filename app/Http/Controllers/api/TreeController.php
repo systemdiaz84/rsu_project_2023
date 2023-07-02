@@ -29,7 +29,7 @@ class TreeController extends Controller
             'trees.user_id',
             'families.name as family_name',
             'species.name as species_name',
-            (DB::raw('select url from tree_photos where tree_id = trees.id limit 1'))
+            ((DB::raw('select url from tree_photos where tree_id = trees.id limit 1')))
         )->join('species', 'species.id', '=', 'specie_id')
             ->join('families', 'families.id', '=', 'species.family_id')->get();
 
