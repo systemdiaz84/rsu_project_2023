@@ -54,13 +54,13 @@ class TreeController extends Controller
     {
         $trees = Tree::create($request->all());
 
-        $name = $trees->name . ' ' . $trees::find($trees->id);
+        $name = $trees->name . ' ' . $trees->id;
 
         $trees->update([
             'name' => $name
         ]);
 
-        return response()->json(['message' => 'Árbol registrado correctamente']);
+        return response()->json(['message' => 'Árbol registrado correctamente','tree_id'=>$trees->id]);
     }
 
     /**
