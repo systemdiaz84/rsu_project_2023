@@ -29,9 +29,13 @@ class TreeController extends Controller
             'trees.user_id',
             'families.name as family_name',
             'species.name as species_name',
-            DB::raw('(select url from tree_photos where tree_id = trees.id limit 1) as url')
-        )->join('species', 'species.id', '=', 'specie_id')
-            ->join('families', 'families.id', '=', 'species.family_id')->get();
+            'zones.name as zones_name',
+            DB::raw('(select url from tree_photos where tree_id = trees.id limit 1) as url'))
+            ->join('species', 'species.id', '=', 'specie_id')
+            ->join('families', 'families.id', '=', 'species.family_id')
+            ->join('zones', 'zones.id','=','trees.zone_id')
+            ->orderBy('trees.id', 'desc')
+            ->get();
 
         return $trees;
     }
@@ -71,7 +75,7 @@ class TreeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($name)
     {
         $trees = Tree::select(
             'trees.id',
@@ -86,11 +90,13 @@ class TreeController extends Controller
             'trees.user_id',
             'families.name as family_name',
             'species.name as species_name',
-            (DB::raw('select url from tree_photos where tree_id = trees.id limit 1'))
-        )
+            'zones.name as zones_name',
+            DB::raw('(select url from tree_photos where tree_id = trees.id limit 1) as url'))
             ->join('species', 'species.id', '=', 'specie_id')
             ->join('families', 'families.id', '=', 'species.family_id')
-            ->where('trees.id', $id)->get();
+            ->join('zones', 'zones.id','=','trees.zone_id')
+            ->where('trees.name','like','%'.$name.'%')
+            ->get();
 
         return $trees;
     }
@@ -103,7 +109,27 @@ class TreeController extends Controller
      */
     public function edit($id)
     {
-        //
+        $trees = Tree::select(
+            'trees.id',
+            'trees.name',
+            'trees.birth_date',
+            'trees.planting_date',
+            'trees.description',
+            'trees.latitude',
+            'trees.longitude',
+            'families.id as family_id',
+            'trees.specie_id',
+            'trees.zone_id',
+            'trees.user_id',    
+            'families.name as family_name',
+            'species.name as species_name',
+            'zones.name as zones_name',
+            DB::raw('(select url from tree_photos where tree_id = trees.id limit 1) as url'))
+            ->join('species', 'species.id', '=', 'specie_id')
+            ->join('families', 'families.id', '=', 'species.family_id')
+            ->join('zones', 'zones.id','=','trees.zone_id')->where('trees.id',$id)->get();
+
+        return $trees;
     }
 
     /**
