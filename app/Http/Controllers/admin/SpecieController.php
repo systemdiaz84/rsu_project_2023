@@ -17,7 +17,7 @@ class SpecieController extends Controller
     public function index()
     {
 
-        $species = Specie::select('species.id','species.name','families.name as familyname','species.description')->join('families','species.family_id','=','families.id')->get();
+        $species = Specie::select('species.id','species.name','species.scientific_name','families.name as familyname','species.description')->join('families','species.family_id','=','families.id')->get();
 
         //return $species;
 

@@ -23,7 +23,8 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>NOMBRE</th>
+                        <th>NOMBRE COMÚN</th>
+                        <th>NOMBRE CIENTÍFICO</th>
                         <th>FAMILIA</th>
                         <th>DESCRIPCIÓN</th>
                         <th></th>
@@ -36,6 +37,7 @@
                         <tr>
                             <td>{{ $specie->id }}</td>
                             <td>{{ $specie->name }}</td>
+                            <td>{{ $specie->scientific_name }}</td>
                             <td>{{ $specie->familyname }}</td>
                             <td>{{ $specie->description }}</td>
                             <td width="10px">

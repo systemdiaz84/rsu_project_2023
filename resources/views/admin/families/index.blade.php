@@ -18,7 +18,7 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>NOMBRE</th>
+                        <th>NOMBRE COMÚN</th>
                         <th>DESCRIPCIÓN</th>
                         <th></th>
                         <th></th>
@@ -30,7 +30,8 @@
                         <tr>
                             <td>{{ $family->id }}</td>
                             <td>{{ $family->name }}</td>
-                            <td>{{ $family->description }}</td>
+                            <td>{{ $family->name }}</td>
+                            <td>{{ $family->scientific_name }}</td>
                             <td width="10px">
                                 <button class="btn btn-secondary btn-sm btnEditar" data-id={{ $family->id }}><i
                                         class="fas fa-edit"></i></button>
