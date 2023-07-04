@@ -140,12 +140,23 @@
 
         });
     </script>
-    @if (null !== session('action'))
+    @if (null !== session('success'))
         <script>
             Swal.fire(
                 'Proceso Exitoso',
-                '{{ session('action') }}',
+                '{{ session('success') }}',
                 'success'
+            )
+        </script>
+    @endif
+
+
+    @if (null !== session('error'))
+        <script>
+            Swal.fire(
+                'Ocurrió un error',
+                '{{ session('error') }}',
+                'error'
             )
         </script>
     @endif

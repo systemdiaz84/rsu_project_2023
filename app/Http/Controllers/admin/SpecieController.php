@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\admin\Family;
 use App\Models\admin\Specie;
+use App\Models\Admin\Tree;
 use Illuminate\Http\Request;
 
 class SpecieController extends Controller
@@ -17,7 +18,7 @@ class SpecieController extends Controller
     public function index()
     {
 
-        $species = Specie::select('species.id','species.name','species.scientific_name','families.name as familyname','species.description')->join('families','species.family_id','=','families.id')->get();
+        $species = Specie::select('species.id', 'species.name', 'species.scientific_name', 'families.name as familyname', 'species.description')->join('families', 'species.family_id', '=', 'families.id')->get();
 
         //return $species;
 
@@ -32,8 +33,8 @@ class SpecieController extends Controller
     public function create()
     {
 
-        $families = Family::pluck('name','id');
-        return view('admin.species.create',compact('families'));
+        $families = Family::pluck('name', 'id');
+        return view('admin.species.create', compact('families'));
     }
 
     /**
@@ -45,7 +46,7 @@ class SpecieController extends Controller
     public function store(Request $request)
     {
         Specie::create($request->all());
-        return redirect()->route('admin.species.index')->with('action','Especie Actualizada');
+        return redirect()->route('admin.species.index')->with('success', 'Especie Actualizada');
     }
 
     /**
@@ -68,8 +69,8 @@ class SpecieController extends Controller
     public function edit($id)
     {
         $specie = Specie::find($id);
-        $families = Family::pluck('name','id');
-        return view('admin.species.edit', compact('specie','families'));
+        $families = Family::pluck('name', 'id');
+        return view('admin.species.edit', compact('specie', 'families'));
     }
 
     /**
@@ -84,7 +85,7 @@ class SpecieController extends Controller
         $specie = Specie::find($id);
         $specie->update($request->all());
 
-        return redirect()->route('admin.species.index')->with('action','Especie Actualizada');
+        return redirect()->route('admin.species.index')->with('success', 'Especie Actualizada');
     }
 
     /**
@@ -95,10 +96,17 @@ class SpecieController extends Controller
      */
     public function destroy($id)
     {
-        $specie=Specie::find($id);
-        $specie->delete();
+        $specie = Specie::find($id);
 
-        return redirect()->route('admin.species.index')->with('action','Especie Eliminada');
+        $counttrees = Tree::where('specie_id', $id)->count();
 
+        if ($counttrees > 0) {
+            return Redirect()->route('admin.species.index')->with('error', 'No se puede eliminar ya que tiene registros asociados');
+        } else {
+
+            $specie->delete();
+
+            return redirect()->route('admin.species.index')->with('success', 'Especie Eliminada');
+        }
     }
 }

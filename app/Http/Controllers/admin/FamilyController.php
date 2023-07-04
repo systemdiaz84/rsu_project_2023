@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin\Family;
 use App\Models\Admin\Familyphoto;
 use App\Models\Admin\Specie;
+use App\Models\Admin\Tree;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -42,7 +43,7 @@ class FamilyController extends Controller
     {
 
         Family::create($request->all());
-        return Redirect()->route('admin.families.index')->with('action', 'Familia Registrada');
+        return Redirect()->route('admin.families.index')->with('success', 'Familia Registrada');
     }
 
     /**
@@ -87,7 +88,7 @@ class FamilyController extends Controller
         $family->update($request->all());
 
         //return view('admin.families.show', compact('family'));
-        return Redirect()->route('admin.families.index')->with('action', 'Familia Actualizada');
+        return Redirect()->route('admin.families.index')->with('success', 'Familia Actualizada');
 
     }
 
@@ -100,9 +101,15 @@ class FamilyController extends Controller
     public function destroy($id)
     {
         $family = Family::find($id);
-        $family->delete();
+        $countSpecies = Specie::where('family_id',$id)->count();
+        $counttrees = Tree::where('family_id',$id)->count();
 
-        return Redirect()->route('admin.families.index')->with('action','Familia Eliminada');
+        if ($countSpecies>0 || $counttrees>0){
+            return Redirect()->route('admin.families.index')->with('error','No se puede eliminar ya que tiene registros asociados');
+        }else{
+            $family->delete();
+            return Redirect()->route('admin.families.index')->with('success','Familia Eliminada');
+        }  
     }
 
     public function species_family($id)

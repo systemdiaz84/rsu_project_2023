@@ -43,7 +43,8 @@
                                 <button class="btn btn-secondary btnEditar btn-sm" data-id={{ $zone->id }}><i
                                         class="fas fa-edit"></i></button>
                             <td width="10px">
-                                <a href={{ route('admin.zones.show',$zone) }} class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
+                                <a href={{ route('admin.zones.show', $zone) }} class="btn btn-primary btn-sm"><i
+                                        class="fas fa-eye"></i></a>
                             </td>
                             <td width="10px">
                                 <form action={{ route('admin.zones.destroy', $zone->id) }} method='post' class="frmDelete">
@@ -139,12 +140,23 @@
         });
     </script>
 
-    @if (null !== session('action'))
+    @if (null !== session('success'))
         <script>
             Swal.fire(
                 'Proceso Exitoso',
-                '{{ session('action') }}',
+                '{{ session('success') }}',
                 'success'
+            )
+        </script>
+    @endif
+
+
+    @if (null !== session('error'))
+        <script>
+            Swal.fire(
+                'Ocurrió un error',
+                '{{ session('error') }}',
+                'error'
             )
         </script>
     @endif

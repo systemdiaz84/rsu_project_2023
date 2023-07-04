@@ -118,7 +118,7 @@
                 e.preventDefault();
                 Swal.fire({
                     title: '¿Seguro de eliminar?',
-                    text: "Este proceso es irreversible",
+                    text: "Se eliminarán las imágenes, evolución y procedimientos del árbol",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',

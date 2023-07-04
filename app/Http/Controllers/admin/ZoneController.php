@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin\Tree;
 use App\Models\admin\Zone;
 use App\Models\admin\ZoneCoord;
 use Illuminate\Http\Request;
@@ -89,7 +90,7 @@ class ZoneController extends Controller
         $zone = Zone::find($id);
         $zone->update($request->all());
 
-        return redirect()->route('admin.zones.index')->with('action', 'Zona Actualizada');
+        return redirect()->route('admin.zones.index')->with('success', 'Zona Actualizada');
     }
 
     /**
@@ -101,8 +102,14 @@ class ZoneController extends Controller
     public function destroy($id)
     {
         $zone = Zone::find($id);
-        $zone->delete();
 
-        return redirect()->route('admin.zones.index')->with('action', 'Zona Eliminada');
+        $counttrees = Tree::where('specie_id', $id)->count();
+
+        if ($counttrees > 0) {
+            return Redirect()->route('admin.zones.index')->with('error', 'No se puede eliminar ya que tiene registros asociados');
+        } else {
+            $zone->delete();
+            return redirect()->route('admin.zones.index')->with('success', 'Zona Eliminada');
+        }
     }
 }
