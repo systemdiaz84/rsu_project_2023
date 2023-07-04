@@ -30,8 +30,8 @@
                         <tr>
                             <td>{{ $family->id }}</td>
                             <td>{{ $family->name }}</td>
-                            <td>{{ $family->name }}</td>
                             <td>{{ $family->scientific_name }}</td>
+                            <td>{{ $family->description }}</td>
                             <td width="10px">
                                 <button class="btn btn-secondary btn-sm btnEditar" data-id={{ $family->id }}><i
                                         class="fas fa-edit"></i></button>
