@@ -10,14 +10,14 @@ class Family extends Model
 {
     use HasFactory;
 
-    protected $guarded=[];
+    protected $fillable=['name','scientific','description'];
 
-    public function species(){
+    /*public function species(){
         return $this->hasMany(Specie::class);
     }
 
     public function photos(){
         return $this->hasMany(Familyphoto::class);
-    }
+    }*/
 
 }
