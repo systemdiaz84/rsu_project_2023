@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('species', function (Blueprint $table) {
             $table->id();
             $table->string('name',100)->nullable(false);
+            $table->string('scientific_name',100)->nullable(true);
             $table->text('description')->nullable(true);
             $table->unsignedBigInteger('family_id');
             $table->foreign('family_id')->references('id')->on('families')->onDelete('cascade');

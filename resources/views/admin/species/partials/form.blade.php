@@ -4,8 +4,13 @@
 </div>
 
 <div class="form-group">
-    {!! Form::label('name', 'Nombre de especie') !!}
-    {!! Form::text('name', null, ['class'=>'form-control','placeholder'=>'Ingrese el nombre de la especie','required']) !!}
+    {!! Form::label('name', 'Nombre común') !!}
+    {!! Form::text('name', null, ['class'=>'form-control','placeholder'=>'Ingrese el nombre común','required']) !!}
+</div>
+
+<div class="form-group">
+    {!! Form::label('scientific_name', 'Nombre científico') !!}
+    {!! Form::text('scientific_name', null, ['class'=>'form-control','placeholder'=>'Ingrese el nombre científico','required']) !!}
 </div>
 
 <div class="form-group">

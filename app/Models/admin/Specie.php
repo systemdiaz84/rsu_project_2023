@@ -9,7 +9,7 @@ class Specie extends Model
 {
     use HasFactory;
 
-    protected $fillable=['name','description','family_id'];
+    protected $guarded=[];
 
     public function family(){
         return $this->belongsTo(Family::class);
