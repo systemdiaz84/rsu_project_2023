@@ -8,10 +8,10 @@
 </div>
 
 <div class="form-group">
-    {!! Form::label('scientific_name', 'Nombre Científico') !!}
+    {!! Form::label('scientific_name', 'Nombre científico') !!}
     {!! Form::text('scientific_name', null, [
         'class' => 'form-control',
-        'placeholder' => 'Ingrese el nombre científico de la familia',
+        'placeholder' => 'Ingrese el nombre científico',
         'required',
     ]) !!}
 </div>
