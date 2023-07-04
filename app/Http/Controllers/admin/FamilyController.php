@@ -82,8 +82,9 @@ class FamilyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $family = Family::find($id);
-        return $family->update($request->all());
+
+        return $request.' ------ '.$family = Family::find($id);
+        $family->update($request->all());
 
         //return view('admin.families.show', compact('family'));
         return Redirect()->route('admin.families.index')->with('action', 'Familia Actualizada');
