@@ -83,7 +83,7 @@ class FamilyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+        return $request;
         $family = Family::find($id);
         $family->update($request->all());
 
