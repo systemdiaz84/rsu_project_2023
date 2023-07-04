@@ -19,8 +19,8 @@
                     <tr>
                         <th>ID</th>
                         <th>NOMBRE COMÚN</th>
+                        <th>NOMBRE CIENTÍFICO</th>
                         <th>DESCRIPCIÓN</th>
-                        <th></th>
                         <th></th>
                     </tr>
                 </thead>
