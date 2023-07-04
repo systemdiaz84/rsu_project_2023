@@ -22,6 +22,7 @@
                         <th>NOMBRE CIENTÍFICO</th>
                         <th>DESCRIPCIÓN</th>
                         <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
