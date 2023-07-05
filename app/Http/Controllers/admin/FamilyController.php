@@ -41,6 +41,7 @@ class FamilyController extends Controller
      */
     public function store(Request $request)
     {
+        return $request;
 
         Family::create($request->all());
         return Redirect()->route('admin.families.index')->with('success', 'Familia Registrada');
