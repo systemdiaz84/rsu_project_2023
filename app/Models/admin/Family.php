@@ -10,7 +10,7 @@ class Family extends Model
 {
     use HasFactory;
 
-    protected $fillable=['name','scientific','description'];
+    protected $fillable=['name','scientific_name','description'];
 
     /*public function species(){
         return $this->hasMany(Specie::class);
