@@ -152,4 +152,5 @@
                 'error'
             )
         </script>
-    @endif@endsection
+    @endif
+    @endsection
