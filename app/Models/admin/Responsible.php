@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Models\Admin;
+namespace App\Models\admin;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Zone extends Model
+class Responsible extends Model
 {
     use HasFactory;
-    protected $guarded = [];
+    protected $guarded=[];
+
 }

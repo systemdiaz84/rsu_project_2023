@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\admin\Evolution;
-use App\Models\admin\State;
-use App\Models\Admin\Tree;
+use App\Models\admin\Procedure;
+use App\Models\admin\ProcedureTypes;
 use Illuminate\Http\Request;
 
-class StateController extends Controller
+class ProcedureTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +16,8 @@ class StateController extends Controller
      */
     public function index()
     {
-        $states = State::all();
-        return view('admin.states.index', compact('states'));
+        $proceduretypes = ProcedureTypes::all();
+        return view('admin.proceduretypes.index', compact('proceduretypes'));
     }
 
     /**
@@ -28,7 +27,7 @@ class StateController extends Controller
      */
     public function create()
     {
-        return view('admin.states.create');
+        return view('admin.proceduretypes.create');
     }
 
     /**
@@ -39,9 +38,8 @@ class StateController extends Controller
      */
     public function store(Request $request)
     {
-        State::create($request->all());
-        return redirect()->route('admin.states.index')->with('success','Estado Registrado');
-
+        ProcedureTypes::create($request->all());
+        return redirect()->route('admin.proceduretypes.index')->with('success','Tipo de procedimiento Registrado');
     }
 
     /**
@@ -63,8 +61,9 @@ class StateController extends Controller
      */
     public function edit($id)
     {
-        $state = State::find($id);
-        return view('admin.states.edit', compact('state'));
+        $proceduretypes = ProcedureTypes::find($id);
+        return view('admin.proceduretypes.edit', compact('proceduretypes'));
+
     }
 
     /**
@@ -76,9 +75,10 @@ class StateController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $state = State::find($id);
-        $state->update($request->all());
-        return redirect()->route('admin.states.index')->with('success','Estado Actualizado');
+        $proceduretypes = ProcedureTypes::find($id);
+        $proceduretypes->update($request->all());
+        return redirect()->route('admin.proceduretypes.index')->with('success','Tipo de procedimiento Actualizado');
+    
     }
 
     /**
@@ -89,16 +89,15 @@ class StateController extends Controller
      */
     public function destroy($id)
     {
-        $state = State::find($id);
+        $proceduretype = ProcedureTypes::find($id);
 
-        $countevo = Evolution::where('state_id', $id)->count();
+        $countpro = Procedure::where('procedure_type_id', $id)->count();
 
-        if ($countevo > 0) {
-            return Redirect()->route('admin.zones.index')->with('error', 'No se puede eliminar ya que tiene registros asociados');
+        if ($countpro > 0) {
+            return Redirect()->route('admin.proceduretypes.index')->with('error', 'No se puede eliminar ya que tiene registros asociados');
         } else {
-            $state->delete();
-            return redirect()->route('admin.zones.index')->with('success', 'Zona Eliminada');
+            $proceduretype->delete();
+            return redirect()->route('admin.proceduretypes.index')->with('success', 'Tipo de procedimiento Eliminado');
         }
-
     }
 }

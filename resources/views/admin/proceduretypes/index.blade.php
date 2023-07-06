@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Estados de evolución')
+@section('title', 'Tipos de procedimientos')
 
 @section('content')
     <div class="p-2"></div>
@@ -11,7 +11,7 @@
             <button type="button" class="btn btn-success float-right" id="btnRegistrar">
                 <i class="fas fa-plus-circle"></i>&nbsp;&nbsp;Registrar</button>
 
-            <h4>Listado de Estados de Evolución</h4>
+            <h4>Listado de tipos de procedimientos</h4>
         </div>
         <div class="card-body">
             <table class="table table-striped" id="table_list">
@@ -26,17 +26,17 @@
                 </thead>
                 <tbody>
 
-                    @foreach ($states as $state)
+                    @foreach ($proceduretypes as $proceduretype)
                         <tr>
-                            <td>{{ $state->id }}</td>
-                            <td>{{ $state->name }}</td>
-                            <td>{{ $state->description }}</td>
+                            <td>{{ $proceduretype->id }}</td>
+                            <td>{{ $proceduretype->name }}</td>
+                            <td>{{ $proceduretype->description }}</td>
                             <td width="10px">
-                                <button class="btn btn-secondary btn-sm btnEditar" data-id={{ $state->id }}><i
+                                <button class="btn btn-secondary btn-sm btnEditar" data-id={{ $proceduretype->id }}><i
                                         class="fas fa-edit"></i></button>
 
                             <td width="10px">
-                                <form action={{ route('admin.states.destroy', $state->id) }} method='post'
+                                <form action={{ route('admin.proceduretypes.destroy', $proceduretype->id) }} method='post'
                                     class="frmDelete">
                                     @method('delete')
                                     @csrf
@@ -60,7 +60,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Formulario de Estados de Evoluación</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Formulario de tipos de procedimientos</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -81,7 +81,7 @@
 
             $('#btnRegistrar').click(function() {
                 $.ajax({
-                    url: "{{ route('admin.states.create') }}",
+                    url: "{{ route('admin.proceduretypes.create') }}",
                     type: 'GET',
                     success: function(response) {
 
@@ -96,7 +96,7 @@
                 var id = $(this).attr('data-id');
 
                 $.ajax({
-                    url: "{{ route('admin.states.edit', ':id') }}".replace(':id', id),
+                    url: "{{ route('admin.proceduretypes.edit', ':id') }}".replace(':id', id),
                     type: 'GET',
                     success: function(response) {
 
@@ -133,23 +133,13 @@
         });
     </script>
 
-    @if (null !== session('success'))
+    @if (null !== session('action'))
         <script>
             Swal.fire(
                 'Proceso Exitoso',
-                '{{ session('success') }}',
+                '{{ session('action') }}',
                 'success'
             )
         </script>
     @endif
-
-
-    @if (null !== session('error'))
-        <script>
-            Swal.fire(
-                'Ocurrió un error',
-                '{{ session('error') }}',
-                'error'
-            )
-        </script>
-    @endif@endsection
+@endsection

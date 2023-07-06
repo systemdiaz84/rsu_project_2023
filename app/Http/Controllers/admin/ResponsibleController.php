@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\admin\Evolution;
-use App\Models\admin\State;
-use App\Models\Admin\Tree;
+use App\Models\admin\Procedure;
+use App\Models\admin\Responsible;
 use Illuminate\Http\Request;
 
-class StateController extends Controller
+class ResponsibleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +16,8 @@ class StateController extends Controller
      */
     public function index()
     {
-        $states = State::all();
-        return view('admin.states.index', compact('states'));
+        $responsibles = Responsible::all();
+        return view('admin.responsibles.index', compact('responsibles'));
     }
 
     /**
@@ -28,7 +27,8 @@ class StateController extends Controller
      */
     public function create()
     {
-        return view('admin.states.create');
+        return view('admin.responsibles.create');
+
     }
 
     /**
@@ -39,11 +39,9 @@ class StateController extends Controller
      */
     public function store(Request $request)
     {
-        State::create($request->all());
-        return redirect()->route('admin.states.index')->with('success','Estado Registrado');
-
+        Responsible::create($request->all());
+        return redirect()->route('admin.responsibles.index')->with('success','Responsable Registrado');
     }
-
     /**
      * Display the specified resource.
      *
@@ -63,8 +61,9 @@ class StateController extends Controller
      */
     public function edit($id)
     {
-        $state = State::find($id);
-        return view('admin.states.edit', compact('state'));
+        $responsibles = Responsible::find($id);
+        return view('admin.responsibles.edit', compact('responsibles'));
+
     }
 
     /**
@@ -76,9 +75,10 @@ class StateController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $state = State::find($id);
-        $state->update($request->all());
-        return redirect()->route('admin.states.index')->with('success','Estado Actualizado');
+        $responsibles = Responsible::find($id);
+        $responsibles->update($request->all());
+        return redirect()->route('admin.responsibles.index')->with('success','Responsable Actualizado');
+
     }
 
     /**
@@ -89,15 +89,14 @@ class StateController extends Controller
      */
     public function destroy($id)
     {
-        $state = State::find($id);
+        $responsibles = Responsible::find($id);
+        $countres = Procedure::where('responsible_id', $id)->count();
 
-        $countevo = Evolution::where('state_id', $id)->count();
-
-        if ($countevo > 0) {
-            return Redirect()->route('admin.zones.index')->with('error', 'No se puede eliminar ya que tiene registros asociados');
+        if ($countres > 0) {
+            return Redirect()->route('admin.responsibles.index')->with('error', 'No se puede eliminar ya que tiene registros asociados');
         } else {
-            $state->delete();
-            return redirect()->route('admin.zones.index')->with('success', 'Zona Eliminada');
+            $responsibles->delete();
+            return redirect()->route('admin.responsibles.index')->with('success', 'Responsable Eliminado');
         }
 
     }

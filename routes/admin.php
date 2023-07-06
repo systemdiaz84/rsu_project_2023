@@ -4,11 +4,13 @@ use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\FamilyController;
 use App\Http\Controllers\admin\FamilyphotoController;
 use App\Http\Controllers\admin\MapController;
+use App\Http\Controllers\admin\ProcedureTypeController;
 use App\Http\Controllers\admin\SpecieController;
 use App\Http\Controllers\admin\StateController;
 use App\Http\Controllers\admin\TreeController;
 use App\Http\Controllers\admin\ZoneController;
 use App\Http\Controllers\admin\ZoneCoordsController;
+use App\Http\Controllers\admin\ResponsibleController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/',[AdminController::class,'index'])->name('admin.index');
@@ -30,5 +32,9 @@ Route::resource('states', StateController::class)->names('admin.states');
 Route::resource('maps', MapController::class)->names('admin.maps');
 
 Route::resource('zonecoords', ZoneCoordsController::class)->names('admin.zonecoords');
+
+Route::resource('proceduretypes', ProcedureTypeController::class)->names('admin.proceduretypes');
+
+Route::resource('responsible', ResponsibleController::class)->names('admin.responsibles');
 
 ?>

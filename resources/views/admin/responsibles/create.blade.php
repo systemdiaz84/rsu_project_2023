@@ -1,6 +1,6 @@
-{!! Form::open(['route' => 'admin.families.store']) !!}
+{!! Form::open(['route' => 'admin.responsibles.store']) !!}
 
-@include('admin.families.partials.form')
+@include('admin.responsibles.partials.form')
 
 <button type="submit" class="btn btn-success"><i class="fas fa-save"></i>&nbsp;&nbsp;Registrar</button>
 

@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Estados de evolución')
+@section('title', 'Responsables')
 
 @section('content')
     <div class="p-2"></div>
@@ -11,32 +11,32 @@
             <button type="button" class="btn btn-success float-right" id="btnRegistrar">
                 <i class="fas fa-plus-circle"></i>&nbsp;&nbsp;Registrar</button>
 
-            <h4>Listado de Estados de Evolución</h4>
+            <h4>Listado de responsables</h4>
         </div>
         <div class="card-body">
             <table class="table table-striped" id="table_list">
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>NOMBRE</th>
-                        <th>DESCRIPCIÓN</th>
+                        <th>RESPONSABLE</th>
+                        <th>DNI</th>
                         <th></th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
 
-                    @foreach ($states as $state)
+                    @foreach ($responsibles as $responsible)
                         <tr>
-                            <td>{{ $state->id }}</td>
-                            <td>{{ $state->name }}</td>
-                            <td>{{ $state->description }}</td>
+                            <td>{{ $responsible->id }}</td>
+                            <td>{{ $responsible->name.' '.$responsible->lastname }}</td>
+                            <td>{{ $responsible->dni }}</td>
                             <td width="10px">
-                                <button class="btn btn-secondary btn-sm btnEditar" data-id={{ $state->id }}><i
+                                <button class="btn btn-secondary btn-sm btnEditar" data-id={{ $responsible->id }}><i
                                         class="fas fa-edit"></i></button>
 
                             <td width="10px">
-                                <form action={{ route('admin.states.destroy', $state->id) }} method='post'
+                                <form action={{ route('admin.responsibles.destroy', $responsible->id) }} method='post'
                                     class="frmDelete">
                                     @method('delete')
                                     @csrf
@@ -60,7 +60,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Formulario de Estados de Evoluación</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Formulario de responsables</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -81,7 +81,7 @@
 
             $('#btnRegistrar').click(function() {
                 $.ajax({
-                    url: "{{ route('admin.states.create') }}",
+                    url: "{{ route('admin.responsibles.create') }}",
                     type: 'GET',
                     success: function(response) {
 
@@ -96,7 +96,7 @@
                 var id = $(this).attr('data-id');
 
                 $.ajax({
-                    url: "{{ route('admin.states.edit', ':id') }}".replace(':id', id),
+                    url: "{{ route('admin.responsibles.edit', ':id') }}".replace(':id', id),
                     type: 'GET',
                     success: function(response) {
 
@@ -133,23 +133,13 @@
         });
     </script>
 
-    @if (null !== session('success'))
+    @if (null !== session('action'))
         <script>
             Swal.fire(
                 'Proceso Exitoso',
-                '{{ session('success') }}',
+                '{{ session('action') }}',
                 'success'
             )
         </script>
     @endif
-
-
-    @if (null !== session('error'))
-        <script>
-            Swal.fire(
-                'Ocurrió un error',
-                '{{ session('error') }}',
-                'error'
-            )
-        </script>
-    @endif@endsection
+@endsection
