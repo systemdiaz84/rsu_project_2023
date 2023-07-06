@@ -3,7 +3,7 @@
         {!! Form::label('name', 'Nombre de árbol') !!}
         {!! Form::text('name', null, [
             'class' => 'form-control',
-            'placeholder' => 'Nombre de árbol',
+            'placeholder' => 'Ingrese el nombre',
             'required',
         ]) !!}
     </div>

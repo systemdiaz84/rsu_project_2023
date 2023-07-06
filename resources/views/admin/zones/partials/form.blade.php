@@ -4,7 +4,7 @@
         {!! Form::label('name', 'Nombre de Zona') !!}
         {!! Form::text('name', null, [
             'class' => 'form-control',
-            'placeholder' => 'Nombre de la Zona',
+            'placeholder' => 'Ingrese el nombre',
             'required',
         ]) !!}
     </div>

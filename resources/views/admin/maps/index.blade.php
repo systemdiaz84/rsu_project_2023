@@ -10,7 +10,7 @@
     <div class="p-2"></div>
     <div class="card">
         <div class="card-header">
-            <h4>Visualización en Mapa</h4>
+            <h4>Visualización en mapa</h4>
         </div>
         <div class="card-body">
             <div id=map style="height:550px;width: 100%;"></div>

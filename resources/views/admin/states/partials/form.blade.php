@@ -3,7 +3,7 @@
     {!! Form::label('name', 'Nombre del estado') !!}
     {!! Form::text('name', null, [
         'class' => 'form-control',
-        'placeholder' => 'Ingrese el nombre del estado',
+        'placeholder' => 'Ingrese el nombre ',
         'required',
     ]) !!}
 </div>

@@ -11,7 +11,7 @@
             <button type="button" class="btn btn-success float-right" id="btnRegistrar">
                 <i class="fas fa-plus-circle"></i>&nbsp;&nbsp;Registrar</button>
 
-            <h4>Listado de Familias</h4>
+            <h4>Listado de familias</h4>
         </div>
         <div class="card-body">
             <table class="table table-striped" id="table_list">
@@ -62,7 +62,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Formulario de Familias</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Formulario de familias</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

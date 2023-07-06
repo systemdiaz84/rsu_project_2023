@@ -14,7 +14,7 @@
 
             <button type="button" class="btn btn-success float-right" id="btnRegistrar">
                 <i class="fas fa-plus-circle"></i>&nbsp;&nbsp;Registrar</button>
-            <h4>Listado de Especies</h4>
+            <h4>Listado de especies</h4>
 
 
         </div>
@@ -68,7 +68,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Formulario de Especies</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Formulario de especies</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

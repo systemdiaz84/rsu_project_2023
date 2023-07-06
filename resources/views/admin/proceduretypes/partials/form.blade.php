@@ -3,7 +3,7 @@
     {!! Form::label('name', 'Nombre del tipo de procedimiento') !!}
     {!! Form::text('name', null, [
         'class' => 'form-control',
-        'placeholder' => 'Ingrese el nombre del tipo de procedimiento',
+        'placeholder' => 'Ingrese el nombre',
         'required',
     ]) !!}
 </div>
