@@ -90,12 +90,6 @@ class MapController extends Controller
             ->get();
         }
 
-        $zones = DB::table('zones')
-            ->leftJoin('zone_coords', 'zones.id', '=', 'zone_coords.zone_id')
-            ->select('zones.name as zone', 'zone_coords.latitude', 'zone_coords.longitude')
-            ->where('zone_coords.zone_id',$id)
-            ->get();
-
         // Agrupa las coordenadas por zona
         $groupedZones = $zones->groupBy('zone');
 
