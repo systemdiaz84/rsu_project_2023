@@ -26,8 +26,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+
 Route::resource('/trees', TreeController::class)->names('api.trees');
 Route::get('/trees_zone/{zone_id}', [TreeController::class,'trees_zone'])->name('api.trees_zone');
-Route::resource('/maps', MapController::class)->names('api.map');
+Route::get('/trees_families/{zone_id}', [TreeController::class,'trees_families'])->name('api.trees_families');
 Route::resource('/treephoto', TreephotoController::class)->names('api.treephotos');
+
+
+Route::resource('/maps', MapController::class)->names('api.map');
 Route::get('/species_family/{family_id}',[FamilyController::class,'species_family'])->name('admin.species_family');

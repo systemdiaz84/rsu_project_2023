@@ -209,4 +209,17 @@ class TreeController extends Controller
 
         return $trees;
     }
+
+    function trees_families($zone_id)
+    {
+        $families = Tree::select(
+            'families.name as name',
+            DB::raw('count(*) as y'),
+            'families.name as drilldown'
+        )
+            ->join('species', 'species.id', '=', 'trees.specie_id')
+            ->join('families', 'families.id', '=', 'species.family_id')
+            ->where('trees.zone_id',$zone_id)
+            ->groupBy('families.name')->get();
+    }
 }
