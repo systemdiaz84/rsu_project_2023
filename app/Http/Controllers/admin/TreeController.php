@@ -21,7 +21,7 @@ class TreeController extends Controller
     {
 
         $trees = Tree::select('trees.id', 'trees.name', 'families.name as familyname', 'species.name as speciename', 'zones.name as zonename')
-            
+
             ->join('species', 'trees.specie_id', '=', 'species.id')
             ->join('families', 'species.family_id', '=', 'families.id')
             ->join('zones', 'trees.zone_id', '=', 'zones.id')->get();
@@ -53,7 +53,16 @@ class TreeController extends Controller
     public function store(Request $request)
     {
         $request->merge(['user_id' => Auth::user()->id]);
-        Tree::create($request->all());
+        $trees = Tree::create($request->all());
+
+        $name = $trees->name . ' ' . $trees->id;
+
+        $trees->update([
+            'name' => $name
+        ]);
+
+
+
         return redirect()->route('admin.trees.index')->with('action', 'Arbol Registrado');
     }
 
@@ -98,7 +107,6 @@ class TreeController extends Controller
         $tree->update($request->all());
 
         return redirect()->route('admin.trees.index')->with('action', 'Arbol Actualizado');
-
     }
 
     /**
@@ -113,6 +121,5 @@ class TreeController extends Controller
         $tree->delete();
 
         return redirect()->route('admin.trees.index')->with('action', 'Arbol Eliminado');
-
     }
 }
