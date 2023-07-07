@@ -219,7 +219,9 @@ class TreeController extends Controller
         )
             ->join('species', 'species.id', '=', 'trees.specie_id')
             ->join('families', 'families.id', '=', 'species.family_id')
-            ->where('trees.zone_id',$zone_id)
+            ->where('trees.zone_id', $zone_id)
             ->groupBy('families.name')->get();
+
+        return $families;
     }
 }
