@@ -154,4 +154,32 @@ class TreeController extends Controller
     {
         //
     }
+
+    public function trees_zone($zone_id)
+    {
+        $trees = Tree::select(
+            'trees.id',
+            'trees.name',
+            'trees.birth_date',
+            'trees.planting_date',
+            'trees.description',
+            'trees.latitude',
+            'trees.longitude',
+            'trees.specie_id',
+            'trees.zone_id',
+            'trees.user_id',
+            'families.name as family_name',
+            'species.name as species_name',
+            'zones.name as zones_name',
+            DB::raw('(select url from tree_photos where tree_id = trees.id limit 1) as url'))
+            ->join('species', 'species.id', '=', 'specie_id')
+            ->join('families', 'families.id', '=', 'species.family_id')
+            ->join('zones', 'zones.id','=','trees.zone_id')
+            ->where('zones.id',$zone_id)
+            ->orderBy('trees.id', 'desc')
+            ->get();
+
+        return $trees;
+
+    }
 }
