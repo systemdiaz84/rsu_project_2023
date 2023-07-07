@@ -212,15 +212,28 @@ class TreeController extends Controller
 
     function trees_families($zone_id)
     {
-        $families = Tree::select(
-            'families.name as name',
-            DB::raw('count(*) as count')
-        )
-            ->join('species', 'species.id', '=', 'trees.specie_id')
-            ->join('families', 'families.id', '=', 'species.family_id')
-            ->where('trees.zone_id', $zone_id)
-            ->groupBy('families.name')->get();
-
+        if ($zone_id == 0){
+            $families = Tree::select(
+                'families.name as name',
+                DB::raw('count(*) as count')
+            )
+                ->join('species', 'species.id', '=', 'trees.specie_id')
+                ->join('families', 'families.id', '=', 'species.family_id')
+                //->where('trees.zone_id', $zone_id)
+                ->groupBy('families.name')->get();
+    
+        }else{
+            $families = Tree::select(
+                'families.name as name',
+                DB::raw('count(*) as count')
+            )
+                ->join('species', 'species.id', '=', 'trees.specie_id')
+                ->join('families', 'families.id', '=', 'species.family_id')
+                ->where('trees.zone_id', $zone_id)
+                ->groupBy('families.name')->get();
+    
+        }
+        
         return $families;
     }
 }
