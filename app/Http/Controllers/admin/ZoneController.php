@@ -103,7 +103,7 @@ class ZoneController extends Controller
     {
         $zone = Zone::find($id);
 
-        $counttrees = Tree::where('specie_id', $id)->count();
+        $counttrees = Tree::where('tree_id', $id)->count();
 
         if ($counttrees > 0) {
             return Redirect()->route('admin.zones.index')->with('error', 'No se puede eliminar ya que tiene registros asociados');
