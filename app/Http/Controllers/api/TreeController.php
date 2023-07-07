@@ -214,8 +214,7 @@ class TreeController extends Controller
     {
         $families = Tree::select(
             'families.name as name',
-            DB::raw('count(*) as y'),
-            'families.name as drilldown'
+            DB::raw('count(*) as count')
         )
             ->join('species', 'species.id', '=', 'trees.specie_id')
             ->join('families', 'families.id', '=', 'species.family_id')
