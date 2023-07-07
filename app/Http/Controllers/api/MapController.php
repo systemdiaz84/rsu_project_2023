@@ -72,8 +72,24 @@ class MapController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($zone_id)
     {
+
+        if ($zone_id == 0){
+            $zones = DB::table('zones')
+            ->leftJoin('zone_coords', 'zones.id', '=', 'zone_coords.zone_id')
+            ->select('zones.name as zone', 'zone_coords.latitude', 'zone_coords.longitude')
+            //->where('zone_coords.zone_id',$id)
+            ->get();
+
+        }else{
+            $zones = DB::table('zones')
+            ->leftJoin('zone_coords', 'zones.id', '=', 'zone_coords.zone_id')
+            ->select('zones.name as zone', 'zone_coords.latitude', 'zone_coords.longitude')
+            ->where('zone_coords.zone_id',$zone_id)
+            ->get();
+        }
+
         $zones = DB::table('zones')
             ->leftJoin('zone_coords', 'zones.id', '=', 'zone_coords.zone_id')
             ->select('zones.name as zone', 'zone_coords.latitude', 'zone_coords.longitude')
