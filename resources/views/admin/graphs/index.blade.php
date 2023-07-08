@@ -85,6 +85,9 @@
 
     function create_pie_chart(element, data, title) {
         Highcharts.chart(element, {
+            exporting: {
+                enabled: false
+            },
             chart: {
                 plotBackgroundColor: null,
                 plotBorderWidth: null,
