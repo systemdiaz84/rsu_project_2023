@@ -1,28 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Gráficos</title>
 </head>
-<body>
 
+<body>
     <div class="row">
         <div class="form-group col-12" id="families_species"></div>
     </div>
     <div class="row">
-        @if ($families->count())
-            {{-- <div class="col-lg-4 mb-lg-0 mb-4 col-12" id="families_graph"></div> --}}
-            <div class="col-6 form-group" id="species"></div>
-            <div class="col-6 form-group" id="zones"></div>
-        @else
-            <div class="col">
-                <p>-Aún no hay árboles registrados-</p>
-            </div>
-        @endif
+        <div class="col-6 form-group" id="species"></div>
+    </div>
+    <div class="row">
+        <div class="col-6 form-group" id="zones"></div>
     </div>
 </body>
+
 </html>
 
 <style>
@@ -119,6 +116,3 @@
     create_pie_chart(document.getElementById('species'), @json($species), 'Árboles por Especie')
     create_pie_chart(document.getElementById('zones'), @json($zones), 'Árboles por Zona')
 </script>
-
-
-
