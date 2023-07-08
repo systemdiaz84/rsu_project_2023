@@ -35,6 +35,10 @@
 
 <script>
     Highcharts.chart('families_species', {
+        exporting: {
+            enabled: false
+        },
+
         chart: {
             type: 'pie'
         },
