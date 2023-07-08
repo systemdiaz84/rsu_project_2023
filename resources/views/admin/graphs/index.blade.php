@@ -9,13 +9,14 @@
 </head>
 
 <body>
-    <div class="row">
+
+    <div class="card">
         <div class="form-group col-12" id="families_species"></div>
     </div>
-    <div class="row">
+    <div class="card">
         <div class="col-6 form-group" id="species"></div>
     </div>
-    <div class="row">
+    <div class="card">
         <div class="col-6 form-group" id="zones"></div>
     </div>
 </body>
