@@ -15,9 +15,11 @@
         <div class="card">
             <div class="form-group" id="families_species"></div>
         </div>
+        <br>
         <div class="card">
             <div class="form-group" id="species"></div>
         </div>
+        <br>
         <div class="card">
             <div class="form-group" id="zones"></div>
         </div>
