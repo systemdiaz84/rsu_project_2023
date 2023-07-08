@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\FamilyController;
+use App\Http\Controllers\api\GraphController;
 use App\Http\Controllers\api\MapController;
 use App\Http\Controllers\api\TreeController;
 use App\Http\Controllers\api\TreephotoController;
@@ -32,6 +33,7 @@ Route::get('/trees_zone/{zone_id}', [TreeController::class,'trees_zone'])->name(
 Route::get('/trees_families/{zone_id}', [TreeController::class,'trees_families'])->name('api.trees_families');
 Route::resource('/treephoto', TreephotoController::class)->names('api.treephotos');
 
+Route::resource('/graphs', GraphController::class)->names('api,graph');
 
 Route::resource('/maps', MapController::class)->names('api.map');
 Route::get('/species_family/{family_id}',[FamilyController::class,'species_family'])->name('admin.species_family');
