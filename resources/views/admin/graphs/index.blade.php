@@ -33,6 +33,10 @@
 <style>
     .highcharts-credits {
         display: none;
+        
+    }
+    body {
+        margin: 0;
     }
 </style>
 <script src="https://code.highcharts.com/highcharts.js"></script>
