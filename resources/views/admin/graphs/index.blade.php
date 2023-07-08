@@ -25,6 +25,11 @@
 </body>
 </html>
 
+<style>
+    .highcharts-credits {
+        display: none;
+    }
+</style>
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
@@ -115,10 +120,5 @@
     create_pie_chart(document.getElementById('zones'), @json($zones), 'Árboles por Zona')
 </script>
 
-<style>
-    .highcharts-credits {
-        display: none;
-    }
-</style>
 
 
