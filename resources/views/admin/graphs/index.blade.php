@@ -8,7 +8,7 @@
     <title>Gráficos</title>
 </head>
 
-<body>
+<body background="black">
 
     <div class="card">
         <div class=form-group" id="families_species"></div>
