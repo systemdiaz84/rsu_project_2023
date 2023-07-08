@@ -115,4 +115,10 @@
     create_pie_chart(document.getElementById('zones'), @json($zones), 'Árboles por Zona')
 </script>
 
+<style>
+    .highcharts-credits {
+        display: none;
+    }
+</style>
+
 
