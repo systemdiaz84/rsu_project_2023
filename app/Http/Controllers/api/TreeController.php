@@ -97,9 +97,12 @@ class TreeController extends Controller
             ->join('species', 'species.id', '=', 'specie_id')
             ->join('families', 'families.id', '=', 'species.family_id')
             ->join('zones', 'zones.id', '=', 'trees.zone_id')
-            ->where('trees.name', 'like', '%' . $name . '%','or','families.name','like', '%' . $name . '%','or','zones.name','like', '%' . $name . '%')
+            ->where(function ($query) use ($name) {
+                $query->where('trees.name', 'like', '%' . $name . '%')
+                    ->orWhere('families.name', 'like', '%' . $name . '%')
+                    ->orWhere('zones.name', 'like', '%' . $name . '%');
+            })
             ->get();
-
         return $trees;
     }
 
