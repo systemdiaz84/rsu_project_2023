@@ -24,7 +24,7 @@
     </div>
 </body>
 </html>
-@section('js')
+
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
@@ -114,13 +114,5 @@
     create_pie_chart(document.getElementById('species'), @json($species), 'Árboles por Especie')
     create_pie_chart(document.getElementById('zones'), @json($zones), 'Árboles por Zona')
 </script>
-@stop
 
-@section('css')
-<style>
-    .highcharts-credits {
-        display: none;
-    }
-</style>
-@endsection
 
