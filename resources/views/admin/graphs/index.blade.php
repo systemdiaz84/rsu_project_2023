@@ -8,17 +8,22 @@
     <title>Gráficos</title>
 </head>
 
-<body background="black">
+<body>
 
-    <div class="card">
-        <div class=form-group" id="families_species"></div>
+    <div style="background-color: #f2f2f2;padding: 10px; ">
+
+        <div class="card">
+            <div class="form-group" id="families_species"></div>
+        </div>
+        <div class="card">
+            <div class="form-group" id="species"></div>
+        </div>
+        <div class="card">
+            <div class="form-group" id="zones"></div>
+        </div>
     </div>
-    <div class="card">
-        <div class="form-group" id="species"></div>
-    </div>
-    <div class="card">
-        <div class="form-group" id="zones"></div>
-    </div>
+
+
 </body>
 
 </html>
