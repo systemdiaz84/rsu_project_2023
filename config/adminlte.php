@@ -377,6 +377,11 @@ return [
                 ],
             ],
         ],
+        [
+            'text' => 'Usuarios',
+            'route'  => 'admin.users.index',
+            'icon' => 'fas fa-fw fa-user-plus',
+        ],
     ],
 
     /*
