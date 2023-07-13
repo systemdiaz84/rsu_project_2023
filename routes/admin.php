@@ -11,6 +11,7 @@ use App\Http\Controllers\admin\TreeController;
 use App\Http\Controllers\admin\ZoneController;
 use App\Http\Controllers\admin\ZoneCoordsController;
 use App\Http\Controllers\admin\ResponsibleController;
+use App\Http\Controllers\admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/',[AdminController::class,'index'])->name('admin.index');
@@ -36,5 +37,7 @@ Route::resource('zonecoords', ZoneCoordsController::class)->names('admin.zonecoo
 Route::resource('proceduretypes', ProcedureTypeController::class)->names('admin.proceduretypes');
 
 Route::resource('responsible', ResponsibleController::class)->names('admin.responsibles');
+
+Route::resource('users', UserController::class)->names('admin.users');
 
 ?>
