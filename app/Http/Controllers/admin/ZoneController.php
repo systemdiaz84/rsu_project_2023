@@ -40,7 +40,7 @@ class ZoneController extends Controller
     public function store(Request $request)
     {
         Zone::create($request->all());
-        return redirect()->route('admin.zones.index')->with('action', 'Zona Registrada');
+        return redirect()->route('admin.zones.index')->with('success', 'Zona Registrada');
     }
 
     /**

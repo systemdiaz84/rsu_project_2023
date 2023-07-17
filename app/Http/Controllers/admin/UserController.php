@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\admin\User;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -14,7 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::all();
     }
 
     /**
@@ -24,7 +26,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return View('admin.users.create');
     }
 
     /**
@@ -35,7 +37,8 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        User::create($request->all());
+        return redirect()->route('admin.users.index')->with('Success', 'Usuario registrado');
     }
 
     /**
@@ -57,7 +60,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+        return view('admin.users.edit', $user);
     }
 
     /**
@@ -69,7 +73,10 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+        $user->update();
+        return redirect()->route('admin.users.index')->with('Success', 'Usuario actualizado');
+
     }
 
     /**
@@ -80,6 +87,6 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
     }
 }
