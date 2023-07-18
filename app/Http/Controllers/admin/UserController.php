@@ -38,7 +38,16 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        User::create($request->all());
+        //User::create($request->all());
+        $user = new User();
+        $user->name = $request->input('name');
+        $user->name = $request->input('lastname');
+        $user->email = $request->input('email');
+        $user->password = bcrypt($request->input('password')); // Se recomienda encriptar la contraseña
+
+        // Guarda el usuario en la base de datos
+        $user->save();
+
         return redirect()->route('admin.users.index')->with('Success', 'Usuario registrado');
     }
 
