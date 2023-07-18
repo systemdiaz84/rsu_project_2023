@@ -9,7 +9,7 @@
 </div>
 <div class="form-group">
     {!! Form::label('name', 'Apellidos') !!}
-    {!! Form::text('name', null, [
+    {!! Form::text('lastname', null, [
         'class' => 'form-control',
         'placeholder' => 'Ingrese los apellidos',
         'required',
@@ -17,7 +17,7 @@
 </div>
 <div class="form-group">
     {!! Form::label('name', 'email') !!}
-    {!! Form::text('name', null, [
+    {!! Form::text('email', null, [
         'class' => 'form-control',
         'placeholder' => 'Ingrese el email',
         'required',
@@ -25,7 +25,7 @@
 </div>
 <div class="form-group">
     {!! Form::label('name', 'password') !!}
-    {!! Form::password('name',  [
+    {!! Form::password('password',  [
         'class' => 'form-control',
         'placeholder' => 'Ingrese el password',
         'required',
