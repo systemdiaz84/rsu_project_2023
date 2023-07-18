@@ -25,7 +25,7 @@
 </div>
 <div class="form-group">
     {!! Form::label('name', 'password') !!}
-    {!! Form::password('name', null, [
+    {!! Form::password('name',  [
         'class' => 'form-control',
         'placeholder' => 'Ingrese el password',
         'required',
