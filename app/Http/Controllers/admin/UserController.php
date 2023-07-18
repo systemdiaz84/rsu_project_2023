@@ -83,8 +83,18 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = User::find($id);
-        $user->update();
+        $user = User::findOrFail($id);
+        $user->name = $request->input('name');
+        $user->lastname = $request->input('lastname');
+        $user->email = $request->input('email');
+    
+        // Verifica si se proporcionó una nueva contraseña
+        if ($request->filled('password')) {
+            $user->password = bcrypt($request->input('password'));
+        }
+
+        $user->save();
+
         return redirect()->route('admin.users.index')->with('Success', 'Usuario actualizado');
 
     }
