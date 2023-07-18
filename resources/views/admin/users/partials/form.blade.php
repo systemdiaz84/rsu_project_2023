@@ -8,7 +8,7 @@
     ]) !!}
 </div>
 <div class="form-group">
-    {!! Form::label('name', 'Apellidos') !!}
+    {!! Form::label('lastname', 'Apellidos') !!}
     {!! Form::text('lastname', null, [
         'class' => 'form-control',
         'placeholder' => 'Ingrese los apellidos',
@@ -16,7 +16,7 @@
     ]) !!}
 </div>
 <div class="form-group">
-    {!! Form::label('name', 'email') !!}
+    {!! Form::label('email', 'email') !!}
     {!! Form::text('email', null, [
         'class' => 'form-control',
         'placeholder' => 'Ingrese el email',
@@ -24,7 +24,7 @@
     ]) !!}
 </div>
 <div class="form-group">
-    {!! Form::label('name', 'password') !!}
+    {!! Form::label('password', 'password') !!}
     {!! Form::password('password',  [
         'class' => 'form-control',
         'placeholder' => 'Ingrese el password',

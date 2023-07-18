@@ -41,7 +41,7 @@ class UserController extends Controller
         //User::create($request->all());
         $user = new User();
         $user->name = $request->input('name');
-        $user->name = $request->input('lastname');
+        $user->lastname = $request->input('lastname');
         $user->email = $request->input('email');
         $user->password = bcrypt($request->input('password')); // Se recomienda encriptar la contraseña
 
