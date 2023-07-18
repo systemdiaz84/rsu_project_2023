@@ -1,4 +1,4 @@
-{!! Form::model($user, ['route' => ['admin.users.update', $state], 'method' => 'put']) !!}
+{!! Form::model($user, ['route' => ['admin.users.update', $user], 'method' => 'put']) !!}
 
 @include('admin.users.partials.form')
 
