@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Listado de zonas')
+@section('title', 'Listado de usuarios')
 
 @section('content_header')
 
@@ -14,7 +14,7 @@
             <button type="button" class="btn btn-success float-right" id="btnRegistrar">
                 <i class="fas fa-plus-circle"></i>&nbsp;&nbsp;Registrar</button>
 
-            <h4>Listado de zonas</h4>
+            <h4>Listado de usuarios</h4>
 
 
         </div>
@@ -23,9 +23,9 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>NOMBRE</th>
-                        <th>ÁREA</th>
-                        <th>DESCRIPCIÓN</th>
+                        <th>NOMBRES</th>
+                        <th>APELLIDOS</th>
+                        <th>EMAIL</th>
                         <th></th>
                         <th></th>
                         <th></th>
@@ -33,21 +33,21 @@
                 </thead>
                 <tbody>
 
-                    @foreach ($zones as $zone)
+                    @foreach ($users as $user)
                         <tr>
-                            <td>{{ $zone->id }}</td>
-                            <td>{{ $zone->name }}</td>
-                            <td>{{ $zone->area }}</td>
-                            <td>{{ $zone->description }}</td>
+                            <td>{{ $user->id }}</td>
+                            <td>{{ $user->name }}</td>
+                            <td>{{ $user->lastname }}</td>
+                            <td>{{ $user->email }}</td>
                             <td width="10px">
                                 <button class="btn btn-secondary btnEditar btn-sm" data-id={{ $zone->id }}><i
                                         class="fas fa-edit"></i></button>
                             <td width="10px">
-                                <a href={{ route('admin.zones.show', $zone) }} class="btn btn-primary btn-sm"><i
+                                <a href={{ route('admin.users.show', $zone) }} class="btn btn-primary btn-sm"><i
                                         class="fas fa-eye"></i></a>
                             </td>
                             <td width="10px">
-                                <form action={{ route('admin.zones.destroy', $zone->id) }} method='post' class="frmDelete">
+                                <form action={{ route('admin.users.destroy', $zone->id) }} method='post' class="frmDelete">
                                     @method('delete')
                                     @csrf
                                     <button type="submit" class="btn btn-danger btn-sm"><i
@@ -67,7 +67,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Formulario de zonas</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Formulario de usuarios</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -103,7 +103,7 @@
                 var id = $(this).attr('data-id');
 
                 $.ajax({
-                    url: "{{ route('admin.zones.edit', ':id') }}".replace(':id', id),
+                    url: "{{ route('admin.users.edit', ':id') }}".replace(':id', id),
                     type: 'GET',
                     success: function(response) {
 
