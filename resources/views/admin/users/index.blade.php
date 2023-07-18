@@ -19,7 +19,7 @@
 
         </div>
         <div class="card-body">
-            <table class="table table-striped" id="zone_table">
+            <table class="table table-striped" id="user_table">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -40,14 +40,14 @@
                             <td>{{ $user->lastname }}</td>
                             <td>{{ $user->email }}</td>
                             <td width="10px">
-                                <button class="btn btn-secondary btnEditar btn-sm" data-id={{ $zone->id }}><i
+                                <button class="btn btn-secondary btnEditar btn-sm" data-id={{ $user->id }}><i
                                         class="fas fa-edit"></i></button>
                             <td width="10px">
-                                <a href={{ route('admin.users.show', $zone) }} class="btn btn-primary btn-sm"><i
+                                <a href={{ route('admin.users.show', $user) }} class="btn btn-primary btn-sm"><i
                                         class="fas fa-eye"></i></a>
                             </td>
                             <td width="10px">
-                                <form action={{ route('admin.users.destroy', $zone->id) }} method='post' class="frmDelete">
+                                <form action={{ route('admin.users.destroy', $user->id) }} method='post' class="frmDelete">
                                     @method('delete')
                                     @csrf
                                     <button type="submit" class="btn btn-danger btn-sm"><i
@@ -88,7 +88,7 @@
 
             $('#btnRegistrar').click(function() {
                 $.ajax({
-                    url: "{{ route('admin.zones.create') }}",
+                    url: "{{ route('admin.users.create') }}",
                     type: 'GET',
                     success: function(response) {
 
@@ -131,7 +131,7 @@
                 })
             })
 
-            var table = $('#zone_table').DataTable({
+            var table = $('#user_table').DataTable({
                 language: {
                     url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
                 },
