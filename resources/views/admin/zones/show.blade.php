@@ -26,47 +26,46 @@
                 </div>
             </div>
             <br>
-            <div class="card">
-                <div class="card-header">
-                    <button type="button" class="btn btn-sm btn-success float-right" id="btnRegistrar"
-                        data-id={{ $zone->id }}>
-                        <i class="fas fa-plus-circle"></i>&nbsp;&nbsp;Agregar Coordenada</button>
-                    <h5>Coodenadas del perímetro</h5>
-                </div>
-                <div class="card-body">
-                    <table class="table table-striped" id="coords_table">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>LATITUD</th>
-                                <th>LONGITUD</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($coords as $coord)
-                                <tr>
-                                    <td>{{ $coord->id }}</td>
-                                    <td>{{ $coord->latitude }}</td>
-                                    <td>{{ $coord->longitude }}</td>
-                                    <td width="10px">
-                                        <form action={{ route('admin.zonecoords.destroy', $coord->id) }} method='post'
-                                            class="frmDelete">
-                                            @method('delete')
-                                            @csrf
-                                            <button type="submit" class="btn btn-danger btn-sm"><i
-                                                    class="fas fa-trash"></i></button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+
         </div>
     </div>
-
+    <div class="card">
+        <div class="card-header">
+            <button type="button" class="btn btn-sm btn-success float-right" id="btnRegistrar" data-id={{ $zone->id }}>
+                <i class="fas fa-plus-circle"></i>&nbsp;&nbsp;Agregar Coordenada</button>
+            <h5>Coodenadas del perímetro</h5>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped" id="coords_table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>LATITUD</th>
+                        <th>LONGITUD</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($coords as $coord)
+                        <tr>
+                            <td>{{ $coord->id }}</td>
+                            <td>{{ $coord->latitude }}</td>
+                            <td>{{ $coord->longitude }}</td>
+                            <td width="10px">
+                                <form action={{ route('admin.zonecoords.destroy', $coord->id) }} method='post'
+                                    class="frmDelete">
+                                    @method('delete')
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger btn-sm"><i
+                                            class="fas fa-trash"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
     <!-- Modal -->
     <div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
