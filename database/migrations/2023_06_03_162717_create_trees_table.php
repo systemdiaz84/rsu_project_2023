@@ -30,13 +30,15 @@ return new class extends Migration
             $table->foreign('zone_id')->references('id')->on('zones');
             
             $table->timestamps();
+
+            //No esta user_id o el encargado de cuidarlo?
         });
     }
 
     /**
      * Reverse the migrations.
      *
-     * @return void
+     * @return voids
      */
     public function down()
     {

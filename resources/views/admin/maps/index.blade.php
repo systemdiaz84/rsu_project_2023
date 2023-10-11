@@ -25,7 +25,9 @@
     <script>
         var coordenadas = @json($trees); // Obtener el array de coordenadas desde PHP
         var perimeters = @json($perimeter);
-
+        var treesDescription = @json($treesDescription); //Obtener el array de todos los arboles con sus coordenadas y datos
+        var treePhotos = @json($treePhotos); //Obtener el array de todas las fotos agrupadas por el id del arbol
+        //console.log(treePhotos[21][1]);
         var currentInfoWindow = null;
 
         function initMap() {
@@ -45,7 +47,7 @@
 
 
 
-                coordenadas.forEach(function(coordenada) {
+                treesDescription.forEach(function(coordenada) {
                     var marker = new google.maps.Marker({
                         position: {
                             lat: coordenada.latitude,
@@ -61,8 +63,23 @@
                             currentInfoWindow.close(); // Cerrar el InfoWindow anterior si existe
                         }
 
+                        texto = "<b>Nombre:</b> " + coordenada.name + "</br>" +
+                                    "<b>Especie:</b> " + coordenada.specie + "</br>" +
+                                    "<b>Familia:</b> " + coordenada.family + "</br>" + 
+                                    "<b>Zona:</b> " + coordenada.zone + "</br>" +
+                                    "<b>Descripción:</b> " + coordenada.description + "</br>";
+                        
+
+                        treePhotos[coordenada.id].forEach((photo) => {
+                            var temUrl = "{{ env('APP_URL') }}" + photo.url;
+                            
+                            texto += "<img src='"+ temUrl + "' height='150pxs'/>"
+                        })
+                        
                         var infowindow = new google.maps.InfoWindow({
-                            content: coordenada.name
+                            content: texto,
+                                    
+                            pixelOffset: 0  // Parametro para mover la ventana de información
                         });
                         infowindow.open(map, marker);
 

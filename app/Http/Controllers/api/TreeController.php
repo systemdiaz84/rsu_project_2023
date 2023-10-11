@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin\Tree;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PhpOption\None;
 
 class TreeController extends Controller
 {
@@ -59,14 +60,20 @@ class TreeController extends Controller
      */
     public function store(Request $request)
     {
+        /* Validar los datos 
+        $request->validate([
+            'atributo' =>  'validadores'
+        ]);
+        */
         $trees = Tree::create($request->all());
 
+        /*
         $name = $trees->name . ' ' . $trees->id;
-
+s
         $trees->update([
             'name' => $name
         ]);
-
+        */
         return response()->json(['message' => 'Árbol registrado correctamente', 'tree_id' => $trees->id]);
     }
 
@@ -101,8 +108,10 @@ class TreeController extends Controller
                 $query->where('trees.name', 'like', '%' . $name . '%')
                     ->orWhere('families.name', 'like', '%' . $name . '%')
                     ->orWhere('zones.name', 'like', '%' . $name . '%');
+                    //->orWhere('trees.id', '==', $name);
             })
             ->get();
+        
         return $trees;
     }
 
@@ -147,7 +156,22 @@ class TreeController extends Controller
      */
     public function update(Request $request, $id)
     {
+        /*
+        $request->validate([
+            'name' => 'required'
+        ]);
+        */
         //
+        if ($request->all() == []){
+            return response()->json(['status' => false, 'data' => $request, 'message' => 'Ingrese parámetros']); 
+        }
+
+        $tree = Tree::find($id);
+        $tree->update($request->all());
+        
+
+        return response()->json(['message' => 'Árbol modificado correctamente', 'tree_id' => $tree->id]);
+
     }
 
     /**
@@ -159,6 +183,8 @@ class TreeController extends Controller
     public function destroy($id)
     {
         //
+        $tree = Tree::find($id);
+        $tree->delete();
     }
 
     public function trees_zone($zone_id)
@@ -215,7 +241,7 @@ class TreeController extends Controller
 
     function trees_families($zone_id)
     {
-        if ($zone_id == 0){
+        if ($zone_id == 0) {
             $families = Tree::select(
                 'families.name as name',
                 DB::raw('count(*) as count')
@@ -224,8 +250,7 @@ class TreeController extends Controller
                 ->join('families', 'families.id', '=', 'species.family_id')
                 //->where('trees.zone_id', $zone_id)
                 ->groupBy('families.name')->get();
-    
-        }else{
+        } else {
             $families = Tree::select(
                 'families.name as name',
                 DB::raw('count(*) as count')
@@ -234,9 +259,8 @@ class TreeController extends Controller
                 ->join('families', 'families.id', '=', 'species.family_id')
                 ->where('trees.zone_id', $zone_id)
                 ->groupBy('families.name')->get();
-    
         }
-        
+
         return $families;
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin\Tree;
+use App\Models\admin\TreePhotos;
 use App\Models\Admin\Zone;
 use App\Models\admin\ZoneCoord;
 use Illuminate\Http\Request;
@@ -15,6 +16,15 @@ class MapController extends Controller
     {
 
         $trees = Tree::select('latitude', 'longitude', 'name')->get();
+
+        $treesDescription = DB::table('trees')
+                            ->join('species', 'species.id', '=', 'trees.specie_id')
+                            ->join('families', 'families.id', '=', 'trees.family_id')
+                            ->join('zones', 'zones.id', '=', 'trees.zone_id')
+                            ->select('trees.id as id', 'latitude', 'longitude', 'trees.name as name', 'species.name as specie', 'families.name as family', 'zones.name as zone', 'trees.description as description')
+                            ->get();
+
+        $treePhotos = TreePhotos::select('tree_id', 'url')->get()->groupBy('tree_id');
 
         $zones = DB::table('zones')
             ->leftJoin('zone_coords', 'zones.id', '=', 'zone_coords.zone_id')
@@ -44,6 +54,6 @@ class MapController extends Controller
         
         //return $perimeter;
 
-        return view('admin.maps.index', compact('trees', 'perimeter'));
+        return view('admin.maps.index', compact('trees', 'perimeter', 'treesDescription', 'treePhotos'));
     }
 }
