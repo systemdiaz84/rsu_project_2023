@@ -29,7 +29,8 @@ class TreephotoController extends Controller
             ->orderBy('trees.id', 'desc')
             ->get();
 
-        return $treePhotos;
+        return response()->json(['status' => true ,'message' => 'Fotos de arboles  obtenidas correctamente', 'data' => $treePhotos]);
+
     }
 
     /**
@@ -79,7 +80,7 @@ class TreephotoController extends Controller
                 $treePhoto->tree_id = $request->input('tree_id');
                 $treePhoto->save();
                 
-                return response()->json(['message' => 'Imagen almacenada correctamente', 'data' => $treePhoto]);
+                return response()->json(['status' => true ,'message' => 'Árbol foto registrada correctamente', 'data' => $treePhoto]);
             }
         } catch (\Exception $ex) {
             return response()->json(['message' => 'Error al almacenar la imagen', 'error' => $ex], 400);
@@ -131,8 +132,8 @@ class TreephotoController extends Controller
      */
     public function show($id)
     {
-        $treephotos = TreePhotos::where('tree_id',$id)->get();
-        return $treephotos;
+        $treePhoto = TreePhotos::where('tree_id',$id)->get();
+        return response()->json(['status' => true ,'message' => 'Árbol foto obtenido correctamente', 'data' => $treePhoto]);
     }
 
     /**
@@ -186,7 +187,7 @@ class TreephotoController extends Controller
             $treePhoto->update($request->input('tree_id'));
         }
 
-        return response()->json(['message' => 'Árbol modificado correctamente', 'tree_id' => $treePhoto->tree_id]);
+        return response()->json(['status' => true ,'message' => 'Árbol foto actualizado correctamente', 'data' => $treePhoto]);
 
     }
 
@@ -201,7 +202,7 @@ class TreephotoController extends Controller
         $treephoto = TreePhotos::find($id);
         $treephoto->delete();
 
-        return response()->json(['message' => 'Imagen eliminada correctamente']);
+        return response()->json(['status' => true ,'message' => 'Árbol foto eliminado correctamente', 'data' => []]);
 
     }
 }

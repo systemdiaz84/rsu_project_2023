@@ -39,8 +39,8 @@ class TreeController extends Controller
             ->orderBy('trees.id', 'desc')
             ->get();
 
-        return $trees;
-    }
+            return response()->json(['status' => true ,'message' => 'Árboles obtenidos correctamente', 'data' => $trees]);
+        }
 
     /**
      * Show the form for creating a new resource.
@@ -74,7 +74,7 @@ s
             'name' => $name
         ]);
         */
-        return response()->json(['message' => 'Árbol registrado correctamente', 'tree_id' => $trees->id]);
+        return response()->json(['status' => true ,'message' => 'Árbol registrado correctamente', 'data' => $trees]);
     }
 
     /**
@@ -112,8 +112,8 @@ s
             })
             ->get();
         
-        return $trees;
-    }
+            return response()->json(['status' => true ,'message' => 'Árbol obtenido correctamente', 'data' => $trees]);
+        }
 
     /**
      * Show the form for editing the specified resource.
@@ -170,7 +170,7 @@ s
         $tree->update($request->all());
         
 
-        return response()->json(['message' => 'Árbol modificado correctamente', 'tree_id' => $tree->id]);
+        return response()->json(['status' => true ,'message' => 'Árbol actualizado correctamente', 'data' => $tree]);
 
     }
 
@@ -185,6 +185,9 @@ s
         //
         $tree = Tree::find($id);
         $tree->delete();
+
+        return response()->json(['status' => true ,'message' => 'Árbol eliminado correctamente', 'data' => []]);
+
     }
 
     public function trees_zone($zone_id)

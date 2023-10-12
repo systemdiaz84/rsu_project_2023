@@ -7,8 +7,11 @@ use App\Http\Controllers\api\FamilyController;
 use App\Http\Controllers\api\GraphController;
 use App\Http\Controllers\api\MapController;
 use App\Http\Controllers\api\ProcedureController;
+use App\Http\Controllers\api\ProcedureTypeController;
+use App\Http\Controllers\api\StateController;
 use App\Http\Controllers\api\TreeController;
 use App\Http\Controllers\api\TreephotoController;
+use App\Models\Admin\Family;
 use App\Models\Admin\Tree;
 use App\Models\EvolutionPhoto;
 use Illuminate\Http\Request;
@@ -47,3 +50,8 @@ Route::get('/species_family/{family_id}',[FamilyController::class,'species_famil
 Route::resource('/procedures', ProcedureController::class)->names('api.procedure');
 Route::resource('/evolutions', EvolutionController::class)->names('api.evolution');
 Route::resource('/evolution_photos', EvolutionPhotoController::class)->names('api.evolution_photos');
+Route::resource('/families', FamilyController::class)->names('api.families');
+Route::resource('/proceduretypes', ProcedureTypeController::class)->names('api.proceduretypes');
+Route::resource('/states', StateController::class)->names('api.states');
+
+

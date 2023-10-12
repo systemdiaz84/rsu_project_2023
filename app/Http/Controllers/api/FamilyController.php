@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin\Family;
 use App\Models\Admin\Specie;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,10 @@ class FamilyController extends Controller
     public function index()
     {
         //
+        $families = Family::all();
+        return $families;
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -26,6 +30,7 @@ class FamilyController extends Controller
     public function create()
     {
         //
+        
     }
 
     /**
@@ -37,6 +42,10 @@ class FamilyController extends Controller
     public function store(Request $request)
     {
         //
+        $family = Family::create($request->all());
+
+        return response()->json(['message' => 'Familia registrada correctamente', 'data' => $family, 'status' => true]);
+
     }
 
     /**
@@ -48,6 +57,9 @@ class FamilyController extends Controller
     public function show($id)
     {
         //
+        $family = Family::find($id);
+        
+        return response()->json(['message' => 'Familia obtenida correctamente', 'data' => $family, 'status' => true]);
     }
 
     /**
@@ -71,6 +83,12 @@ class FamilyController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $family = Family::find($id);
+        $family->update($request->all());
+        
+        return response()->json(['message' => 'Familia actualizada correctamente', 'data' => $family, 'status' => true]);
+
+
     }
 
     /**
@@ -82,6 +100,12 @@ class FamilyController extends Controller
     public function destroy($id)
     {
         //
+        $family = Family::find($id);
+        $family->delete();
+        
+        return response()->json(['message' => 'Familia eliminada correctamente', 'data' => [], 'status' => true]);
+
+
     }
 
     public function species_family($id)

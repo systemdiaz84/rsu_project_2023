@@ -42,9 +42,14 @@ class EvolutionPhotoController extends Controller
      * @param  \App\Models\EvolutionPhoto  $evolutionPhoto
      * @return \Illuminate\Http\Response
      */
-    public function show(EvolutionPhoto $evolutionPhoto)
+    public function show($id)
     {
         //
+        $evolutionPhoto = EvolutionPhoto::find($id);
+        
+
+        return response()->json(['message' => 'Foto de evolución obtenida correctamente', 'status' => TRUE, 'data' => $evolutionPhoto]);        
+        
     }
 
     /**

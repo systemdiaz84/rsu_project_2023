@@ -16,7 +16,9 @@ class ProcedureController extends Controller
     public function index()
     {
         //
-        return Procedure::all();
+        $procedure = Procedure::all();
+        return response()->json(['status' => true ,'message' => 'Procedimientos obtenidos correctamente', 'data' => $procedure]);
+
     }
 
     /**
@@ -30,7 +32,7 @@ class ProcedureController extends Controller
         //
         $procedure = Procedure::create($request->all());
 
-        return response()->json(['message' => 'Procedimiento registrado correctamente', 'procedure_id' => $procedure->id]);
+        return response()->json(['status' => true ,'message' => 'Procedimiento registrado correctamente', 'data' => $procedure]);
     }
 
     /**
@@ -39,9 +41,13 @@ class ProcedureController extends Controller
      * @param  \App\Models\Procedure  $procedure
      * @return \Illuminate\Http\Response
      */
-    public function show(Procedure $procedure)
+    public function show($id)
     {
         //
+        $procedure = Procedure::find($id);
+
+        return response()->json(['status' => true ,'message' => 'Procedimiento obtenido correctamente', 'data' => $procedure]);
+    
     }
 
     /**
@@ -57,7 +63,7 @@ class ProcedureController extends Controller
         $procedure = Procedure::find($id);
         $procedure->update($request->all());
 
-        return response()->json(['message' => 'Procedimiento actualizado correctamente', 'procedure_id' => $procedure->id]);
+        return response()->json(['status' => true ,'message' => 'Procedimiento actualizado correctamente', 'data' => $procedure]);
     }
 
     /**
@@ -72,7 +78,7 @@ class ProcedureController extends Controller
         $procedure = Procedure::find($id);
         $procedure->delete();
 
-        return response()->json(['message' => 'Procedimiento eliminado correctamente', 'procedure_id' => $procedure->id]);
+        return response()->json(['status' => true ,'message' => 'Procedimiento eliminado correctamente', 'data' => []]);
 
     }
 }

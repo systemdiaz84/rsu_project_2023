@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\api;
 
-use App\Models\admin\Evolution;
+use App\Models\admin\State;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class EvolutionController extends Controller
+class StateController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +16,10 @@ class EvolutionController extends Controller
     public function index()
     {
         //
-        $evolution = Evolution::all();
+        $states = State::all();
 
-        return $evolution;
+        return response()->json(['status' => true, 'message' => 'Estados obtenidos correctamente', 'data' => $states]);
+
     }
 
     /**
@@ -30,24 +31,23 @@ class EvolutionController extends Controller
     public function store(Request $request)
     {
         //
-        $evolution = Evolution::create($request->all());
+        $states = State::create($request->all());
 
-        return response()->json(['message' => 'Evolución registrada correctamente', 'status' => TRUE, 'data' => $evolution]);
+        return response()->json(['status' => true, 'message' => 'Estado registrado correctamente', 'data' => $states]);
 
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Evolution  $evolution
+     * @param  \App\Models\admin\State  $state
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
-        $evolution = Evolution::find($id);
+        $states = State::find($id);
 
-        return response()->json(['message' => 'Evolución obtenida correctamente', 'status' => TRUE, 'data' => $evolution]);
+        return response()->json(['status' => true, 'message' => 'Estado obtenido correctamente', 'data' => $states]);
 
     }
 
@@ -55,34 +55,30 @@ class EvolutionController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Evolution  $evolution
+     * @param  \App\Models\admin\State  $state
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         //
-        $evolution = Evolution::find($id);
-        $evolution->update($request->all());
+        $states = State::find($id);
+        $states->update($request->all());
 
-        return response()->json(['message' => 'Evolución modificada correctamente', 'status' => TRUE, 'data' => $evolution]);
-
-
+        return response()->json(['status' => true, 'message' => 'Estado actualizado correctamente', 'data' => $states]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Evolution  $evolution
+     * @param  \App\Models\admin\State  $state
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         //
-        $evolution = Evolution::find($id);
-        $evolution->delete();
+        $states = State::find($id);
+        $states->delete();
 
-        return response()->json(['message' => 'Evolución eliminada correctamente', 'status' => TRUE, 'data' => []]);
-
-
+        return response()->json(['status' => true, 'message' => 'Estado eliminado correctamente', 'data' => []]);
     }
 }
