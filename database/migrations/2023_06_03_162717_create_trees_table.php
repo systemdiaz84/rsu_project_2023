@@ -38,7 +38,7 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      *
-     * @return voids
+     * @return void
      */
     public function down()
     {
