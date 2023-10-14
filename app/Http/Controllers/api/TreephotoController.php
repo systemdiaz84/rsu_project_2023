@@ -156,7 +156,7 @@ class TreephotoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        /*
         if ($request->all() == []){
             return response()->json(['status' => false, 'data' => $request, 'message' => 'Ingrese parámetros']); 
         }
@@ -188,7 +188,7 @@ class TreephotoController extends Controller
         }
 
         return response()->json(['status' => true ,'message' => 'Árbol foto actualizado correctamente', 'data' => $treePhoto]);
-
+        */
     }
 
     /**
