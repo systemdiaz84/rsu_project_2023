@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name', 45)->nullable(false);
             $table->string('province_id', 4)->nullable(false);
             $table->foreign('province_id')->references('id')->on('province');
-            $table->string('department_id', 2)->nullable(false);
+            $table->string('departament_id', 2)->nullable(false);
             $table->foreign('departament_id')->references('id')->on('departament');
         });
     }
