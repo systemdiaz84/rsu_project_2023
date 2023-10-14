@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\SpecieController;
 use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\EvolutionController;
 use App\Http\Controllers\api\EvolutionPhotoController;
@@ -8,9 +9,12 @@ use App\Http\Controllers\api\GraphController;
 use App\Http\Controllers\api\MapController;
 use App\Http\Controllers\api\ProcedureController;
 use App\Http\Controllers\api\ProcedureTypeController;
+use App\Http\Controllers\api\ResponsibleController;
+use App\Http\Controllers\api\SpecieController as ApiSpecieController;
 use App\Http\Controllers\api\StateController;
 use App\Http\Controllers\api\TreeController;
 use App\Http\Controllers\api\TreephotoController;
+use App\Http\Controllers\api\ZoneController;
 use App\Models\Admin\Family;
 use App\Models\Admin\Tree;
 use App\Models\EvolutionPhoto;
@@ -53,5 +57,10 @@ Route::resource('/evolution_photos', EvolutionPhotoController::class)->names('ap
 Route::resource('/families', FamilyController::class)->names('api.families');
 Route::resource('/proceduretypes', ProcedureTypeController::class)->names('api.proceduretypes');
 Route::resource('/states', StateController::class)->names('api.states');
+Route::resource('/responsibles', ResponsibleController::class)->names('api.responsible');
+Route::resource('/species', ApiSpecieController::class)->names('api.specie');
+Route::resource('/zones', ZoneController::class)->names('api.zone');
 
+
+Route::get('/evolutions/tree/{tree_id}', [EvolutionController::class, 'showEvolutionsByTree'])->name('api.evolution_tree');
 

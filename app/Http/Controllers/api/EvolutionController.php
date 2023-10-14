@@ -18,7 +18,9 @@ class EvolutionController extends Controller
         //
         $evolution = Evolution::all();
 
-        return $evolution;
+        //return $evolution;
+        return response()->json(['status' => true, 'message' => 'Evoluciones obtenidas correctamente', 'data' => $evolution]);
+
     }
 
     /**
@@ -85,4 +87,14 @@ class EvolutionController extends Controller
 
 
     }
+
+    public function showEvolutionsByTree($tree_id) {
+        $evolution = Evolution::select('*')
+                        ->where('tree_id', '=', $tree_id)
+                        ->get();
+
+        return response()->json(['status' => true, 'message' => 'Evoluciones obtenidas por árbol correctamente', 'data' => $evolution]);
+                
+    }
+
 }

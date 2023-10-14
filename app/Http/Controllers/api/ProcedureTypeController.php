@@ -40,12 +40,16 @@ class ProcedureTypeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\admin\ProcedureTypes  $procedureTypes
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(ProcedureTypes $procedureTypes)
+    public function show(int $id)
     {
         //
+        $procedureTypes = ProcedureTypes::find($id);
+
+        return response()->json(['message' => 'Tipo de procedimiento obtenido correctamente', 'data' => $procedureTypes, 'status' => true]);
+    
     }
 
     /**
