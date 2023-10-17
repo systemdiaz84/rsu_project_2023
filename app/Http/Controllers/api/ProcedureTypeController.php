@@ -48,7 +48,8 @@ class ProcedureTypeController extends Controller
         //
         $procedureTypes = ProcedureTypes::find($id);
 
-        return response()->json(['message' => 'Tipo de procedimiento obtenido correctamente', 'data' => $procedureTypes, 'status' => true]);
+        return $procedureTypes;
+        //return response()->json(['message' => 'Tipo de procedimiento obtenido correctamente', 'data' => $procedureTypes, 'status' => true]);
     
     }
 

@@ -18,7 +18,8 @@ class SpecieController extends Controller
         //
         $specie = Specie::all();
 
-        return response()->json(['status' => true ,'message' => 'Especies obtenidas correctamente', 'data' => $specie]);
+        return $specie;
+        //return response()->json(['status' => true ,'message' => 'Especies obtenidas correctamente', 'data' => $specie]);
 
     }
 
@@ -48,7 +49,8 @@ class SpecieController extends Controller
         //
         $specie = Specie::find($id);
 
-        return response()->json(['status' => true ,'message' => 'Especie obtenida correctamente', 'data' => $specie]);
+        return $specie;
+        //return response()->json(['status' => true ,'message' => 'Especie obtenida correctamente', 'data' => $specie]);
 
     }
 
@@ -65,8 +67,8 @@ class SpecieController extends Controller
         $specie = Specie::find($id);
         $specie->update($request->all());
 
-
-        return response()->json(['status' => true ,'message' => 'Especie actualizada correctamente', 'data' => $specie]);
+        return $specie;
+        //return response()->json(['status' => true ,'message' => 'Especie actualizada correctamente', 'data' => $specie]);
 
     }
 
@@ -86,4 +88,13 @@ class SpecieController extends Controller
 
 
     }
+
+    public function species_by_family($family_id) {
+        $species = Specie::select('*')
+                            ->where('family_id', '=', $family_id)
+                            ->get();
+                            
+        return $species;
+    }
+
 }

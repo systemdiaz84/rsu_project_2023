@@ -29,7 +29,8 @@ class TreephotoController extends Controller
             ->orderBy('trees.id', 'desc')
             ->get();
 
-        return response()->json(['status' => true ,'message' => 'Fotos de arboles  obtenidas correctamente', 'data' => $treePhotos]);
+        return $treePhotos;
+        //return response()->json(['status' => true ,'message' => 'Fotos de arboles  obtenidas correctamente', 'data' => $treePhotos]);
 
     }
 
@@ -133,7 +134,9 @@ class TreephotoController extends Controller
     public function show($id)
     {
         $treePhoto = TreePhotos::where('tree_id',$id)->get();
-        return response()->json(['status' => true ,'message' => 'Árbol foto obtenido correctamente', 'data' => $treePhoto]);
+
+        return $treePhoto;
+        //return response()->json(['status' => true ,'message' => 'Árbol foto obtenido correctamente', 'data' => $treePhoto]);
     }
 
     /**

@@ -18,7 +18,8 @@ class ZoneController extends Controller
         //
         $zones = Zone::all();
 
-        return response()->json(['status' => true ,'message' => 'Zonas obtenidas correctamente', 'data' => $zones]);
+        return $zones;
+        //return response()->json(['status' => true ,'message' => 'Zonas obtenidas correctamente', 'data' => $zones]);
 
     }
 
@@ -47,8 +48,9 @@ class ZoneController extends Controller
     {
         //
         $zones = Zone::find($id);
-
-        return response()->json(['status' => true ,'message' => 'Zona obtenida correctamente', 'data' => $zones]);
+        
+        return $zones;
+        //return response()->json(['status' => true ,'message' => 'Zona obtenida correctamente', 'data' => $zones]);
     }
 
     /**

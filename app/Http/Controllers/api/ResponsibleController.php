@@ -18,7 +18,8 @@ class ResponsibleController extends Controller
         //
         $responsible = Responsible::all();
 
-        return response()->json(['status' => true ,'message' => 'Responsables obtenidos correctamente', 'data' => $responsible]);
+        return $responsible;
+        //return response()->json(['status' => true ,'message' => 'Responsables obtenidos correctamente', 'data' => $responsible]);
 
 
     }

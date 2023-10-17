@@ -19,6 +19,7 @@ class EvolutionPhotoController extends Controller
     {
         //
         $evolutionPhotos = EvolutionPhoto::all();
+        
         return $evolutionPhotos;
 
     }
@@ -82,8 +83,8 @@ class EvolutionPhotoController extends Controller
         //
         $evolutionPhoto = EvolutionPhoto::find($id);
         
-
-        return response()->json(['message' => 'Foto de evolución obtenida correctamente', 'status' => TRUE, 'data' => $evolutionPhoto]);        
+        return $evolutionPhoto;
+        //return response()->json(['message' => 'Foto de evolución obtenida correctamente', 'status' => TRUE, 'data' => $evolutionPhoto]);        
         
     }
 

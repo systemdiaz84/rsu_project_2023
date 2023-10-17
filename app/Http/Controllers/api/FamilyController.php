@@ -59,7 +59,8 @@ class FamilyController extends Controller
         //
         $family = Family::find($id);
         
-        return response()->json(['message' => 'Familia obtenida correctamente', 'data' => $family, 'status' => true]);
+        return $family;
+        //return response()->json(['message' => 'Familia obtenida correctamente', 'data' => $family, 'status' => true]);
     }
 
     /**

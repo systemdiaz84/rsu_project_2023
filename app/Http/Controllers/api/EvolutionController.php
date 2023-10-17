@@ -18,8 +18,8 @@ class EvolutionController extends Controller
         //
         $evolution = Evolution::all();
 
-        //return $evolution;
-        return response()->json(['status' => true, 'message' => 'Evoluciones obtenidas correctamente', 'data' => $evolution]);
+        return $evolution;
+        //return response()->json(['status' => true, 'message' => 'Evoluciones obtenidas correctamente', 'data' => $evolution]);
 
     }
 
@@ -49,8 +49,9 @@ class EvolutionController extends Controller
         //
         $evolution = Evolution::find($id);
 
-        return response()->json(['message' => 'Evolución obtenida correctamente', 'status' => TRUE, 'data' => $evolution]);
-
+        return $evolution;
+        //return response()->json(['message' => 'Evolución obtenida correctamente', 'status' => TRUE, 'data' => $evolution]);
+        
     }
 
     /**
@@ -93,7 +94,9 @@ class EvolutionController extends Controller
                         ->where('tree_id', '=', $tree_id)
                         ->get();
 
-        return response()->json(['status' => true, 'message' => 'Evoluciones obtenidas por árbol correctamente', 'data' => $evolution]);
+        
+        return $evolution;
+        //return response()->json(['status' => true, 'message' => 'Evoluciones obtenidas por árbol correctamente', 'data' => $evolution]);
                 
     }
 

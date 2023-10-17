@@ -39,7 +39,8 @@ class TreeController extends Controller
             ->orderBy('trees.id', 'desc')
             ->get();
 
-            return response()->json(['status' => true ,'message' => 'Árboles obtenidos correctamente', 'data' => $trees]);
+            return $trees;
+            //return response()->json(['status' => true ,'message' => 'Árboles obtenidos correctamente', 'data' => $trees]);
         }
 
     /**
@@ -74,7 +75,7 @@ s
             'name' => $name
         ]);
         */
-        return response()->json(['status' => true ,'message' => 'Árbol registrado correctamente', 'data' => $trees]);
+        return response()->json(['status' => true ,'message' => 'Árbol registrado correctamente', 'data' => $trees, 'tree_id' => $trees->id]);
     }
 
     /**
@@ -112,7 +113,8 @@ s
             })
             ->get();
         
-            return response()->json(['status' => true ,'message' => 'Árbol obtenido correctamente', 'data' => $trees]);
+            return $trees;
+            //return response()->json(['status' => true ,'message' => 'Árbol obtenido correctamente', 'data' => $trees]);
         }
 
     /**

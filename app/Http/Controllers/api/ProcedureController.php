@@ -17,7 +17,9 @@ class ProcedureController extends Controller
     {
         //
         $procedure = Procedure::all();
-        return response()->json(['status' => true ,'message' => 'Procedimientos obtenidos correctamente', 'data' => $procedure]);
+
+        return $procedure;
+        //return response()->json(['status' => true ,'message' => 'Procedimientos obtenidos correctamente', 'data' => $procedure]);
 
     }
 
@@ -46,7 +48,8 @@ class ProcedureController extends Controller
         //
         $procedure = Procedure::find($id);
 
-        return response()->json(['status' => true ,'message' => 'Procedimiento obtenido correctamente', 'data' => $procedure]);
+        return $procedure;
+        //return response()->json(['status' => true ,'message' => 'Procedimiento obtenido correctamente', 'data' => $procedure]);
     
     }
 

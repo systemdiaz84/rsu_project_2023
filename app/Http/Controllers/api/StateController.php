@@ -18,7 +18,8 @@ class StateController extends Controller
         //
         $states = State::all();
 
-        return response()->json(['status' => true, 'message' => 'Estados obtenidos correctamente', 'data' => $states]);
+        return $states;
+        //return response()->json(['status' => true, 'message' => 'Estados obtenidos correctamente', 'data' => $states]);
 
     }
 
@@ -47,7 +48,8 @@ class StateController extends Controller
     {
         $states = State::find($id);
 
-        return response()->json(['status' => true, 'message' => 'Estado obtenido correctamente', 'data' => $states]);
+        return $states;
+        //return response()->json(['status' => true, 'message' => 'Estado obtenido correctamente', 'data' => $states]);
 
     }
 
@@ -81,4 +83,6 @@ class StateController extends Controller
 
         return response()->json(['status' => true, 'message' => 'Estado eliminado correctamente', 'data' => []]);
     }
+
+
 }
