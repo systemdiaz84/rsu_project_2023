@@ -13,14 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('responsibles', function (Blueprint $table) {
-            $table->id();
+        Schema::table('trees', function (Blueprint $table) {
+            $table->dropForeign('trees_zone_id_foreign');
+            $table->dropColumn('zone_id');
 
-            $table->string('dni', 10);
-            $table->string('name', 50);
-            $table->string('lastname', 50);
-
-            $table->timestamps();
         });
     }
 
@@ -31,6 +27,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('responsibles');
+        Schema::table('trees', function (Blueprint $table) {
+            //
+        });
     }
 };
