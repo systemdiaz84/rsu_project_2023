@@ -14,6 +14,7 @@ use App\Http\Controllers\api\SpecieController as ApiSpecieController;
 use App\Http\Controllers\api\StateController;
 use App\Http\Controllers\api\TreeController;
 use App\Http\Controllers\api\TreephotoController;
+use App\Http\Controllers\api\UserController;
 use App\Http\Controllers\api\ZoneController;
 use App\Models\Admin\Family;
 use App\Models\Admin\Tree;
@@ -64,3 +65,4 @@ Route::resource('/zones', ZoneController::class)->names('api.zone');
 
 Route::get('/evolutions/tree/{tree_id}', [EvolutionController::class, 'showEvolutionsByTree'])->name('api.evolution_tree');
 
+Route::get('/login/data/{email}', [UserController::class, 'data_email'])->name('api.data_email');
