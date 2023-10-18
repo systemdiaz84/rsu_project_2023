@@ -63,6 +63,8 @@ Route::resource('/species', ApiSpecieController::class)->names('api.specie');
 Route::resource('/zones', ZoneController::class)->names('api.zone');
 
 
-Route::get('/evolutions/tree/{tree_id}', [EvolutionController::class, 'showEvolutionsByTree'])->name('api.evolution_tree');
+Route::get('/evolutions/tree/{tree_id}', [EvolutionController::class, 'showEvolutionsByTree'])->name('api.evolutions_tree');
+Route::get('/procedures/tree/{tree_id}', [ProcedureController::class, 'showProceduresByTreeId']) ->name('api.procedures_tree');
+
 
 Route::get('/login/data/{email}', [UserController::class, 'data_email'])->name('api.data_email');

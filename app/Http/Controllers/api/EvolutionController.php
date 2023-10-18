@@ -89,7 +89,7 @@ class EvolutionController extends Controller
 
     }
 
-    public function showEvolutionsByTree($tree_id) {
+    public function showEvolutionsByTree(int $tree_id) {
         $evolution = Evolution::select('*')
                         ->where('tree_id', '=', $tree_id)
                         ->get();
