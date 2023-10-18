@@ -86,8 +86,10 @@ class ProcedureController extends Controller
     }
 
     public function showProceduresByTreeId(int $tree_id) {
-        $procedures = Procedure::select("*")
-                                //->where("tree_id", "=", $tree_id)
+        $procedures = Procedure::select("procedures.*", "procedure_types.name as procedure_type_name")
+                                ->join('procedure_types', 'procedure_types.id', '=', 'procedures.procedure_type_id')
+                                ->where("tree_id", "=", $tree_id)
+
                                 ->get();
 
         return $procedures;
