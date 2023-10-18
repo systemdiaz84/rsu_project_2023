@@ -12,6 +12,8 @@ use App\Http\Controllers\admin\ZoneController;
 use App\Http\Controllers\admin\ZoneCoordsController;
 use App\Http\Controllers\admin\ResponsibleController;
 use App\Http\Controllers\admin\UserController;
+use App\Http\Controllers\admin\PermissionsController;
+use App\Http\Controllers\admin\RolesController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/',[AdminController::class,'index'])->name('admin.index');
@@ -40,4 +42,6 @@ Route::resource('responsible', ResponsibleController::class)->names('admin.respo
 
 Route::resource('users', UserController::class)->names('admin.users');
 
+Route::resource('roles', RolesController::class);
+Route::resource('permissions', PermissionsController::class);
 ?>

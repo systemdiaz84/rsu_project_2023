@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\admin\Tree;
+use App\Models\admin\District;
 use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
@@ -54,11 +55,11 @@ class AdminController extends Controller
             ->join('species', 'species.id', '=', 'trees.specie_id')
             ->groupBy('species.name')->get();
 
-        $zones = Tree::select(
+        $zones = District::select(
             'zones.name as name',
             DB::raw('count(*) as y')
         )
-            ->join('zones', 'zones.id', '=', 'trees.zone_id')
+            ->join('zones', 'zones.district_id', '=', 'district.id')
             ->groupBy('zones.name')->get();
 
         return View('admin.index', compact('families', 'species_families', 'species', 'zones'));
