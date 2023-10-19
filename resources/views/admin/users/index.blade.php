@@ -26,6 +26,7 @@
                         <th>NOMBRES</th>
                         <th>APELLIDOS</th>
                         <th>EMAIL</th>
+                        <th>ROLES</th>
                         <th></th>
                         <th></th>
                         <th></th>
@@ -39,6 +40,11 @@
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->lastname }}</td>
                             <td>{{ $user->email }}</td>
+                            <td>
+                                @foreach($user->roles as $role)
+                                    <span class="badge bg-primary">{{ $role->name }}</span>
+                                @endforeach
+                            </td>
                             <td width="10px">
                                 <button class="btn btn-secondary btnEditar btn-sm" data-id={{ $user->id }}><i
                                         class="fas fa-edit"></i></button>

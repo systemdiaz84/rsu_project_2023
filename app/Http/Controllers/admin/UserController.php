@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\admin\User;
+use Spatie\Permission\Models\Role;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
@@ -27,7 +28,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        return View('admin.users.create');
+        $roles = Role::latest()->get();
+
+        return view('admin.users.create', compact('roles'));
     }
 
     /**
@@ -71,7 +74,9 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        return view('admin.users.edit', compact('user'));
+        $roles = Role::latest()->get();
+        
+        return view('admin.users.edit', compact('user','roles'));
     }
 
     /**

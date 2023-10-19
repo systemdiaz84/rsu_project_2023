@@ -1,4 +1,6 @@
-@extends('layouts.app-master')
+@extends('adminlte::page')
+
+@section('title', 'Editar Permiso')
 
 @section('content')
     <div class="bg-light p-4 rounded">
@@ -9,7 +11,7 @@
 
         <div class="container mt-4">
 
-            <form method="POST" action="{{ route('permissions.update', $permission->id) }}">
+            <form method="POST" action="{{ route('admin.permissions.update', $permission->id) }}">
                 @method('patch')
                 @csrf
                 <div class="mb-3">
@@ -26,7 +28,7 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary">Save permission</button>
-                <a href="{{ route('permissions.index') }}" class="btn btn-default">Back</a>
+                <a href="{{ route('admin.permissions.index') }}" class="btn btn-default">Back</a>
             </form>
         </div>
 

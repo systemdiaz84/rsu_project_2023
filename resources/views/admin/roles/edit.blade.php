@@ -1,4 +1,4 @@
-@extends('layouts.app-master')
+@extends('adminlte::page')
 
 @section('content')
     <div class="bg-light p-4 rounded">
@@ -20,7 +20,7 @@
                 </div>
             @endif
 
-            <form method="POST" action="{{ route('roles.update', $role->id) }}">
+            <form method="POST" action="{{ route('admin.roles.update', $role->id) }}">
                 @method('patch')
                 @csrf
                 <div class="mb-3">
@@ -59,7 +59,7 @@
                 </table>
 
                 <button type="submit" class="btn btn-primary">Save changes</button>
-                <a href="{{ route('roles.index') }}" class="btn btn-default">Back</a>
+                <a href="{{ route('admin.roles.index') }}" class="btn btn-default">Back</a>
             </form>
         </div>
 

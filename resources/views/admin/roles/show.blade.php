@@ -1,4 +1,4 @@
-@extends('layouts.app-master')
+@extends('adminlte::page')
 
 @section('content')
     <div class="bg-light p-4 rounded">
@@ -28,7 +28,7 @@
 
     </div>
     <div class="mt-4">
-        <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-info">Edit</a>
-        <a href="{{ route('roles.index') }}" class="btn btn-default">Back</a>
+        <a href="{{ route('admin.roles.edit', $role->id) }}" class="btn btn-info">Edit</a>
+        <a href="{{ route('admin.roles.index') }}" class="btn btn-default">Back</a>
     </div>
 @endsection

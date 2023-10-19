@@ -42,6 +42,6 @@ Route::resource('responsible', ResponsibleController::class)->names('admin.respo
 
 Route::resource('users', UserController::class)->names('admin.users');
 
-Route::resource('roles', RolesController::class);
-Route::resource('permissions', PermissionsController::class);
+Route::resource('roles', RolesController::class)->names('admin.roles');
+Route::resource('permissions', PermissionsController::class)->names('admin.permissions');
 ?>

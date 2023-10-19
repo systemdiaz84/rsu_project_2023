@@ -31,3 +31,14 @@
         'required',
     ]) !!}
 </div>
+<div class="form-group">
+    {!! Form::label('role', 'Role', ['class' => 'form-label']) !!}
+    @foreach($roles as $role)
+        <div class="checkbox">
+            <label>
+                {!! Form::checkbox('roles[]', $role->id, isset($user) ? $user->hasRole($role->name) : false) !!}
+                {{ $role->name }}
+            </label>
+        </div>
+    @endforeach
+</div>

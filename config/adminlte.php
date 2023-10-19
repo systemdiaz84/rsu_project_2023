@@ -359,6 +359,25 @@ return [
             ],
         ],
         [
+            'text'    => 'SEGURIDAD',
+            'icon' => 'fas fa-fw fa-thermometer-half',
+            'url'     => 'users.index',
+            'submenu' => [
+                [
+                    'text' => 'Roles',
+                    'icon' => 'fas fa-fw fa-thermometer-half',
+                    'route'  => 'admin.roles.index',
+
+                ],
+                [
+                    'text' => 'Permisos',
+                    'icon' => 'fas fa-fw fa-thermometer-half',
+                    'route'  => 'admin.permissions.index',
+
+                ],
+            ],
+        ],
+        [
             'text'    => 'Tratamiento',
             'icon' => 'fas fa-fw fa-first-aid',
             'url'     => 'users.index',
