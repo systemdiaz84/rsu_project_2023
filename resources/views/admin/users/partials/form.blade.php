@@ -28,11 +28,11 @@
     {!! Form::password('password',  [
         'class' => 'form-control',
         'placeholder' => 'Ingrese el password',
-        'required',
+        isset($user) ? '' : 'required',
     ]) !!}
 </div>
 <div class="form-group">
-    {!! Form::label('role', 'Role', ['class' => 'form-label']) !!}
+    {!! Form::label('role', 'Roles', ['class' => 'form-label']) !!}
     @foreach($roles as $role)
         <div class="checkbox">
             <label>
