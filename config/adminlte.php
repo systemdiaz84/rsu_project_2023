@@ -359,25 +359,6 @@ return [
             ],
         ],
         [
-            'text'    => 'SEGURIDAD',
-            'icon' => 'fas fa-fw fa-thermometer-half',
-            'url'     => 'users.index',
-            'submenu' => [
-                [
-                    'text' => 'Roles',
-                    'icon' => 'fas fa-fw fa-thermometer-half',
-                    'route'  => 'admin.roles.index',
-
-                ],
-                [
-                    'text' => 'Permisos',
-                    'icon' => 'fas fa-fw fa-thermometer-half',
-                    'route'  => 'admin.permissions.index',
-
-                ],
-            ],
-        ],
-        [
             'text'    => 'Tratamiento',
             'icon' => 'fas fa-fw fa-first-aid',
             'url'     => 'users.index',
@@ -400,6 +381,25 @@ return [
             'text' => 'Usuarios',
             'route'  => 'admin.users.index',
             'icon' => 'fas fa-fw fa-user-plus',
+        ],
+        [
+            'text'    => 'Seguridad',
+            'icon' => 'fas fa-fw fa-shield-alt',
+            'url'     => 'users.index',
+            'submenu' => [
+                [
+                    'text' => 'Roles',
+                    'icon' => 'fas fa-fw fa-key',
+                    'route'  => 'admin.roles.index',
+
+                ],
+                [
+                    'text' => 'Permisos',
+                    'icon' => 'fas fa-fw fa-lock',
+                    'route'  => 'admin.permissions.index',
+
+                ],
+            ],
         ],
     ],
 
