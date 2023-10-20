@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\User;
+use App\Models\Admin\User;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
@@ -15,14 +15,12 @@ class CreateAdminUserSeeder extends Seeder
      *
      * @return void
      */
+    protected $guard_name = 'web';
     public function run()
     {
-        $user = User::create([
-            'name' => 'Admin', 
-            'email' => 'admin@gmail.com',
-            'username' => 'admin',
-            'password' => 'admin1234589'
-        ]);
+
+        $user = User::findOrFail(1);
+
 
         $role = Role::create(['name' => 'admin']);
      

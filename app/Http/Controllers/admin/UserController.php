@@ -7,6 +7,8 @@ use App\Models\admin\User;
 use Spatie\Permission\Models\Role;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+
 
 class UserController extends Controller
 {
@@ -17,7 +19,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = User::paginate(10);
         return view('admin.users.index', compact('users'));
     }
 
@@ -99,6 +101,14 @@ class UserController extends Controller
         }
 
         $user->save();
+
+        if ($request->filled('roles')) {
+            $roles = Role::whereIn('id', $request->get('roles'))->pluck('name');
+            $user->syncRoles($roles);
+        }
+
+        
+        //Log::debug('roles' , $roles);
 
         return redirect()->route('admin.users.index')->with('Success', 'Usuario actualizado');
 
