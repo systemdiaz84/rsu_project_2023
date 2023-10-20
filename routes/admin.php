@@ -12,32 +12,38 @@ use App\Http\Controllers\admin\ZoneController;
 use App\Http\Controllers\admin\ZoneCoordsController;
 use App\Http\Controllers\admin\ResponsibleController;
 use App\Http\Controllers\admin\UserController;
+use App\Http\Controllers\admin\PermissionsController;
+use App\Http\Controllers\admin\RolesController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/',[AdminController::class,'index'])->name('admin.index');
+Route::group(['middleware' => ['auth', 'permission']], function() {
+    Route::get('/',[AdminController::class,'index'])->name('admin.index');
 
-Route::resource('families',FamilyController::class)->names('admin.families')->middleware('auth:sanctum');
+    Route::resource('families',FamilyController::class)->names('admin.families')->middleware('auth:sanctum');
 
-Route::get('species_family/{family_id}',[FamilyController::class,'species_family'])->name('admin.species_family');
+    Route::get('species_family/{family_id}',[FamilyController::class,'species_family'])->name('admin.species_family');
 
-Route::resource('species', SpecieController::class)->names('admin.species');
+    Route::resource('species', SpecieController::class)->names('admin.species');
 
-Route::resource('familyphotos', FamilyphotoController::class)->names('admin.familyphotos');
+    Route::resource('familyphotos', FamilyphotoController::class)->names('admin.familyphotos');
 
-Route::resource('zones', ZoneController::class)->names('admin.zones');
+    Route::resource('zones', ZoneController::class)->names('admin.zones');
 
-Route::resource('trees', TreeController::class)->names('admin.trees');
+    Route::resource('trees', TreeController::class)->names('admin.trees');
 
-Route::resource('states', StateController::class)->names('admin.states');
+    Route::resource('states', StateController::class)->names('admin.states');
 
-Route::resource('maps', MapController::class)->names('admin.maps');
+    Route::resource('maps', MapController::class)->names('admin.maps');
 
-Route::resource('zonecoords', ZoneCoordsController::class)->names('admin.zonecoords');
+    Route::resource('zonecoords', ZoneCoordsController::class)->names('admin.zonecoords');
 
-Route::resource('proceduretypes', ProcedureTypeController::class)->names('admin.proceduretypes');
+    Route::resource('proceduretypes', ProcedureTypeController::class)->names('admin.proceduretypes');
 
-Route::resource('responsible', ResponsibleController::class)->names('admin.responsibles');
+    Route::resource('responsible', ResponsibleController::class)->names('admin.responsibles');
 
-Route::resource('users', UserController::class)->names('admin.users');
+    Route::resource('users', UserController::class)->names('admin.users');
 
+    Route::resource('roles', RolesController::class)->names('admin.roles');
+    Route::resource('permissions', PermissionsController::class)->names('admin.permissions');
+});
 ?>

@@ -382,6 +382,25 @@ return [
             'route'  => 'admin.users.index',
             'icon' => 'fas fa-fw fa-user-plus',
         ],
+        [
+            'text'    => 'Seguridad',
+            'icon' => 'fas fa-fw fa-shield-alt',
+            'url'     => 'users.index',
+            'submenu' => [
+                [
+                    'text' => 'Roles',
+                    'icon' => 'fas fa-fw fa-key',
+                    'route'  => 'admin.roles.index',
+
+                ],
+                [
+                    'text' => 'Permisos',
+                    'icon' => 'fas fa-fw fa-lock',
+                    'route'  => 'admin.permissions.index',
+
+                ],
+            ],
+        ],
     ],
 
     /*
