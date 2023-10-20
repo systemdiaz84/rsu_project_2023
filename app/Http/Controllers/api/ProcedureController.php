@@ -84,4 +84,15 @@ class ProcedureController extends Controller
         return response()->json(['status' => true ,'message' => 'Procedimiento eliminado correctamente', 'data' => []]);
 
     }
+
+    public function showProceduresByTreeId(int $tree_id) {
+        $procedures = Procedure::select("procedures.*", "procedure_types.name as procedure_type_name")
+                                ->join('procedure_types', 'procedure_types.id', '=', 'procedures.procedure_type_id')
+                                ->where("tree_id", "=", $tree_id)
+
+                                ->get();
+
+        return $procedures;
+    }
+
 }

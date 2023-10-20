@@ -60,9 +60,15 @@ class TreephotoController extends Controller
                 
                 $base64Image = $request->input("image");
                 
-                list($type, $imageData) = explode(';', $base64Image);
-                list(,$extension) = explode('/',$type);
-                list(,$imageData) = explode(',', $imageData);
+                
+                if (str_contains($base64Image, 'data:image')) {
+                    list($type, $imageData) = explode(';', $base64Image);
+                    list(,$extension) = explode('/',$type);
+                    list(,$imageData) = explode(',', $imageData);
+                } else {
+                    $imageData = $base64Image;
+                }
+                
 
                 // Genera un nombre único para la imagen
                 $imageName = uniqid() . '.jpg';
