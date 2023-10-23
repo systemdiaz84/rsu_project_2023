@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\admin\District;
+use App\Models\admin\Province;
 use App\Models\Admin\Tree;
 use App\Models\admin\Zone;
 use App\Models\admin\ZoneCoord;
@@ -27,8 +29,10 @@ class ZoneController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        return view('admin.zones.create');
+    {   
+        $provinces = Province::where('departament_id','14')->get();
+        $districts = District::where('departament_id','14')->get();
+        return view('admin.zones.create',compact('provinces','districts'));
     }
 
     /**
@@ -39,7 +43,7 @@ class ZoneController extends Controller
      */
     public function store(Request $request)
     {
-        Zone::create($request->all());
+        Zone::create($request->except('province_id'));
         return redirect()->route('admin.zones.index')->with('success', 'Zona Registrada');
     }
 
@@ -75,7 +79,9 @@ class ZoneController extends Controller
     public function edit($id)
     {
         $zone = Zone::find($id);
-        return view('admin.zones.edit', compact('zone'));
+        $provinces = Province::where('departament_id','14')->get();
+        $districts = District::where('departament_id','14')->get();
+        return view('admin.zones.edit', compact('zone','provinces','districts'));
     }
 
     /**

@@ -21,6 +21,8 @@
                     <p>{{ $zone->area }}</p>
                     <label for="">Descripción</label>
                     <p>{{ $zone->description }}</p>
+                    <label for="">Distrito</label>
+                    <p>{{ $zone->district_id }}</p>
                 </div>
                 <div class="col-9" id="map" style="height: 300px;">
                 </div>

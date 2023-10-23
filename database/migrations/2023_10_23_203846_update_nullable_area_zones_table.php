@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('procedures', function (Blueprint $table) {
-            $table->unsignedBigInteger('responsible_id')->nullable(true)->change();
+        Schema::table('zones', function (Blueprint $table) {
+            $table->unsignedBigInteger('area')->nullable(true)->change();
         });
     }
 
