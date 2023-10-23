@@ -640,10 +640,7 @@ class ComposerStaticInit0df48e5201eb67418f7475b1643ee91e
         'App\\Http\\Controllers\\api\\StateController' => __DIR__ . '/../..' . '/app/Http/Controllers/api/StateController.php',
         'App\\Http\\Controllers\\api\\TreeController' => __DIR__ . '/../..' . '/app/Http/Controllers/api/TreeController.php',
         'App\\Http\\Controllers\\api\\TreephotoController' => __DIR__ . '/../..' . '/app/Http/Controllers/api/TreephotoController.php',
-<<<<<<< HEAD
         'App\\Http\\Controllers\\api\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/api/UserController.php',
-=======
->>>>>>> test_permission
         'App\\Http\\Controllers\\api\\ZoneController' => __DIR__ . '/../..' . '/app/Http/Controllers/api/ZoneController.php',
         'App\\Http\\Controllers\\api\\ZonecoordsController' => __DIR__ . '/../..' . '/app/Http/Controllers/api/ZonecoordsController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',

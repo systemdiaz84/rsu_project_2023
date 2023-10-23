@@ -26,16 +26,13 @@ class TreeController extends Controller
             'trees.latitude',
             'trees.longitude',
             'trees.specie_id',
-            'trees.zone_id',
             'trees.user_id',
             'families.name as family_name',
             'species.name as species_name',
-            'zones.name as zones_name',
             DB::raw('(select url from tree_photos where tree_id = trees.id limit 1) as url')
         )
             ->join('species', 'species.id', '=', 'specie_id')
             ->join('families', 'families.id', '=', 'species.family_id')
-            ->join('zones', 'zones.id', '=', 'trees.zone_id')
             ->orderBy('trees.id', 'desc')
             ->get();
 
@@ -95,20 +92,16 @@ s
             'trees.latitude',
             'trees.longitude',
             'trees.specie_id',
-            'trees.zone_id',
             'trees.user_id',
             'families.name as family_name',
             'species.name as species_name',
-            'zones.name as zones_name',
             DB::raw('(select url from tree_photos where tree_id = trees.id limit 1) as url')
         )
             ->join('species', 'species.id', '=', 'specie_id')
             ->join('families', 'families.id', '=', 'species.family_id')
-            ->join('zones', 'zones.id', '=', 'trees.zone_id')
             ->where(function ($query) use ($name) {
                 $query->where('trees.name', 'like', '%' . $name . '%')
-                    ->orWhere('families.name', 'like', '%' . $name . '%')
-                    ->orWhere('zones.name', 'like', '%' . $name . '%');
+                    ->orWhere('families.name', 'like', '%' . $name . '%');
                     //->orWhere('trees.id', '==', $name);
             })
             ->get();
@@ -135,16 +128,14 @@ s
             'trees.longitude',
             'families.id as family_id',
             'trees.specie_id',
-            'trees.zone_id',
             'trees.user_id',
             'families.name as family_name',
             'species.name as species_name',
-            'zones.name as zones_name',
             DB::raw('(select url from tree_photos where tree_id = trees.id limit 1) as url')
         )
             ->join('species', 'species.id', '=', 'specie_id')
             ->join('families', 'families.id', '=', 'species.family_id')
-            ->join('zones', 'zones.id', '=', 'trees.zone_id')->where('trees.id', $id)->get();
+            ->where('trees.id', $id)->get();
 
         return $trees;
     }
@@ -192,6 +183,7 @@ s
 
     }
 
+    //TODO: search trees use coordinates
     public function trees_zone($zone_id)
     {
         if ($zone_id == 0) {

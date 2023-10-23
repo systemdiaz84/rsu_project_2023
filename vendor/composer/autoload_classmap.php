@@ -43,10 +43,7 @@ return array(
     'App\\Http\\Controllers\\api\\StateController' => $baseDir . '/app/Http/Controllers/api/StateController.php',
     'App\\Http\\Controllers\\api\\TreeController' => $baseDir . '/app/Http/Controllers/api/TreeController.php',
     'App\\Http\\Controllers\\api\\TreephotoController' => $baseDir . '/app/Http/Controllers/api/TreephotoController.php',
-<<<<<<< HEAD
     'App\\Http\\Controllers\\api\\UserController' => $baseDir . '/app/Http/Controllers/api/UserController.php',
-=======
->>>>>>> test_permission
     'App\\Http\\Controllers\\api\\ZoneController' => $baseDir . '/app/Http/Controllers/api/ZoneController.php',
     'App\\Http\\Controllers\\api\\ZonecoordsController' => $baseDir . '/app/Http/Controllers/api/ZonecoordsController.php',
     'App\\Http\\Kernel' => $baseDir . '/app/Http/Kernel.php',
