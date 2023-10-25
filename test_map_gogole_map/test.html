@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Polygon Auto-Completion</title>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    
+        <link rel="stylesheet" type="text/css" href="./style.css" />
+      </head>
+<body>
+    <div id="map"></div>
+
+    <!-- 
+      The `defer` attribute causes the callback to execute after the full HTML
+      document has been parsed. For non-blocking uses, avoiding race conditions,
+      and consistent behavior across browsers, consider loading using Promises.
+      See https://developers.google.com/maps/documentation/javascript/load-maps-js-api
+      for more information.
+      -->
+        <script src="https://code.jquery.com/jquery-latest.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3&libraries=drawing"></script>
+    <script>
+        // function initMap() {
+
+            const map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 5,
+    center: { lat: 24.886, lng: -70.268 },
+    mapTypeId: "terrain",
+  });
+        const drawingManager = new google.maps.drawing.DrawingManager({
+            drawingMode: google.maps.drawing.OverlayType.POLYGON,
+            drawingControl: true,
+            drawingControlOptions: {
+                position: google.maps.ControlPosition.TOP_CENTER,
+                drawingModes: [google.maps.drawing.OverlayType.POLYGON],
+            },
+            });
+
+            drawingManager.setMap(map);
+        
+        // window.initMap = initMap;
+
+    </script>
+</body>
+</html>

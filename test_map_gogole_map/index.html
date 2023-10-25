@@ -35,6 +35,7 @@
     <script src="https://code.jquery.com/jquery-latest.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3"></script>
     <button id="button">Añadir</button>
+    <button id="delete" style="background-color: green;">Eliminar</button>
     <ul class="DataList">
         <li data-position="34.0717825, -118.567396">Santa Ynez Canyon Park</li>
         <li data-position="34.0787989, -118.572502">Palisades Country Estates</li>
@@ -47,6 +48,8 @@
             //set latlng of starting window of map
             var coordenadas  = [];
             var markers = [];
+            var eliminar = false;
+            var ids=0;
             var map = new google.maps.Map($('#map-canvas')[0], {
                 center: { lat: 34.073609, lng: -118.562313 },
                 zoom: 14,
@@ -68,7 +71,11 @@
                     fillColor: '#FF0000',
                     fillOpacity: 0.35
                 });
-
+            
+            $("#delete").click(function () {
+                eliminar=!eliminar;
+                $(this).css('background-color', eliminar ? 'red': 'green');
+            })
             $("#button").click(function () {
                 var that = $(this);
                 //when there is no marker associated with the li we create a new
@@ -79,12 +86,27 @@
 
                 
                 var marker = that.data('marker');
-                marker.metadata = {type: "point", id: markers.length+1};
-                markers.push({id:markers.length+1, lat:"", lng:""});
+                marker.metadata = {type: "point", id: ids+1};
+                markers.push({id:ids+1, lat:34.073514, lng:-118.562348});
+                ids +=1;
                 that.addClass('current');
                 console.log(marker)
                 
-                google.maps.event.addListener(marker, 'dragend', function(event, i) {
+                google.maps.event.addListener(marker, 'click', function(event) {
+                    if(eliminar){
+                        console.log(markers)
+                        markers = markers.filter(i => i.id != marker.metadata.id);
+                        console.log(markers)
+                        marker.setMap(null);
+                        perimeterPolygon.setMap(null);
+                        perimeterPolygon.setPath(markers.map( mk => ({lat: mk.lat, lng: mk.lng})) );
+                        perimeterPolygon.setMap(map);
+                        eliminar = false;
+                        $("#delete").css('background-color', 'green');
+                    }
+                })
+
+                google.maps.event.addListener(marker, 'dragend', function(event) {
                     console.log(marker)
                     var latLng = event.latLng;
                     // latInput.value = latLng.lat();
@@ -96,7 +118,7 @@
                     coordenadas.push({lat:latLng.lat(),lng:latLng.lng()})
                     perimeterPolygon.setMap(null);
                     console.log(markers)
-                    console.log([ markers.map( mk => ({lat: mk.lat, lng: mk.lng})) ])
+                    console.log( markers.map( mk => ({lat: mk.lat, lng: mk.lng})) )
 
                     perimeterPolygon.setPath(markers.map( mk => ({lat: mk.lat, lng: mk.lng})) );
                     perimeterPolygon.setMap(map);
