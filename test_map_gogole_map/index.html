@@ -33,9 +33,12 @@
 
 <body>
     <script src="https://code.jquery.com/jquery-latest.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?v=3"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyCl9B7aX8NOZ1kKs5nYeLyIXHNSVaZ0ltE&libraries=places"></script>
     <button id="button">Añadir</button>
     <button id="delete" style="background-color: green;">Eliminar</button>
+    <div id="">
+        <input id="input-place" type="text" placeholder="Enter a location" />
+    </div>
     <ul class="DataList">
         <li data-position="34.0717825, -118.567396">Santa Ynez Canyon Park</li>
         <li data-position="34.0787989, -118.572502">Palisades Country Estates</li>
@@ -46,10 +49,15 @@
     <script>
         function initialize() {
             //set latlng of starting window of map
-            var coordenadas  = [];
+            var coordenadas = [];
             var markers = [];
             var eliminar = false;
-            var ids=0;
+            var ids = 0;
+
+
+
+
+
             var map = new google.maps.Map($('#map-canvas')[0], {
                 center: { lat: 34.073609, lng: -118.562313 },
                 zoom: 14,
@@ -62,73 +70,90 @@
                     icon: 'http://maps.google.com/mapfiles/arrow.png'
                 });
 
+            const input = document.getElementById('input-place');
+            const autocomplete = new google.maps.places.Autocomplete(input, {
+                fields: ["formatted_address", "geometry", "name"],
+                strictBounds: false,
+            });
+
             map.controls[google.maps.ControlPosition.TOP_LEFT].push($(".DataList")[0]);
+
             var perimeterPolygon = new google.maps.Polygon({
-                    paths: coordenadas,
-                    strokeColor: '#FF0000',
-                    strokeOpacity: 0.8,
-                    strokeWeight: 2,
-                    fillColor: '#FF0000',
-                    fillOpacity: 0.35
-                });
-            
+                paths: coordenadas,
+                strokeColor: '#FF0000',
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: '#FF0000',
+                fillOpacity: 0.35
+            });
+
             $("#delete").click(function () {
-                eliminar=!eliminar;
-                $(this).css('background-color', eliminar ? 'red': 'green');
+                eliminar = !eliminar;
+                $(this).css('background-color', eliminar ? 'red' : 'green');
             })
             $("#button").click(function () {
-                var that = $(this);
                 //when there is no marker associated with the li we create a new
+                var that = $(this);
                 that.data('marker', new google.maps.Marker({
                     position: { lat: 34.073514, lng: -118.562348 },
                     draggable: true
                 }));
 
-                
+
                 var marker = that.data('marker');
-                marker.metadata = {type: "point", id: ids+1};
-                markers.push({id:ids+1, lat:34.073514, lng:-118.562348});
-                ids +=1;
+                marker.metadata = { type: "point", id: ids + 1 };
+                markers.push({ id: ids + 1, lat: 34.073514, lng: -118.562348 });
+                ids += 1;
                 that.addClass('current');
                 console.log(marker)
-                
-                google.maps.event.addListener(marker, 'click', function(event) {
-                    if(eliminar){
+
+                google.maps.event.addListener(marker, 'click', function (event) {
+                    if (eliminar) {
                         console.log(markers)
                         markers = markers.filter(i => i.id != marker.metadata.id);
                         console.log(markers)
                         marker.setMap(null);
                         perimeterPolygon.setMap(null);
-                        perimeterPolygon.setPath(markers.map( mk => ({lat: mk.lat, lng: mk.lng})) );
+                        perimeterPolygon.setPath(markers.map(mk => ({ lat: mk.lat, lng: mk.lng })));
                         perimeterPolygon.setMap(map);
                         eliminar = false;
                         $("#delete").css('background-color', 'green');
                     }
                 })
 
-                google.maps.event.addListener(marker, 'dragend', function(event) {
+                google.maps.event.addListener(marker, 'dragend', function (event) {
                     console.log(marker)
                     var latLng = event.latLng;
                     // latInput.value = latLng.lat();
                     // lonInput.value = latLng.lng();
-                    markers = markers.map(function(mk){
-                        return {id:mk.id,lat: marker.metadata.id == mk.id ? latLng.lat() : mk.lat,  lng: marker.metadata.id == mk.id ? latLng.lng() : mk.lng}
+                    markers = markers.map(function (mk) {
+                        return { id: mk.id, lat: marker.metadata.id == mk.id ? latLng.lat() : mk.lat, lng: marker.metadata.id == mk.id ? latLng.lng() : mk.lng }
                     })
 
-                    coordenadas.push({lat:latLng.lat(),lng:latLng.lng()})
+                    coordenadas.push({ lat: latLng.lat(), lng: latLng.lng() })
                     perimeterPolygon.setMap(null);
                     console.log(markers)
-                    console.log( markers.map( mk => ({lat: mk.lat, lng: mk.lng})) )
+                    console.log(markers.map(mk => ({ lat: mk.lat, lng: mk.lng })))
 
-                    perimeterPolygon.setPath(markers.map( mk => ({lat: mk.lat, lng: mk.lng})) );
+                    perimeterPolygon.setPath(markers.map(mk => ({ lat: mk.lat, lng: mk.lng })));
                     perimeterPolygon.setMap(map);
                 });
                 marker.setMap(map);
                 console.log(coordenadas)
 
-                
+
 
             })
+
+            autocomplete.addListener('place_changed', () => {
+                const place = autocomplete.getPlace();
+                if (!place.geometry) {
+                    console.error('No se encontró la ubicación seleccionada');
+                    return;
+                }
+                map.setCenter(place.geometry.location);
+            });
+
             //on click of li add new marker or remove if marker already exists
             $(".DataList li").click(function () {
                 var that = $(this);
