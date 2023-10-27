@@ -107,6 +107,12 @@
                 that.addClass('current');
                 console.log(marker)
 
+                const infowindow = new google.maps.InfoWindow({
+                    content: "Latitud: " + marker.getPosition().lat() + 
+                    "<br>Longitud: " + marker.getPosition().lng()
+                });
+                infowindow.open(map, marker);
+
                 google.maps.event.addListener(marker, 'click', function (event) {
                     if (eliminar) {
                         console.log(markers)
@@ -121,7 +127,12 @@
                     }
                 })
 
-                google.maps.event.addListener(marker, 'dragend', function (event) {
+                google.maps.event.addListener(marker, 'drag', function (event) {
+
+                infowindow.setContent("Latitud: " + marker.getPosition().lat() + 
+                    "<br>Longitud: " + marker.getPosition().lng())
+                
+
                     console.log(marker)
                     var latLng = event.latLng;
                     // latInput.value = latLng.lat();

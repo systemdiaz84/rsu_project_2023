@@ -110,6 +110,12 @@
             markers.push({ id: ids + 1, lat: lat, lng: lng });
             ids += 1;
 
+            const infowindow = new google.maps.InfoWindow({
+                content: "Latitud: " + marker.getPosition().lat() + 
+                "<br>Longitud: " + marker.getPosition().lng()
+            });
+            infowindow.open(map, marker)
+
             google.maps.event.addListener(marker, 'click', function (event) {
                 if (eliminar) {
 
@@ -124,10 +130,15 @@
 
                     eliminar = false;//SI SE REQUIERE SEGUIR ELIMINANDO, ENTONCES REMOVER
                     $("#delete").css('background-color', 'green');
+                }else{
+                    infowindow.close();
+                    infowindow.setContent("Latitud: " + marker.getPosition().lat() + 
+                        "<br>Longitud: " + marker.getPosition().lng());
+                    infowindow.open(map, marker);
                 }
             })
 
-            google.maps.event.addListener(marker, 'dragend', function (event) {
+            google.maps.event.addListener(marker, 'drag', function (event) {
                 var latLng = event.latLng;
 
                 markers = markers.map( mk => ({ 
@@ -141,6 +152,8 @@
                 perimeterPolygon.setMap(map);
 
                 // console.log(markers)
+                infowindow.setContent("Latitud: " + marker.getPosition().lat() + 
+                    "<br>Longitud: " + marker.getPosition().lng());
                 console.log(markers.map(mk => ({ lat: mk.lat, lng: mk.lng })))
                 
             });
