@@ -34,7 +34,7 @@
     <div class="card">
         <div class="card-header">
             <button type="button" class="btn btn-sm btn-success float-right" id="btnRegistrar" data-id={{ $zone->id }}>
-                <i class="fas fa-plus-circle"></i>&nbsp;&nbsp;Agregar Coordenada</button>
+                <i class="fas fa-plus-circle"></i>&nbsp;&nbsp;Agregar/Modificar Coordenada</button>
             <h5>Coodenadas del perímetro</h5>
         </div>
         <div class="card-body">
@@ -71,10 +71,10 @@
     <!-- Modal -->
     <div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-lg" style="width: 100%;max-width: 100%;" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Agregar Coordenadas</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Agregar/Modificar Coordenadas</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

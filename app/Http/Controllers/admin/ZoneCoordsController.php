@@ -35,8 +35,22 @@ class ZoneCoordsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        ZoneCoord::create($request->all());
+    {   
+        $coordsJSON = $request->input('coords');
+        $coords = json_decode($coordsJSON, true);
+
+        $zone = Zone::where('id', $request->input('zone_id'))->first();
+        $zone->area = $request->input('area');
+        $zone->save();
+
+        ZoneCoord::where('zone_id', $request->input('zone_id'))->delete();
+        foreach ($coords as $coord) {
+            ZoneCoord::create([
+                'zone_id' => $request->input('zone_id'),
+                'latitude' => $coord['lat'],
+                'longitude' => $coord['lng'],
+            ]);
+    }
         return redirect()->route('admin.zones.show', $request->zone_id)->with('action', 'Coordena Agregada');
     }
 
