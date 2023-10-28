@@ -40,7 +40,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
  
-Route::group(['middleware' => ['auth:sanctum', 'permission']], function() {
+//'auth:sanctum', 'permission'
+Route::group(['middleware' => []], function() {
 
     Route::resource('/trees', TreeController::class)->names('api.trees');
     Route::get('/trees_zone/{zone_id}', [TreeController::class,'trees_zone'])->name('api.trees_zone');

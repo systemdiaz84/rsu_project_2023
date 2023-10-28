@@ -24,7 +24,9 @@ class TreeController extends Controller
 
             ->join('species', 'trees.specie_id', '=', 'species.id')
             ->join('families', 'species.family_id', '=', 'families.id')
-            ->join('zones', 'trees.zone_id', '=', 'zones.id')->get();
+            ->join('home_trees', 'home_trees.tree_id', '=', 'trees.id')
+            ->join('home', 'home.id', '=', 'home_trees.home_id')
+            ->join('zones', 'zones.id', '=', 'home.zone_id')->get();
 
         return view('admin.trees.index', compact('trees'));
     }

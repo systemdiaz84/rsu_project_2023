@@ -20,7 +20,9 @@ class MapController extends Controller
         $treesDescription = DB::table('trees')
                             ->join('species', 'species.id', '=', 'trees.specie_id')
                             ->join('families', 'families.id', '=', 'trees.family_id')
-                            ->join('zones', 'zones.id', '=', 'trees.zone_id')
+                            ->join('home_trees', 'home_trees.tree_id', '=', 'trees.id')
+                            ->join('home', 'home.id', '=', 'home_trees.home_id')
+                            ->join('zones', 'zones.id', '=', 'home.zone_id')
                             ->select('trees.id as id', 'latitude', 'longitude', 'trees.name as name', 'species.name as specie', 'families.name as family', 'zones.name as zone', 'trees.description as description')
                             ->get();
 

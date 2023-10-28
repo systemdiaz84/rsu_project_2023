@@ -26,6 +26,7 @@ class TreeController extends Controller
             'trees.latitude',
             'trees.longitude',
             'trees.specie_id',
+            'zones.id as zone_id',
             'trees.user_id',
             'families.name as family_name',
             'species.name as species_name',
@@ -33,6 +34,9 @@ class TreeController extends Controller
         )
             ->join('species', 'species.id', '=', 'specie_id')
             ->join('families', 'families.id', '=', 'species.family_id')
+            ->join('home_trees', 'home_trees.tree_id', '=', 'trees.id')
+            ->join('home', 'home.id', '=', 'home_trees.home_id')
+            ->join('zones', 'zones.id', '=', 'home.zone_id')
             ->orderBy('trees.id', 'desc')
             ->get();
 
@@ -196,7 +200,7 @@ s
                 'trees.latitude',
                 'trees.longitude',
                 'trees.specie_id',
-                'trees.zone_id',
+                'home.zone_id',
                 'trees.user_id',
                 'families.name as family_name',
                 'species.name as species_name',
@@ -205,7 +209,9 @@ s
             )
                 ->join('species', 'species.id', '=', 'specie_id')
                 ->join('families', 'families.id', '=', 'species.family_id')
-                ->join('zones', 'zones.id', '=', 'trees.zone_id')
+                ->join('home_trees', 'home_trees.tree_id', '=', 'trees.id')
+                ->join('home', 'home.id', '=', 'home_trees.home_id')
+                ->join('zones', 'zones.id', '=', 'home.zone_id')
                 ->orderBy('trees.id', 'desc')
                 ->get();
         } else {
@@ -227,7 +233,9 @@ s
             )
                 ->join('species', 'species.id', '=', 'specie_id')
                 ->join('families', 'families.id', '=', 'species.family_id')
-                ->join('zones', 'zones.id', '=', 'trees.zone_id')
+                ->join('home_trees', 'home_trees.tree_id', '=', 'trees.id')
+                ->join('home', 'home.id', '=', 'home_trees.home_id')
+                ->join('zones', 'zones.id', '=', 'home.zone_id')
                 ->where('zones.id', $zone_id)
                 ->orderBy('trees.id', 'desc')
                 ->get();
@@ -254,7 +262,9 @@ s
             )
                 ->join('species', 'species.id', '=', 'trees.specie_id')
                 ->join('families', 'families.id', '=', 'species.family_id')
-                ->where('trees.zone_id', $zone_id)
+                ->join('home_trees', 'home_trees.tree_id', '=', 'trees.id')
+                ->join('home', 'home.id', '=', 'home_trees.home_id')
+                ->where('home.zone_id', $zone_id)
                 ->groupBy('families.name')->get();
         }
 
