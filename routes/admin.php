@@ -3,6 +3,7 @@
 use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\FamilyController;
 use App\Http\Controllers\admin\FamilyphotoController;
+use App\Http\Controllers\admin\HomeController;
 use App\Http\Controllers\admin\MapController;
 use App\Http\Controllers\admin\ProcedureTypeController;
 use App\Http\Controllers\admin\SpecieController;
@@ -46,4 +47,5 @@ Route::group(['middleware' => ['auth', 'permission']], function() {
     Route::resource('roles', RolesController::class)->names('admin.roles');
     Route::resource('permissions', PermissionsController::class)->names('admin.permissions');
 });
+Route::resource('homes', HomeController::class)->names('admin.home');
 ?>

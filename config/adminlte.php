@@ -344,6 +344,11 @@ return [
             'route'  => 'admin.zones.index',
             'icon' => 'fas fa-fw fa-map-signs',
         ],
+        [
+            'text' => 'Hogares',
+            'route'  => 'admin.home.index',
+            'icon' => 'fas fa-fw fa-home',
+        ],
        
         [
             'text'    => 'Evolución',

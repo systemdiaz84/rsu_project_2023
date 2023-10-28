@@ -9,5 +9,6 @@ class Home extends Model
 {
     use HasFactory;
     protected $guarded=[];
+    protected $table = 'home';
 
 }
