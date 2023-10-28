@@ -33,6 +33,7 @@
 
                         <th></th>
                         <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -49,9 +50,14 @@
                                     {{ $home->is_pending ? 'Pendiente' : 'Activo' }}</span></td>
                             <td><span class="badge badge-pill badge-{{ $home->is_public ? 'success' : 'warning' }}">
                                     {{ $home->is_public ? 'Público' : 'Privado' }}</span></td>
+                            <td width="35px">
+                                <button class="btn btn-info btn-sm btnMiembros" data-id={{ $home->id }}><i
+                                        class="fas fa-users"></i>Miembros</button>
+                            </td>
                             <td width="10px">
                                 <button class="btn btn-secondary btn-sm btnEditar" data-id={{ $home->id }}><i
                                         class="fas fa-edit"></i></button>
+                            </td>
 
                             <td width="10px">
                                 <form action={{ route('admin.home.destroy', $home->id) }} method='post'
@@ -114,6 +120,21 @@
 
                 $.ajax({
                     url: "{{ route('admin.home.edit', ':id') }}".replace(':id', id),
+                    type: 'GET',
+                    success: function(response) {
+
+                        $("#Modal .modal-body").html(response);
+                        $("#Modal").modal('show');
+                    }
+                })
+            })
+            
+            $('.btnMiembros').click(function() {
+
+                var id = $(this).attr('data-id');
+
+                $.ajax({
+                    url: "{{ route('admin.homemembers.show', ':id') }}".replace(':id', id),
                     type: 'GET',
                     success: function(response) {
 
