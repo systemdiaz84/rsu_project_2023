@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\admin\Home;
+use App\Models\admin\HomeMembers;
 use App\Models\admin\Zone;
 use App\Models\Admin\User;
 use Illuminate\Http\Request;
@@ -60,6 +61,14 @@ class HomeController extends Controller
         $home->is_active = 1;
         $home->is_pending = 0;
         $home->save();
+
+        $homeMember = new HomeMembers();
+        $homeMember->home_id = $home->id;
+        $homeMember->is_active = 1;
+        $homeMember->is_pending = 0;
+        $homeMember->is_boss = 1;
+        $homeMember->user_id = $home->user_id;
+        $homeMember->save();
         return redirect()->route('admin.home.index')->with('success', 'Hogar creado');
     }
     

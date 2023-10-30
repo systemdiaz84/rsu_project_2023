@@ -27,15 +27,10 @@ class HomeMembersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($home_id)
     {
-        $zones = Zone::pluck('name', 'id');
-        
-        do {
-            $code = $this->generateCode();
-        } while ($this->checkCode($code) > 0);
-
-        return view('admin.home.create', compact('zones', 'code'));
+        $home = Home::find($home_id);
+        return view('admin.homemembers.create', compact('home'));
     }
 
     /**
@@ -46,13 +41,20 @@ class HomeMembersController extends Controller
      */
     public function store(Request $request)
     {   
-
+        // validar si el usuario ya existe en el hogar
+        $home_member = HomeMembers::where('home_id', $request->input('home_id'))->where('user_id', User::select('users.id')->where('users.n_doc', $request->input('n_doc'))->pluck('id')->first())->count();
+        if($home_member > 0){
+            return redirect()->route('admin.home.index')->with('error', 'El usuario ya existe en el hogar');
+        }
         $request->merge(['is_pending' => 0]);
         $request->merge(['user_id' => User::select('users.id')->where('users.n_doc', $request->input('n_doc'))->pluck('id')->first()]);
         $request->offsetUnset('n_doc');
         HomeMembers::create($request->all());
+
+        $home = Home::find($request->input('home_id'));
+        $members = User::select('users.id', 'users.n_doc', 'users.name', 'users.lastname')->join('home_members', 'users.id', '=', 'home_members.user_id')->where('home_members.home_id', $request->input('home_id'))->get();
         
-        return redirect()->route('admin.home.index')->with('success', 'Miembro agregado');
+        return view('admin.homemembers.index', compact('home', 'members'));
     }
     
     function checkCode($code){
@@ -78,7 +80,7 @@ class HomeMembersController extends Controller
     public function show($id)
     {
         $home = Home::find($id);
-        $members = User::select('users.id', 'users.n_doc', 'users.name', 'users.lastname')->join('home_members', 'users.id', '=', 'home_members.user_id')->where('home_members.home_id', $id)->get();
+        $members = User::select('users.id', 'users.n_doc', 'users.name', 'users.lastname','home_members.is_boss')->join('home_members', 'users.id', '=', 'home_members.user_id')->where('home_members.home_id', $id)->get();
         return view('admin.homemembers.index', compact('home', 'members'));
     }
 
@@ -131,13 +133,10 @@ class HomeMembersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id_home, $id_member)
     {
-        $home = Home::find($id);
-        $home->is_active = 0;
-        $home->save();
-
-        return Redirect()->route('admin.home.index')->with('success', 'Hogar dado de baja');
-
+        $home_member = HomeMembers::where('home_id', $id_home)->where('user_id', $id_member);
+        $home_member->delete();
+        return redirect()->route('admin.home.index')->with('success', 'Miembro eliminado');
     }
 }

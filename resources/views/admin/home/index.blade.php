@@ -26,7 +26,7 @@
                         <th>Código</th>
                         <th>Nombre</th>
                         <th>Dirección</th>
-                        <th>Usuario</th>
+                        <th>Usuario Creador</th>
                         <th>Zona</th>
                         <th>Pendiente</th>
                         <th>Público</th>
@@ -132,13 +132,19 @@
             $('.btnMiembros').click(function() {
 
                 var id = $(this).attr('data-id');
-
+                $("#Modal .modal-body").html('');
+                $.ajax({
+                    url: "{{ route('admin.homemembers.create', ':id') }}".replace(':id', id),
+                    type: 'GET',
+                    success: function(response) {
+                        $("#Modal .modal-body").html(response);
+                    }
+                })
                 $.ajax({
                     url: "{{ route('admin.homemembers.show', ':id') }}".replace(':id', id),
                     type: 'GET',
                     success: function(response) {
-
-                        $("#Modal .modal-body").html(response);
+                        $("#Modal .modal-body").html($("#Modal .modal-body").html() + response);
                         $("#Modal").modal('show');
                     }
                 })
