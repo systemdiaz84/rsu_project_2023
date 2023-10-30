@@ -1,5 +1,5 @@
 <div class="form-row">
-    <div class="form-group col-6">
+    <div class="form-group col-5">
         {!! Form::label('name', 'Nombre de árbol') !!}
         {!! Form::text('name', null, [
             'class' => 'form-control',
@@ -8,10 +8,14 @@
         ]) !!}
     </div>
 
-    <div class="form-group col-6">
+    <div class="form-group col-4">
         {!! Form::label('zone_id', 'Zona') !!}
         {!! Form::select('zone_id', $zones, null, ['class' => 'form-control', 'required']) !!}
 
+    </div>
+    <div class="form-group col-3">
+        {!! Form::label('is_public', 'Árbol público') !!}
+        {!! Form::select('is_public', ['1' => 'Si', '0' => 'No'], null, ['class' => 'form-control', 'placeholder' => 'Seleccione']) !!}
     </div>
 
 </div>

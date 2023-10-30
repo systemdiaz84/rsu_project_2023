@@ -62,8 +62,9 @@ class TreeController extends Controller
         $trees->update([
             'name' => $name
         ]);
-
-
+        $trees->is_pending = 0;
+        // $trees->is_active = 1;
+        $trees->save();
 
         return redirect()->route('admin.trees.index')->with('action', 'Arbol Registrado');
     }
