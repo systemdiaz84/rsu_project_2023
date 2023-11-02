@@ -92,6 +92,8 @@ class FamilyphotoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $familyphoto = Familyphoto::find($id);
+        $familyphoto->delete();
+        return redirect()->route('admin.families.show',$familyphoto->family_id);
     }
 }

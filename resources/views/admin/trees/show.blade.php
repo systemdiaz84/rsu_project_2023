@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Visualización de Familia</h1>
+    <h1>Visualización de Árbol</h1>
 @stop
 
 @section('content')
@@ -13,18 +13,17 @@
 
             <div class="form-group">
                 <label for="">Nombre</label> <br>
-                {{ $family->name }}
+                {{ $tree->name }}
             </div>
 
             <div class="form-group">
                 <label for="">Descripción</label> <br>
-                {{ $family->description }}
+                {{ $tree->description }}
             </div>
 
-            <a href={{ route('admin.families.edit', $family) }} class="btn btn-success"><i
-                    class="bi bi-pencil-fill"></i>&nbsp;&nbsp;Editar</a>
-
-            <a href={{ route('admin.families.index') }} class="btn btn-danger"><i
+            <button class="btn btn-success btnEditar" data-id={{ $tree->id }}><i
+                    class="bi bi-pencil-fill"></i>&nbsp;&nbsp;Editar</button>
+            <a href={{ route('admin.trees.index') }} class="btn btn-danger"><i
                     class="bi bi-backspace-fill"></i>&nbsp;&nbsp;Retornar</a>
 
 
@@ -60,7 +59,7 @@
                 <div class="card-footer">
                     <form action={{ route('admin.familyphotos.store') }} method="post" enctype="multipart/form-data">
                         @csrf
-                        <input type="hidden" value="{{ $family->id }}" name="family_id">
+                        <input type="hidden" value="{{ $tree->id }}" name="family_id">
                         <div class="form-group">
                             <div class="custom-file">
                                 <div class="input-group mb-3">
@@ -90,7 +89,24 @@
 
 
     </div>
+<!-- Modal -->
+    <div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Formulario de árboles</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
 
+            </div>
+        </div>
+    </div>
     <script>
         function previewImage() {
             var preview = document.querySelector('#preview');
@@ -116,4 +132,21 @@
 
 @section('js')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <script>
+        $(document).ready(function() {
+            $('.btnEditar').click(function() {
+                var id = $(this).attr('data-id');
+
+                $.ajax({
+                    url: "{{ route('admin.trees.edit', ':id') }}".replace(':id', id),
+                    type: 'GET',
+                    success: function(response) {
+
+                        $("#Modal .modal-body").html(response);
+                        $("#Modal").modal('show');
+                    }
+                })
+                })
+            })
+    </script>
 @endsection

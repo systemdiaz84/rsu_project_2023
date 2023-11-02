@@ -29,6 +29,7 @@
                         <th>ZONA</th>
                         <th></th>
                         <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,7 +44,11 @@
                             <td width="10px">
                                 <button class="btn btn-secondary btn-sm btnEditar" data-id={{ $tree->id }}><i
                                         class="fas fa-edit"></i></button>
-
+                            </td>
+                            <td width="10px">
+                                <a href={{ route('admin.trees.show', $tree->id) }} class="btn btn-primary btn-sm"><i
+                                        class="fas fa-eye"></i></a>
+                            </td>
                             <td width="10px">
                                 <form action={{ route('admin.trees.destroy', $tree->id) }} method='post' class="frmDelete">
                                     @method('delete')

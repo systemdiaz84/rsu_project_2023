@@ -36,6 +36,11 @@
                             <td width="10px">
                                 <button class="btn btn-secondary btn-sm btnEditar" data-id={{ $family->id }}><i
                                         class="fas fa-edit"></i></button>
+                            </td>
+                            <td width="10px">
+                                <a href="{{ route('admin.families.show', $family->id) }}"
+                                    class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
+                            </td>
 
                             <td width="10px">
                                 <form action={{ route('admin.families.destroy', $family->id) }} method='post'

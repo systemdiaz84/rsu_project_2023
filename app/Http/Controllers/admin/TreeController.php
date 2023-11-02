@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\admin\Family;
 use App\Models\admin\Specie;
 use App\Models\admin\Tree;
+use App\Models\admin\TreePhotos;
 use App\Models\admin\Zone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -77,7 +78,10 @@ class TreeController extends Controller
      */
     public function show($id)
     {
-        //
+        $tree = Tree::findOrFail($id);
+        $photos = TreePhotos::where('tree_id', $id)->get();
+
+        return view('admin.trees.show', compact('tree', 'photos'));
     }
 
     /**
@@ -89,12 +93,11 @@ class TreeController extends Controller
     public function edit($id)
     {
         $tree = Tree::find($id);
-        $zones = Zone::all()->pluck('name', 'id');
         $families = Family::whereRaw('id IN (Select family_id from species)')->pluck('name', 'id');
 
         $species = Specie::where('family_id', $tree->family_id)->pluck('name', 'id');
 
-        return view('admin.trees.edit', compact('tree', 'zones', 'families', 'species'));
+        return view('admin.trees.edit', compact('tree', 'families', 'species'));
     }
 
     /**
