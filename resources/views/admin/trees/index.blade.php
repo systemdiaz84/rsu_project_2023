@@ -27,6 +27,7 @@
                         <th>FAMILIA</th>
                         <th>ESPECIE</th>
                         <th>ZONA</th>
+                        <th>HOME</th>
                         <th></th>
                         <th></th>
                         <th></th>
@@ -41,6 +42,7 @@
                             <td>{{ $tree->familyname }}</td>
                             <td>{{ $tree->speciename }}</td>
                             <td>{{ $tree->zonename }}</td>
+                            <td>{{ $tree->homename }}</td>
                             <td width="10px">
                                 <button class="btn btn-secondary btn-sm btnEditar" data-id={{ $tree->id }}><i
                                         class="fas fa-edit"></i></button>

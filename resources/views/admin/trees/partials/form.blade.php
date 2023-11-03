@@ -1,5 +1,5 @@
 <div class="form-row">
-    <div class="form-group col-5">
+    <div class="form-group col-8">
         {!! Form::label('name', 'Nombre de árbol') !!}
         {!! Form::text('name', null, [
             'class' => 'form-control',
@@ -7,19 +7,22 @@
             'required',
         ]) !!}
     </div>
-
     <div class="form-group col-4">
-        {!! Form::label('zone_id', 'Zona') !!}
-        {!! Form::select('zone_id', $zones, null, ['class' => 'form-control', 'required']) !!}
-
-    </div>
-    <div class="form-group col-3">
         {!! Form::label('is_public', 'Árbol público') !!}
         {!! Form::select('is_public', ['1' => 'Si', '0' => 'No'], null, ['class' => 'form-control', 'placeholder' => 'Seleccione']) !!}
     </div>
 
 </div>
-
+<div class="form-row">
+    <div class="form-group col-6">
+        {!! Form::label('zone_id', 'Zona') !!}
+        {!! Form::select('zone_id', $zones, null, ['class' => 'form-control', 'required', 'id' => 'zone_id']) !!}
+    </div>
+    <div class="form-group col-6">
+        {!! Form::label('home_id', 'Hogar') !!}
+        {!! Form::select('home_id', $homes, null, ['class' => 'form-control', 'required', 'id' => 'home_id']) !!}
+    </div>
+</div>
 <div class="form-row">
     <div class="form-group col-6">
         {!! Form::label('family_id', 'Familia') !!}
@@ -117,7 +120,24 @@
         lonInput.value = "";
 
         verPerimetro();
+        listadoHogares($(this).val());
     });
+
+    function listadoHogares(zone_id){
+        $.ajax({
+            url: "{{ route('admin.homes_zone', ':id') }}".replace(':id', zone_id),
+            type: 'GET',
+            dataType: 'json',
+            contentType: 'application/json;chartset=utf-8',
+            success: function(response) {
+                $('#home_id').empty();
+                $.each(response, function(key, value) {
+                    $('#home_id').append('<option value="' + value.id + '">' + value
+                        .name + '</option>');
+                });
+            }
+        })
+    }
 
     function verPerimetro() {
         var id = $('#zone_id').val();

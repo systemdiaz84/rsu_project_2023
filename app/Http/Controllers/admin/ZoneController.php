@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\admin\District;
+use App\Models\admin\Home;
 use App\Models\admin\Province;
 use App\Models\Admin\Tree;
 use App\Models\admin\Zone;
@@ -119,5 +120,11 @@ class ZoneController extends Controller
             $zone->delete();
             return redirect()->route('admin.zones.index')->with('success', 'Zona Eliminada');
         }
+    }
+
+    public function homes_zone($id)
+    {
+        $homes = Home::where('zone_id', $id)->where('is_active', 1)->get();
+        return $homes;
     }
 }
