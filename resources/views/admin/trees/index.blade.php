@@ -55,7 +55,7 @@
                                 <form action={{ route('admin.trees.destroy', $tree->id) }} method='post' class="frmDelete">
                                     @method('delete')
                                     @csrf
-                                    <button type="submit" class="btn btn-danger btn-sm"><i
+                                    <button type="submit" class="btn btn-danger btn-sm" disabled><i
                                             class="fas fa-trash"></i></button>
                                 </form>
                             </td>

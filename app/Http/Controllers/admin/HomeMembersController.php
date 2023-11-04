@@ -44,7 +44,7 @@ class HomeMembersController extends Controller
         // validar si el usuario ya existe en el hogar
         $home_member = HomeMembers::where('home_id', $request->input('home_id'))->where('user_id', User::select('users.id')->where('users.n_doc', $request->input('n_doc'))->pluck('id')->first())->count();
         if($home_member > 0){
-            return redirect()->route('admin.home.index')->with('error', 'El usuario ya existe en el hogar');
+            return response()->json(['error' => 'El usuario ya existe en el hogar'], 409);
         }
         $request->merge(['is_pending' => 0]);
         $request->merge(['user_id' => User::select('users.id')->where('users.n_doc', $request->input('n_doc'))->pluck('id')->first()]);
@@ -52,7 +52,7 @@ class HomeMembersController extends Controller
         HomeMembers::create($request->all());
 
         $home = Home::find($request->input('home_id'));
-        $members = User::select('users.id', 'users.n_doc', 'users.name', 'users.lastname')->join('home_members', 'users.id', '=', 'home_members.user_id')->where('home_members.home_id', $request->input('home_id'))->get();
+        $members = User::select('users.id', 'users.n_doc', 'users.name', 'users.lastname','home_members.is_boss')->join('home_members', 'users.id', '=', 'home_members.user_id')->where('home_members.home_id', $request->input('home_id'))->get();
         
         return view('admin.homemembers.index', compact('home', 'members'));
     }

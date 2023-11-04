@@ -124,4 +124,15 @@ class UserController extends Controller
     {
         
     }
+    public function search($search)
+    {
+        $users = User::select('n_doc', 'name', 'lastname')
+            ->where('n_doc', 'LIKE', '%' . $search . '%')
+            ->orWhere('name', 'LIKE', '%' . $search . '%')
+            ->orWhere('lastname', 'LIKE', '%' . $search . '%')
+            ->limit(10)
+            ->get();
+
+        return $users;
+    }
 }
