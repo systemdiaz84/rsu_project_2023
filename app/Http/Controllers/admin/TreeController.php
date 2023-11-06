@@ -29,7 +29,11 @@ class TreeController extends Controller
             ->join('families', 'species.family_id', '=', 'families.id')
             ->join('home_trees', 'home_trees.tree_id', '=', 'trees.id')
             ->join('home', 'home.id', '=', 'home_trees.home_id')
-            ->join('zones', 'zones.id', '=', 'home.zone_id')->get();
+            ->join('zones', 'zones.id', '=', 'home.zone_id')
+            // verificar si se debe mostrar en los siguientes casos:
+            // ->where('home.is_active', 1) 
+            // ->where('home.is_pending', 0)
+            ->get();
 
         return view('admin.trees.index', compact('trees'));
     }
@@ -48,7 +52,9 @@ class TreeController extends Controller
                     ->join('district', 'district.id', '=', 'zones.district_id')
                     ->where('district.departament_id', '14')
                     ->limit(1);
-            })->pluck('name', 'id');
+            })->where('home.is_active', 1) 
+            ->where('home.is_pending', 0)
+            ->pluck('name', 'id');
 
         $zones = Zone::select('zones.id', 'zones.name')
             ->join('district', 'district.id', '=', 'zones.district_id')
@@ -121,7 +127,10 @@ class TreeController extends Controller
             ->where('trees.id', $id)->first();
         $families = Family::whereRaw('id IN (Select family_id from species)')->pluck('name', 'id');
         $homes = Home::select('home.id', 'home.name')
-            ->where('home.zone_id', $tree->zone_id)->pluck('name', 'id');
+            ->where('home.zone_id', $tree->zone_id)
+            ->where('home.is_active', 1)
+            ->where('home.is_pending', 0)
+            ->pluck('name', 'id');
         $zones = Zone::select('zones.id', 'zones.name')
             ->join('district', 'district.id', '=', 'zones.district_id')
             ->where('district.departament_id', '14')->pluck('name', 'id');

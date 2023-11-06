@@ -46,8 +46,23 @@
                             <td>{{ $home->direction }}</td>
                             <td>{{ $home->username }} {{ $home->userlastname }}</td>
                             <td>{{ $home->zonename }}</td>
-                            <td><span class="badge badge-pill badge-{{ $home->is_pending ? 'danger' : 'success' }}">
-                                    {{ $home->is_pending ? 'Pendiente' : 'Activo' }}</span></td>
+                            <td>
+                                <span class="d-flex justify-content-center">
+                                    <span class="badge badge-pill badge-{{ $home->is_pending ? 'warning' : 'success' }}">
+                                        {{ $home->is_pending ? 'Pendiente' : 'Activo' }}
+                                    </span>
+                                </span>
+                                @if ($home->is_pending)
+                                    <div class="btn-group mt-1">
+                                        <a href="{{ route('admin.home.accept', $home->id) }}" class="btn btn-success btn-sm">
+                                            Aceptar
+                                        </a>
+                                        <a href="{{ route('admin.home.reject', $home->id) }}" class="btn btn-danger btn-sm">
+                                            Rechazar
+                                        </a>
+                                    </div>
+                                @endif
+                            </td>
                             <td><span class="badge badge-pill badge-{{ $home->is_public ? 'success' : 'warning' }}">
                                     {{ $home->is_public ? 'Público' : 'Privado' }}</span></td>
                             <td width="35px">

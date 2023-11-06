@@ -49,6 +49,8 @@ Route::group(['middleware' => ['auth', 'permission']], function() {
     Route::resource('permissions', PermissionsController::class)->names('admin.permissions');
 });
 Route::resource('homes', HomeController::class)->names('admin.home');
+Route::get('homes/accept/{id}', [HomeController::class, 'accept'])->name('admin.home.accept');
+Route::get('homes/reject/{id}', [HomeController::class, 'reject'])->name('admin.home.reject');
 Route::resource('homemembers', HomeMembersController::class)->names('admin.homemembers')->except(
     ['create','destroy']
 );

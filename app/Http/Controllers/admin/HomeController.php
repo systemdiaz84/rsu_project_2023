@@ -155,4 +155,23 @@ class HomeController extends Controller
         return Redirect()->route('admin.home.index')->with('success', 'Hogar dado de baja');
 
     }
+
+    public function accept($id)
+    {
+        $home = Home::find($id);
+        $home->is_pending = 0;
+        $home->save();
+
+        return Redirect()->route('admin.home.index')->with('success', 'Hogar aceptado');
+    }
+
+    public function reject($id)
+    {
+        $home = Home::find($id);
+        $home->is_active = 0;
+        $home->is_pending = 0;
+        $home->save();
+
+        return Redirect()->route('admin.home.index')->with('success', 'Hogar rechazado');
+    }
 }
