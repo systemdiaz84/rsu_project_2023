@@ -53,7 +53,7 @@
                                     </span>
                                 </span>
                                 @if ($home->is_pending)
-                                    <div class="btn-group mt-1">
+                                    <div class="btn-group mt-1 d-flex justify-content-center">
                                         <a href="{{ route('admin.home.accept', $home->id) }}" class="btn btn-success btn-sm">
                                             Aceptar
                                         </a>

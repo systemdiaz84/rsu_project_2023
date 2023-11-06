@@ -64,7 +64,9 @@ class GraphController extends Controller
             'zones.name as name',
             DB::raw('count(*) as y')
         )
-            ->join('zones', 'zones.id', '=', 'trees.zone_id')
+            ->join('home_trees', 'home_trees.tree_id', '=', 'trees.id')
+            ->join('home', 'home.id', '=', 'home_trees.home_id')
+            ->join('zones', 'zones.id', '=', 'home.zone_id')
             ->groupBy('zones.name')->get();
 
         return View('admin.graphs.index', compact('families', 'species_families', 'species', 'zones'));
