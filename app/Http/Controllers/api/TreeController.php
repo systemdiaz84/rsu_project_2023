@@ -224,7 +224,7 @@ s
                 'trees.latitude',
                 'trees.longitude',
                 'trees.specie_id',
-                'trees.zone_id',
+                'home.zone_id',
                 'trees.user_id',
                 'families.name as family_name',
                 'species.name as species_name',
