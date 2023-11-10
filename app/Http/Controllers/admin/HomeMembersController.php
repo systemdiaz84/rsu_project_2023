@@ -80,7 +80,14 @@ class HomeMembersController extends Controller
     public function show($id)
     {
         $home = Home::find($id);
-        $members = User::select('users.id', 'users.n_doc', 'users.name', 'users.lastname','home_members.is_boss')->join('home_members', 'users.id', '=', 'home_members.user_id')->where('home_members.home_id', $id)->get();
+        $members = User::select('users.id', 'users.n_doc', 'users.name', 'users.lastname','home_members.is_boss','home_members.is_active','home_members.is_pending')
+                    ->join('home_members', 'users.id', '=', 'home_members.user_id')
+                    ->where('home_members.home_id', $id)
+                    ->where(function($query){
+                        $query->where('home_members.is_active', 1)
+                        ->orWhere('home_members.is_active', 0)->where('home_members.is_pending', 1);
+                    })
+                    ->get();
         return view('admin.homemembers.index', compact('home', 'members'));
     }
 
@@ -135,8 +142,24 @@ class HomeMembersController extends Controller
      */
     public function destroy($id_home, $id_member)
     {
-        $home_member = HomeMembers::where('home_id', $id_home)->where('user_id', $id_member);
-        $home_member->delete();
+        $home_member = HomeMembers::where('home_id', $id_home)->where('user_id', $id_member); //pueden ser varios
+        $home_member->update(['is_active' => 0, 'is_pending' => 0]);
         return redirect()->route('admin.home.index')->with('success', 'Miembro eliminado');
+    }
+
+    public function accept($id_home, $id_member){
+        $home_member = HomeMembers::where('home_id', $id_home)->where('user_id', $id_member)->where('is_pending', 1)->where('is_active', 0)->first();
+        $home_member->is_pending = 0;
+        $home_member->is_active = 1;
+        $home_member->save();
+        return redirect()->route('admin.home.index')->with('success', 'Miembro aceptado');
+    }
+
+    public function reject($id_home, $id_member){
+        $home_member = HomeMembers::where('home_id', $id_home)->where('user_id', $id_member)->where('is_pending', 1)->where('is_active', 0)->first();
+        $home_member->is_pending = 0;
+        $home_member->is_active = 0;
+        $home_member->save();
+        return redirect()->route('admin.home.index')->with('success', 'Miembro rechazado');
     }
 }

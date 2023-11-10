@@ -6,6 +6,7 @@ use App\Http\Controllers\api\EvolutionController;
 use App\Http\Controllers\api\EvolutionPhotoController;
 use App\Http\Controllers\api\FamilyController;
 use App\Http\Controllers\api\GraphController;
+use App\Http\Controllers\api\HomeController;
 use App\Http\Controllers\api\MapController;
 use App\Http\Controllers\api\ProcedureController;
 use App\Http\Controllers\api\ProcedureTypeController;
@@ -41,7 +42,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
  
 //'auth:sanctum', 'permission'
-Route::group(['middleware' => ['auth:sanctum', 'permission']], function() {
+Route::group(['middleware' => ['auth:sanctum']], function() {
 
     Route::resource('/trees', TreeController::class)->names('api.trees');
     Route::get('/trees_zone/{zone_id}', [TreeController::class,'trees_zone'])->name('api.trees_zone');
@@ -71,6 +72,7 @@ Route::group(['middleware' => ['auth:sanctum', 'permission']], function() {
     
     
     Route::get('/login/data/{email}', [UserController::class, 'data_email'])->name('api.data_email');
-
+    
+    Route::post('/home/request/{codeHome}', [HomeController::class, 'requestAccessHome'])->name('api.request_home');
 });
 

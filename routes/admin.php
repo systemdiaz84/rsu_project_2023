@@ -56,6 +56,8 @@ Route::resource('homemembers', HomeMembersController::class)->names('admin.homem
 );
 Route::get('homemembers/create/{home_id}', [HomeMembersController::class, 'create'])->name('admin.homemembers.create');
 Route::delete('homemembers/{id_home}/{id_member}', [HomeMembersController::class,'destroy'])->name('admin.homemembers.destroy');
+Route::get('homemembers/accept/{id_home}/{id_member}', [HomeMembersController::class,'accept'])->name('admin.homemembers.accept');
+Route::get('homemembers/reject/{id_home}/{id_member}', [HomeMembersController::class,'reject'])->name('admin.homemembers.reject');
 Route::get('homes_zone/{zone_id}', [ZoneController::class, 'homes_zone'])->name('admin.homes_zone');
 Route::get('users/search/{search}', [UserController::class, 'search'])->name('admin.users.search');
 ?>
