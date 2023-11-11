@@ -47,6 +47,7 @@ class UserController extends Controller
         $user = new User();
         $user->name = $request->input('name');
         $user->lastname = $request->input('lastname');
+        $user->n_doc = $request->input('n_doc');
         $user->email = $request->input('email');
         $user->password = bcrypt($request->input('password')); // Se recomienda encriptar la contraseña
 
@@ -93,6 +94,7 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->name = $request->input('name');
         $user->lastname = $request->input('lastname');
+        $user->n_doc = $request->input('n_doc');
         $user->email = $request->input('email');
     
         // Verifica si se proporcionó una nueva contraseña
