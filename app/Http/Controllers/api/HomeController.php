@@ -39,29 +39,31 @@ class HomeController extends Controller
      */
     public function store(Request $request)
     {
-        // Home::create($request->all());
-        if($this->checkCode($request->input('code')) > 0){
-            return redirect()->route('admin.home.index')->with('error', 'El código ya existe');
+        $code = $this->generateCode();
+        while($this->checkCode($code)){
+            $code = $this->generateCode();
         }
         $home = new Home();
-        $home->code = $request->input('code');
+        $home->code = $code;
         $home->name = $request->input('name');
-        $home->is_public = $request->input('is_public');
         $home->direction = $request->input('direction');
+        $home->is_public = 0;
+        // 1
         $home->zone_id = $request->input('zone_id');
-        $home->user_id = User::select('users.id')->where('users.n_doc', $request->input('n_doc'))->pluck('id')->first();
-        $home->is_active = 1;
-        $home->is_pending = 0;
+        $home->user_id = auth()->user()->id;
+        $home->is_active = 0;
+        $home->is_pending = 1;
         $home->save();
 
         $homeMember = new HomeMembers();
         $homeMember->home_id = $home->id;
-        $homeMember->is_active = 1;
-        $homeMember->is_pending = 0;
+        $homeMember->is_active = 0;
+        $homeMember->is_pending = 1;
         $homeMember->is_boss = 1;
         $homeMember->user_id = $home->user_id;
         $homeMember->save();
-        return redirect()->route('admin.home.index')->with('success', 'Hogar creado');
+
+        return response()->json(['message' => 'Hogar creado correctamente', 'data' => $home, 'status' => true]); 
     }
     
     function checkCode($code){

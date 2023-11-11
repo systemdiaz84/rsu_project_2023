@@ -129,3 +129,129 @@ BEGIN
 
     RETURN zone_id;
 END;
+
+
+CREATE PROCEDURE puntoEnPoligono(IN x DOUBLE, IN y DOUBLE, IN x1 DOUBLE, IN y1 DOUBLE, IN x2 DOUBLE, IN y2 DOUBLE, OUT resultado BOOLEAN)
+BEGIN
+  DECLARE cruces INT DEFAULT 0;
+  IF x = x1 AND y = y1 THEN
+    SET resultado = TRUE;
+  ELSEIF y1 = y2 AND y = y1 AND x > LEAST(x1, x2) AND x < GREATEST(x1, x2) THEN
+    SET resultado = TRUE;
+  ELSEIF y < LEAST(y1, y2) OR y > GREATEST(y1, y2) THEN
+    SET resultado = FALSE;
+  ELSEIF x < LEAST(x1, x2) THEN
+    SET cruces = cruces + 1;
+    SET resultado = cruces % 2 = 1;
+  ELSEIF x > GREATEST(x1, x2) THEN
+    SET resultado = FALSE;
+  ELSE
+    DECLARE m DOUBLE;
+    DECLARE b DOUBLE;
+    SET m = (y2 - y1) / (x2 - x1);
+    SET b = y1 - m * x1;
+    IF y = m * x + b THEN
+      SET resultado = TRUE;
+    ELSEIF y > m * x + b THEN
+      SET cruces = cruces + 1;
+      SET resultado = cruces % 2 = 1;
+    END IF;
+  END IF;
+END;
+
+
+
+
+-- DECLARE coord_cursor CURSOR FOR
+--                 SELECT latitude, longitude FROM zone_coords WHERE zone_id = zone_id ORDER BY id;
+
+--             OPEN coord_cursor;
+
+CREATE FUNCTION get_zone_id(latitude DOUBLE, longitude DOUBLE)
+RETURNS INT
+BEGIN
+    DECLARE done INT DEFAULT FALSE;
+    DECLARE zone_id INT;
+    DECLARE num_intersections INT DEFAULT 0;
+    DECLARE p1_lat DOUBLE;
+    DECLARE p1_long DOUBLE;
+    DECLARE p2_lat DOUBLE;
+    DECLARE p2_long DOUBLE;
+    DECLARE x_inters DOUBLE;
+    DECLARE m DOUBLE;
+    DECLARE b DOUBLE;
+    DECLARE num_coords INT DEFAULT 0;
+    DECLARE i INT DEFAULT 1;
+
+    DECLARE zone_cursor CURSOR FOR
+        SELECT id FROM zones ORDER BY id;
+
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+
+    SELECT COUNT(id) INTO num_coords FROM zone_coords WHERE zone_id = zone_id;
+    
+    OPEN zone_cursor;
+
+    zone_loop: LOOP
+        FETCH zone_cursor INTO zone_id;
+        IF done IS NULL THEN
+            LEAVE zone_loop;
+        END IF;
+        BLOCK2: BEGIN
+            
+
+            coord_loop: LOOP
+                SELECT latitude, longitude INTO p1_lat, p1_long FROM zone_coords WHERE zone_id = zone_id ORDER BY id LIMIT i, 1;
+
+                IF p1_lat IS NULL OR p1_long IS NULL THEN
+                    LEAVE coord_loop;
+                END IF;
+
+                SELECT latitude, longitude INTO p2_lat, p2_long FROM zone_coords WHERE zone_id = zone_id ORDER BY id LIMIT 1, 1;
+
+                IF p2_lat IS NULL OR p2_long IS NULL THEN
+                    SELECT latitude, longitude INTO p2_lat, p2_long FROM zone_coords WHERE zone_id = zone_id ORDER BY id LIMIT 0, 1;
+                END IF;
+
+                IF latitude = p1_lat AND longitude = p1_long THEN
+                    SET zone_id = (SELECT id FROM zones WHERE id = zone_id);
+                    LEAVE zone_loop;
+                ELSEIF p1_lat = p2_lat AND latitude = p1_lat AND longitude > LEAST(p1_long, p2_long) AND longitude < GREATEST(p1_long, p2_long) THEN
+                    SET zone_id = (SELECT id FROM zones WHERE id = zone_id);
+                    LEAVE zone_loop;
+                ELSEIF latitude < LEAST(p1_lat, p2_lat) OR latitude > GREATEST(p1_lat, p2_lat) THEN
+                    ITERATE coord_loop;
+                ELSEIF longitude < LEAST(p1_long, p2_long) THEN
+                    SET num_intersections = num_intersections + 1;
+                ELSEIF longitude > GREATEST(p1_long, p2_long) THEN
+                    ITERATE coord_loop;
+                ELSE
+                    SET m = (p2_lat - p1_lat) / (p2_long - p1_long);
+                    SET b = p1_lat - m * p1_long;
+                    IF latitude = m * longitude + b THEN
+                        SET zone_id = (SELECT id FROM zones WHERE id = zone_id);
+                        LEAVE zone_loop;
+                    ELSEIF latitude > m * longitude + b THEN
+                        SET num_intersections = num_intersections + 1;
+                    END IF;
+                END IF;
+                SET i = i + 1;
+            END LOOP;
+
+            IF num_intersections % 2 = 1 THEN
+                CLOSE zone_cursor;
+                RETURN zone_id;
+            ELSE
+                SET zone_id = NULL;
+            END IF;
+
+            SET num_intersections = 0;
+
+        END BLOCK2;
+        SET i = 1;
+    END LOOP;
+
+    CLOSE zone_cursor;
+
+    RETURN zone_id;
+END;
