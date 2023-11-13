@@ -42,7 +42,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
  
 //'auth:sanctum', 'permission'
-Route::group(['middleware' => ['auth:sanctum']], function() {
+Route::group(['middleware' => []], function() {
 
     Route::resource('/trees', TreeController::class)->names('api.trees');
     Route::get('/trees_zone/{zone_id}', [TreeController::class,'trees_zone'])->name('api.trees_zone');
@@ -74,5 +74,6 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::get('/login/data/{email}', [UserController::class, 'data_email'])->name('api.data_email');
     
     Route::post('/home/request/{codeHome}', [HomeController::class, 'requestAccessHome'])->name('api.request_home');
+    Route::get('/zone/search', [ZoneController::class, 'getZoneByCoordinates'])->name('api.zone_search');
 });
 

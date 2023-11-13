@@ -255,3 +255,105 @@ BEGIN
 
     RETURN zone_id;
 END;
+
+DELIMITER //
+CREATE FUNCTION get_zone_id(lat DOUBLE, lng DOUBLE)
+RETURNS INT
+BEGIN
+    DECLARE zone_id INT;
+
+    SELECT zone_id INTO zone_id
+    FROM zone_coords
+    WHERE ST_Contains(
+        ST_GeomFromText(CONCAT('POLYGON((', 
+            GROUP_CONCAT(CONCAT(latitude, ' ', longitude) SEPARATOR ', '), '))')),
+        ST_PointFromText(CONCAT('POINT(', lat, ' ', lng, ')'))
+    )
+    LIMIT 1;
+
+    RETURN zone_id;
+END//
+DELIMITER ;
+
+DELIMITER //
+CREATE FUNCTION get_zone_id(lat DOUBLE, lng DOUBLE)
+RETURNS INT
+BEGIN
+    DECLARE _zone_id INT;
+    DECLARE done INT DEFAULT FALSE;
+    DECLARE cur CURSOR FOR SELECT DISTINCT zone_id FROM zone_coords ORDER BY zone_id;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+
+    OPEN cur;
+
+    read_loop: LOOP
+        FETCH cur INTO _zone_id;
+        IF done THEN
+            SET _zone_id = NULL;
+            LEAVE read_loop;
+        END IF;
+
+        IF ST_Contains(
+            ST_GeomFromText(CONCAT('POLYGON((',
+                (SELECT CONCAT(
+                    GROUP_CONCAT(CONCAT(latitude, ' ', longitude) SEPARATOR ','),
+                    ',', 
+                    SUBSTRING_INDEX(GROUP_CONCAT(CONCAT(latitude, ' ', longitude) SEPARATOR ','), ',', 1)
+                )
+                FROM zone_coords WHERE zone_id = _zone_id), '))')),
+            ST_PointFromText(CONCAT('POINT(', lat, ' ', lng, ')'))
+        ) = 1 THEN
+            LEAVE read_loop;
+        END IF;
+    END LOOP;
+
+    CLOSE cur;
+
+    RETURN _zone_id;
+END//
+DELIMITER ;
+
+
+
+-- FUNCIÓN FINAL
+DELIMITER //
+CREATE FUNCTION get_zone_id(lat DOUBLE, lng DOUBLE)
+RETURNS INT
+BEGIN
+    DECLARE _zone_id INT;
+    DECLARE done INT DEFAULT FALSE;
+    DECLARE cur CURSOR FOR SELECT DISTINCT zone_id FROM zone_coords ORDER BY zone_id;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+
+    OPEN cur;
+
+    read_loop: LOOP
+        FETCH cur INTO _zone_id;
+        IF done THEN
+            SET _zone_id = NULL;
+            LEAVE read_loop;
+        END IF;
+
+        IF (SELECT COUNT(id) FROM zone_coords WHERE zone_id = _zone_id) < 3 THEN
+            ITERATE read_loop;
+        END IF;
+
+        IF ST_Contains(
+            ST_GeomFromText(CONCAT('POLYGON((',
+                (SELECT CONCAT(
+                    GROUP_CONCAT(CONCAT(latitude, ' ', longitude) SEPARATOR ','),
+                    ',',
+                    (SELECT CONCAT(latitude, ' ', longitude) FROM zone_coords WHERE zone_id = _zone_id LIMIT 1)
+                )
+                FROM zone_coords WHERE zone_id = _zone_id), '))')),
+            ST_PointFromText(CONCAT('POINT(', lat, ' ', lng, ')'))
+        ) = 1 THEN
+            LEAVE read_loop;
+        END IF;
+    END LOOP;
+
+    CLOSE cur;
+
+    RETURN _zone_id;
+END//
+DELIMITER ;
