@@ -19,7 +19,7 @@
         No se encontraron resultados
     </div>
 </div>
-<table class="table table-striped" hidden id="user_table_search">
+<table class="table table-striped table-responsive" hidden id="user_table_search">
     <thead>
         <tr>
             <th>Nombre</th>

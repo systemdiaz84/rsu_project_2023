@@ -5,7 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\admin\Evolution;
 use App\Models\admin\State;
-use App\Models\Admin\Tree;
+use App\Models\admin\Tree;
 use Illuminate\Http\Request;
 
 class StateController extends Controller

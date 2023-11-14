@@ -16,7 +16,7 @@
             @include('layouts.partials.messages')
         </div>
 
-        <table class="table table-striped">
+        <table class="table table-striped table-responsive">
             <thead>
             <tr>
                 <th scope="col" width="15%">Nombre</th>

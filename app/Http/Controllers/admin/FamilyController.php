@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Admin\Family;
-use App\Models\Admin\Familyphoto;
-use App\Models\Admin\Specie;
-use App\Models\Admin\Tree;
+use App\Models\admin\Family;
+use App\Models\admin\Familyphoto;
+use App\Models\admin\Specie;
+use App\Models\admin\Tree;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 

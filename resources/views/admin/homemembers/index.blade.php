@@ -1,4 +1,4 @@
-<table class="table table-striped" id="home_members_table">
+<table class="table table-striped table-responsive" id="home_members_table">
     <thead>
         <tr>
             <th>Miembro</th>

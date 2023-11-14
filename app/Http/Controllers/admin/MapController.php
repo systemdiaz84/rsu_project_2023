@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Admin\Tree;
+use App\Models\admin\Tree;
 use App\Models\admin\TreePhotos;
-use App\Models\Admin\Zone;
+use App\Models\admin\Zone;
 use App\Models\admin\ZoneCoord;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;

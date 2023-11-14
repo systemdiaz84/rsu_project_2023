@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\admin\Home;
 use App\Models\admin\HomeMembers;
 use App\Models\admin\Zone;
-use App\Models\Admin\User;
+use App\Models\admin\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller

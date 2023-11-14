@@ -4,7 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Models\admin\HomeTree;
-use App\Models\Admin\Tree;
+use App\Models\admin\Tree;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PhpOption\None;

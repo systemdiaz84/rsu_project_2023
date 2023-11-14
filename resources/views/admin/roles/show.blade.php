@@ -13,7 +13,7 @@
 
             <h3>Permisos asignados</h3>
 
-            <table class="table table-striped">
+            <table class="table table-striped table-responsive">
                 <thead>
                     <th scope="col" width="20%">Nombre</th>
                     <th scope="col" width="1%">Guard</th> 

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Admin\Family;
-use App\Models\Admin\Specie;
+use App\Models\admin\Family;
+use App\Models\admin\Specie;
 use Illuminate\Http\Request;
 
 class FamilyController extends Controller

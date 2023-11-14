@@ -38,7 +38,7 @@
             <h5>Coodenadas del perímetro</h5>
         </div>
         <div class="card-body">
-            <table class="table table-striped" id="coords_table">
+            <table class="table table-striped table-responsive" id="coords_table">
                 <thead>
                     <tr>
                         <th>ID</th>

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Admin\Zone;
+use App\Models\admin\Zone;
 use App\Models\admin\ZoneCoord;
 use Illuminate\Http\Request;
 

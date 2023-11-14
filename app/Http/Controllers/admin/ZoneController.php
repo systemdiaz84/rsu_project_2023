@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\admin\District;
 use App\Models\admin\Home;
 use App\Models\admin\Province;
-use App\Models\Admin\Tree;
+use App\Models\admin\Tree;
 use App\Models\admin\Zone;
 use App\Models\admin\ZoneCoord;
 use Illuminate\Http\Request;

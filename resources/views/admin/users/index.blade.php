@@ -19,7 +19,7 @@
 
         </div>
         <div class="card-body">
-            <table class="table table-striped" id="user_table">
+            <table class="table table-striped table-responsive" id="user_table">
                 <thead>
                     <tr>
                         <th>ID</th>

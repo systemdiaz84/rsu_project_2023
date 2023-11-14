@@ -2,7 +2,7 @@
 
 namespace App\Models\Admin;
 
-use App\Models\Admin\Familyphoto;
+use App\Models\admin\Familyphoto;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 

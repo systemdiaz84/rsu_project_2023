@@ -19,7 +19,7 @@
 
         </div>
         <div class="card-body">
-            <table class="table table-striped" id="tree_table">
+            <table class="table table-striped table-responsive" id="tree_table">
                 <thead>
                     <tr>
                         <th>ID</th>

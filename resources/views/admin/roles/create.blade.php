@@ -35,7 +35,7 @@
                 
                 <label for="permissions" class="form-label">Asignar Permisos</label>
 
-                <table class="table table-striped">
+                <table class="table table-striped table-responsive">
                     <thead>
                         <th scope="col" width="1%"><input type="checkbox" name="all_permission"></th>
                         <th scope="col" width="20%">Nombre</th>

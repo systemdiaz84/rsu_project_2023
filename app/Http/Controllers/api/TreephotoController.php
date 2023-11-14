@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Admin\Tree;
+use App\Models\admin\Tree;
 use App\Models\admin\Treephoto;
 use App\Models\admin\TreePhotos;
 use Illuminate\Http\Request;
