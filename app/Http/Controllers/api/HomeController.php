@@ -172,4 +172,30 @@ class HomeController extends Controller
             return response()->json(['message' => 'El hogar no existe', 'data' => $home, 'status' => false]);
         }
     }
+
+
+    //Obtener los hogares de un usuario
+    public function homeByUser($user_id) {
+
+        $homes = Home::select(
+                            'home.id', 
+                            'home.code', 
+                            'home.name', 
+                            'home.user_id', 
+                            'home.is_pending', 
+                            'home.is_public', 
+                            'home.direction', 
+                            'zones.id as zone_id',
+                            'zones.name as zonename'
+                            )
+                        ->join('zones', 'home.zone_id', '=', 'zones.id')
+                        ->join('home_members', 'home.id', '=', 'home_members.home_id')
+                        ->where([['home.is_active', 1], ['home_members.user_id', $user_id]])
+                        //->andWhere('home_members.user_id', $user_id)
+                        ->get();
+            
+        return $homes;
+
+    }
+
 }

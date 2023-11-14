@@ -75,5 +75,7 @@ Route::group(['middleware' => []], function() {
     
     Route::post('/home/request/{codeHome}', [HomeController::class, 'requestAccessHome'])->name('api.request_home');
     Route::get('/zone/search', [ZoneController::class, 'getZoneByCoordinates'])->name('api.zone_search');
+
+    Route::get('home/{user_id}', [HomeController::class, 'homeByUser']) ->name('api.homes_by_user');
 });
 
