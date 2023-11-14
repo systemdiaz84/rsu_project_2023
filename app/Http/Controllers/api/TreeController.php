@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\admin\HomeTree;
 use App\Models\Admin\Tree;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -67,7 +68,15 @@ class TreeController extends Controller
             'atributo' =>  'validadores'
         ]);
         */
-        $trees = Tree::create($request->all());
+
+        //Creamos el nuevo árbol con todos los parametros ingresados menos home_id que se usa para la asociación
+        $trees = Tree::create($request->except('home_id'));
+
+        //Creamos la asociación home_trees
+        $homeTree = new HomeTree();
+        $homeTree->home_id = $request->input('home_id');
+        $homeTree->tree_id = $trees->id;
+        $homeTree->save();
 
         /*
         $name = $trees->name . ' ' . $trees->id;
@@ -135,10 +144,14 @@ s
             'trees.user_id',
             'families.name as family_name',
             'species.name as species_name',
+            'zones.name as zones_name', 
             DB::raw('(select url from tree_photos where tree_id = trees.id limit 1) as url')
         )
             ->join('species', 'species.id', '=', 'specie_id')
             ->join('families', 'families.id', '=', 'species.family_id')
+            ->join('home_trees', 'home_trees.tree_id', '=', 'trees.id')
+            ->join('home', 'home.id', '=', 'home_trees.home_id')
+            ->join('zones', 'zones.id', '=', 'home.zone_id')
             ->where('trees.id', $id)->get();
 
         return $trees;
