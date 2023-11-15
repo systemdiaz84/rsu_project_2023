@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\admin\HomeTree;
 use App\Models\admin\Tree;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use PhpOption\None;
 
@@ -70,12 +71,29 @@ class TreeController extends Controller
         */
 
         //Creamos el nuevo árbol con todos los parametros ingresados menos home_id que se usa para la asociación
-        $trees = Tree::create($request->except('home_id'));
+        $tree = new Tree();
+        $tree->name = $request->input("name");
+        $tree->birth_date = $request->input("birth_date");
+        $tree->planting_date = $request->input("planting_date");
+        $tree->latitude = $request->input("latitude");
+        $tree->longitude = $request->input("longitude");
+        $tree->family_id = $request->input("family_id");
+        $tree->description = $request->input("description");
+        $tree->specie_id = $request->input("specie_id");
+
+        $user = Auth::user();
+        
+        $tree->user_id = $user->id;
+        $tree->is_pending = 0;
+        $tree->is_active = 1;
+        $tree->save();
+
+        //$trees = Tree::create($request->except('home_id'));
 
         //Creamos la asociación home_trees
         $homeTree = new HomeTree();
         $homeTree->home_id = $request->input('home_id');
-        $homeTree->tree_id = $trees->id;
+        $homeTree->tree_id = $tree->id;
         $homeTree->save();
 
         /*
@@ -85,7 +103,7 @@ s
             'name' => $name
         ]);
         */
-        return response()->json(['status' => true ,'message' => 'Árbol registrado correctamente', 'data' => $trees, 'tree_id' => $trees->id]);
+        return response()->json(['status' => true ,'message' => 'Árbol registrado correctamente', 'data' => $tree, 'tree_id' => $tree->id]);
     }
 
     /**
