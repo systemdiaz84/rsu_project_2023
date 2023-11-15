@@ -12,6 +12,8 @@ use App\Models\admin\Zone;
 use App\Models\admin\Home;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class TreeController extends Controller
 {
@@ -167,5 +169,36 @@ class TreeController extends Controller
         $tree->delete();
 
         return redirect()->route('admin.trees.index')->with('action', 'Arbol Eliminado');
+    }
+
+    public function deletePhoto($id)
+    {
+        $photo = TreePhotos::find($id);
+        $photo->delete();
+
+        return redirect()->route('admin.trees.show', $photo->tree_id);
+    }
+
+    public function addPhoto(Request $request)
+    {
+        $imageName = uniqid() . '.jpg';
+        //$imageName = uniqid().'.'.$extension; //codigo si se quiere mantener la extención del archivo        
+        
+        $url = 'images/trees/' . $request->tree_id . '/' . $imageName;
+        
+        $image = $request->file('url');
+
+        $request->validate([
+            'url' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        Storage::disk('public')->put($url, File::get($image));
+
+        TreePhotos::create([
+            'url' => 'storage/'. $url,
+            'tree_id' => $request->tree_id
+        ]);
+
+        return redirect()->route('admin.trees.show', $request->tree_id);
     }
 }

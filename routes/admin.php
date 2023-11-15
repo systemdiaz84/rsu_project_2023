@@ -33,6 +33,9 @@ Route::group(['middleware' => ['auth', 'permission']], function() {
 
     Route::resource('trees', TreeController::class)->names('admin.trees');
 
+    Route::delete('trees/photos/{id}', [TreeController::class,'deletePhoto'])->name('admin.trees.destroy_photo');
+    Route::post('trees/photos', [TreeController::class,'addPhoto'])->name('admin.trees.add_photo');
+
     Route::resource('states', StateController::class)->names('admin.states');
 
     Route::resource('maps', MapController::class)->names('admin.maps');
@@ -60,4 +63,6 @@ Route::get('homemembers/accept/{id_home}/{id_member}', [HomeMembersController::c
 Route::get('homemembers/reject/{id_home}/{id_member}', [HomeMembersController::class,'reject'])->name('admin.homemembers.reject');
 Route::get('homes_zone/{zone_id}', [ZoneController::class, 'homes_zone'])->name('admin.homes_zone');
 Route::get('users/search/{search}', [UserController::class, 'search'])->name('admin.users.search');
+Route::delete('trees/photos/{id}', [TreeController::class,'deletePhoto'])->name('admin.trees.destroy_photo');
+Route::post('trees/photos', [TreeController::class,'addPhoto'])->name('admin.trees.add_photo');
 ?>

@@ -47,7 +47,9 @@ class HomeController extends Controller
      */
     public function store(Request $request)
     {
-        // Home::create($request->all());
+        if(User::where('n_doc', $request->input('n_doc'))->count() == 0){
+            return redirect()->route('admin.home.index')->with('error', 'El número de documento no pertenece a ningún usuario.');
+        }
         if($this->checkCode($request->input('code')) > 0){
             return redirect()->route('admin.home.index')->with('error', 'El código ya existe');
         }

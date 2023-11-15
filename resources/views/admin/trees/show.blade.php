@@ -43,7 +43,7 @@
 
                                 <div class="card img-thumbnail mb-3" style="width: 150px;height:150px; border: 1px solid #ccc; position: relative;">
                                     <img src="{{ asset($photo->url) }}" alt="" style="width: 100%;height:100%">
-                                    <form action="{{ route('admin.familyphotos.destroy', $photo->id) }}" method="post" style="position: absolute; top: 5px; right: 5px;">
+                                    <form action="{{ route('admin.trees.destroy_photo', $photo->id) }}" method="post" style="position: absolute; top: 5px; right: 5px;">
                                         @csrf
                                         @method('delete')
                                         <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-times"></i></button>
@@ -57,9 +57,9 @@
                 </div>
 
                 <div class="card-footer">
-                    <form action={{ route('admin.familyphotos.store') }} method="post" enctype="multipart/form-data">
+                    <form action={{ route('admin.trees.add_photo') }} method="post" enctype="multipart/form-data">
                         @csrf
-                        <input type="hidden" value="{{ $tree->id }}" name="family_id">
+                        <input type="hidden" value="{{ $tree->id }}" name="tree_id">
                         <div class="form-group">
                             <div class="custom-file">
                                 <div class="input-group mb-3">
