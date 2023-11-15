@@ -4,8 +4,8 @@
         <input wire:model="search" type="text" name="" id="" class="form-control" placeholder="Buscar familia">
 
     </div>
-    <div class="card-body">
-        <table class="table table-striped table-responsive">
+    <div class="card-body table-responsive">
+        <table class="table table-striped">
             <thead>
                 <tr>
                     <th>ID</th>

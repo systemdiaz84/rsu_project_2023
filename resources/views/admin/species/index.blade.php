@@ -18,8 +18,8 @@
 
 
         </div>
-        <div class="card-body">
-            <table class="table table-striped table-responsive" id="specie_table">
+        <div class="card-body table-responsive">
+            <table class="table table-striped" id="specie_table">
                 <thead>
                     <tr>
                         <th>ID</th>

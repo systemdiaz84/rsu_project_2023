@@ -34,28 +34,28 @@
                 </div>
                 
                 <label for="permissions" class="form-label">Asignar Permisos</label>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <th scope="col" width="1%"><input type="checkbox" name="all_permission"></th>
+                            <th scope="col" width="20%">Nombre</th>
+                            <th scope="col" width="1%">Guard</th> 
+                        </thead>
 
-                <table class="table table-striped table-responsive">
-                    <thead>
-                        <th scope="col" width="1%"><input type="checkbox" name="all_permission"></th>
-                        <th scope="col" width="20%">Nombre</th>
-                        <th scope="col" width="1%">Guard</th> 
-                    </thead>
-
-                    @foreach($permissions as $permission)
-                        <tr>
-                            <td>
-                                <input type="checkbox" 
-                                name="permission[{{ $permission->name }}]"
-                                value="{{ $permission->name }}"
-                                class='permission'>
-                            </td>
-                            <td>{{ $permission->name }}</td>
-                            <td>{{ $permission->guard_name }}</td>
-                        </tr>
-                    @endforeach
-                </table>
-
+                        @foreach($permissions as $permission)
+                            <tr>
+                                <td>
+                                    <input type="checkbox" 
+                                    name="permission[{{ $permission->name }}]"
+                                    value="{{ $permission->name }}"
+                                    class='permission'>
+                                </td>
+                                <td>{{ $permission->name }}</td>
+                                <td>{{ $permission->guard_name }}</td>
+                            </tr>
+                        @endforeach
+                    </table>
+                </div>
                 <button type="submit" class="btn btn-primary">Guardar</button>
                 <a href="{{ route('admin.users.index') }}" class="btn btn-default">Regresar</a>
             </form>

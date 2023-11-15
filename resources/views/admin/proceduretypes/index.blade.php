@@ -13,8 +13,8 @@
 
             <h4>Listado de tipos de procedimientos</h4>
         </div>
-        <div class="card-body">
-            <table class="table table-striped table-responsive" id="table_list">
+        <div class="card-body table-responsive">
+            <table class="table table-striped" id="table_list">
                 <thead>
                     <tr>
                         <th>ID</th>

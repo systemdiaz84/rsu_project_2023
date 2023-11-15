@@ -37,8 +37,8 @@
                 <i class="fas fa-plus-circle"></i>&nbsp;&nbsp;Agregar/Modificar Coordenada</button>
             <h5>Coodenadas del perímetro</h5>
         </div>
-        <div class="card-body">
-            <table class="table table-striped table-responsive" id="coords_table">
+        <div class="card-body table-responsive">
+            <table class="table table-striped" id="coords_table">
                 <thead>
                     <tr>
                         <th>ID</th>

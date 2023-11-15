@@ -12,20 +12,21 @@
         <div class="container mt-4">
 
             <h3>Permisos asignados</h3>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <th scope="col" width="20%">Nombre</th>
+                        <th scope="col" width="1%">Guard</th> 
+                    </thead>
 
-            <table class="table table-striped table-responsive">
-                <thead>
-                    <th scope="col" width="20%">Nombre</th>
-                    <th scope="col" width="1%">Guard</th> 
-                </thead>
-
-                @foreach($rolePermissions as $permission)
-                    <tr>
-                        <td>{{ $permission->name }}</td>
-                        <td>{{ $permission->guard_name }}</td>
-                    </tr>
-                @endforeach
-            </table>
+                    @foreach($rolePermissions as $permission)
+                        <tr>
+                            <td>{{ $permission->name }}</td>
+                            <td>{{ $permission->guard_name }}</td>
+                        </tr>
+                    @endforeach
+                </table>
+            </div>
         </div>
 
     </div>
