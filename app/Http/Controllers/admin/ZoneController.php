@@ -56,7 +56,10 @@ class ZoneController extends Controller
      */
     public function show($id)
     {
-        $zone = Zone::find($id);
+        $zone = Zone::select('z.id','z.name','z.description','z.area','d.province_id','d.name as district_name','p.name as province_name','z.district_id')->from('zones as z')
+            ->join('district as d','z.district_id','=','d.id')
+            ->join('province as p','d.province_id','=','p.id')
+            ->where('z.id',$id)->first();
 
         $coords = ZoneCoord::where('zone_id', $id)->get();
 
@@ -79,9 +82,9 @@ class ZoneController extends Controller
      */
     public function edit($id)
     {
-        $zone = Zone::find($id);
+        $zone = Zone::select('z.id','z.name','z.description','z.area','d.province_id','z.district_id')->from('zones as z')->join('district as d','z.district_id','=','d.id')->where('z.id',$id)->first();
         $provinces = Province::where('departament_id','14')->get();
-        $districts = District::where('departament_id','14')->get();
+        $districts = District::where('departament_id','14')->where('province_id',$zone->province_id)->get();
         return view('admin.zones.edit', compact('zone','provinces','districts'));
     }
 
@@ -95,7 +98,7 @@ class ZoneController extends Controller
     public function update(Request $request, $id)
     {
         $zone = Zone::find($id);
-        $zone->update($request->all());
+        $zone->update($request->except('province_id'));
 
         return redirect()->route('admin.zones.index')->with('success', 'Zona Actualizada');
     }
@@ -110,7 +113,7 @@ class ZoneController extends Controller
     {
         $zone = Zone::find($id);
 
-        $counttrees = Tree::where('zone_id', $id)->count();
+        $counttrees = Home::where('zone_id', $id)->count();
         $countcoords = ZoneCoord::where('zone_id', $id)->count();
 
 

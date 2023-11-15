@@ -37,19 +37,30 @@
 
 <script>
     try {
+        const districts = <?php echo json_encode($districts); ?>;
         const provinciaSelect = document.getElementById('provincia');
         const distritoSelect = document.getElementById('distrito');
-        const districts = <?php echo json_encode($districts); ?>;
+        <?php if(isset($zone)): ?>
+            let district_id = <?php echo json_encode($zone->district_id); ?>;
+            let province_id = <?php echo json_encode($zone->province_id); ?>;
+            provinciaSelect.value = province_id;
+            listDiscrits(province_id,districts,distritoSelect)
+            distritoSelect.value = district_id;
+        <?php endif; ?>
+        
         provinciaSelect.addEventListener('change', () => {
             const provinciaId = provinciaSelect.value;
-            let options = '';
-            districts.filter(district => district.province_id == provinciaId).map(
-                (district)=>{
-                    options += `<option value="${district.id}">${district.name}</option>`
-                }
-            )
-            distritoSelect.innerHTML = options;
+            listDiscrits(provinciaId,districts,distritoSelect)
         });
     } catch (error) {
+    }
+    function listDiscrits(province_id, d, ds){
+        let options = '';
+        d.filter(district => district.province_id == province_id).map(
+            (district)=>{
+                options += `<option value="${district.id}">${district.name}</option>`
+            }
+        )
+        ds.innerHTML = options;
     }
 </script>
