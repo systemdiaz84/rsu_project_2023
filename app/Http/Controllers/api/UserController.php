@@ -28,6 +28,18 @@ class UserController extends Controller
     public function store(Request $request)
     {
         //
+        $user = new User();
+        $user->name = $request->input('name');
+        $user->lastname = $request->input('lastname');
+        $user->n_doc = $request->input('n_doc');
+        $user->email = $request->input('email');
+        $user->password = bcrypt($request->input('password')); // Se recomienda encriptar la contraseña
+
+        // Guarda el usuario en la base de datos
+        $user->save();
+
+        return response()->json(['status' => true ,'message' => 'Usuario registrado correctamente', 'data' => $user]);
+
     }
 
     /**
