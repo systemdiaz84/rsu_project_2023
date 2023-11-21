@@ -38,6 +38,11 @@ class UserController extends Controller
         // Guarda el usuario en la base de datos
         $user->save();
 
+        //Obtenemos token para el nuevo usuario
+        $token = $user->createToken('api-token')->plainTextToken;
+
+        $user->token = $token;
+
         return response()->json(['status' => true ,'message' => 'Usuario registrado correctamente', 'data' => $user]);
 
     }
