@@ -42,8 +42,10 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
  
 //'auth:sanctum', 'permission'
-Route::group(['middleware' => []], function() {
+Route::group(['middleware' => ['auth:sanctum']], function() {
 
+    Route::post('/user/token', [UserController::class, 'save_token_device'])->name('api.user_token.save');
+    Route::patch('/user/token', [UserController::class, 'disable_token_device'])->name('api.user_token.disable');
     Route::resource('/trees', TreeController::class)->names('api.trees');
     Route::get('/trees_zone/{zone_id}', [TreeController::class,'trees_zone'])->name('api.trees_zone');
     Route::get('/trees_families/{zone_id}', [TreeController::class,'trees_families'])->name('api.trees_families');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Models\admin\User;
 use App\Http\Controllers\Controller;
+use App\Models\NotifyToken;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -73,4 +74,33 @@ class UserController extends Controller
         return $users;
     }
 
+    public function save_token_device(Request $request) {
+
+        $user = auth()->user();
+
+        // save token in table notify_tokens
+        NotifyToken::create([
+            'user_id' => $user->id,
+            'token' => $request->token,
+            'is_active' => 1
+        ]);
+
+        return response()->json([
+            'status' => True,
+            'data' => '',
+            'message' => 'Token device saved successfully'
+        ], 200);
+    }
+    public function disable_token_device(Request $request) {
+        $user = auth()->user();
+        NotifyToken::where('user_id', $user->id)
+                ->where('token', $request->token)
+                    ->update(['is_active' => 0]);
+
+        return response()->json([
+            'status' => True,
+            'data' => '',
+            'message' => 'Token device disabled successfully'
+        ], 200);
+    }
 }

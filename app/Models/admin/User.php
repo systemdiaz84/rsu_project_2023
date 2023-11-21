@@ -2,6 +2,7 @@
 
 namespace App\Models\admin;
 
+use App\Models\NotifyToken;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
@@ -17,4 +18,13 @@ class User extends Authenticatable
     protected $guarded = [];
 
     protected $table = 'users';
+
+    public function notifyTokens()
+    {
+        return $this->hasMany(NotifyToken::class);
+    }
+    public function routeNotificationForFcm($notification)
+    {
+        return $this->notifyTokens()->where('is_active', 1)->pluck('token')->toArray();
+    }
 }
