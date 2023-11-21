@@ -39,7 +39,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/login', [AuthController::class, 'login']);
-Route::post('/users', [UserController::class, 'store'])->names('api.users.store');
+Route::resource('/users', UserController::class)->names('api.users');
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
  
 //'auth:sanctum', 'permission'
