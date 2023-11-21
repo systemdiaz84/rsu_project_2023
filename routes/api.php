@@ -39,6 +39,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/users', [UserController::class, 'store'])->names('api.users.store');
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
  
 //'auth:sanctum', 'permission'
@@ -58,7 +59,6 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     
     
     //------------------
-    Route::resource('/users', UserController::class)->names('api.users');
     Route::resource('/procedures', ProcedureController::class)->names('api.procedure');
     Route::resource('/evolutions', EvolutionController::class)->names('api.evolution');
     Route::resource('/evolution_photos', EvolutionPhotoController::class)->names('api.evolution_photos');
