@@ -7,7 +7,9 @@ use App\Models\admin\Home;
 use App\Models\admin\HomeMembers;
 use App\Models\admin\Zone;
 use App\Models\admin\User;
+use App\Notifications\NotificationRequestAccessHome;
 use Illuminate\Http\Request;
+use stdClass;
 
 class HomeController extends Controller
 {
@@ -148,13 +150,15 @@ class HomeController extends Controller
 
     public function requestAccessHome($codeHome)
     {
+        $user = auth()->user();
+
         $home = Home::where('code',$codeHome)->where('is_active',1)->first();
         if($home){
-            $homeMember = HomeMembers::where('home_id',$home->id)->where('user_id',auth()->user()->id)->where('is_active',1)->first();
+            $homeMember = HomeMembers::where('home_id',$home->id)->where('user_id',$user->id)->where('is_active',1)->first();
             if($homeMember){
                 return response()->json(['message' => 'Ya perteneces a este hogar', 'data' => $home, 'status' => false]);
             }else{
-                $homeMember = HomeMembers::where('home_id',$home->id)->where('user_id',auth()->user()->id)->where('is_pending',1)->first();
+                $homeMember = HomeMembers::where('home_id',$home->id)->where('user_id',$user->id)->where('is_pending',1)->first();
                 if($homeMember){
                     return response()->json(['message' => 'Ya tienes una solicitud pendiente', 'data' => $home, 'status' => false]);
                 }else{
@@ -163,8 +167,35 @@ class HomeController extends Controller
                     $homeMember->is_active = 0;
                     $homeMember->is_pending = 1;
                     $homeMember->is_boss = 0;
-                    $homeMember->user_id = auth()->user()->id;
+                    $homeMember->user_id = $user->id;
                     $homeMember->save();
+                    
+                    
+
+                    $data = new stdClass();
+                    $data->username = strtoupper($user->name . ' ' . $user->lastname);
+                    $data->homename = $home->name;
+                    $data->codehome = $home->code;
+                    $data->data = [
+                        'home' => [
+                            'name' => $home->name,
+                            'code' => $home->code,
+                            'direction' => $home->direction,
+                        ],
+                        'user' => [
+                            'name' => $user->name . ' ' . $user->lastname,
+                            'lastname' => $user->lastname,
+                            'email' => $user->email,
+                            'n_doc' => $user->n_doc,
+                        ]
+                    ];
+
+                    $homeBoss = HomeMembers::where('home_id',$home->id)->where('is_active',1)->where('is_boss',1)->where('is_pending',0)->get();
+                    foreach($homeBoss as $boss){
+                        $user = User::find($boss->user_id);
+                        $user->notify(new NotificationRequestAccessHome($data));
+                    }
+                    
                     return response()->json(['message' => 'Solicitud enviada correctamente', 'data' => $home, 'status' => true]);
                 }
             }

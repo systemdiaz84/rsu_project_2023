@@ -14,7 +14,7 @@ use NotificationChannels\Fcm\Resources\AndroidNotification;
 
 // php artisan make:test NotificationTest
 // php artisan test tests/Feature/NotificationTest.php
-class TestNotification extends Notification
+class NotificationRequestCreateTree extends Notification
 {
     use Queueable;
 
