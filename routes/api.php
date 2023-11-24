@@ -7,6 +7,7 @@ use App\Http\Controllers\api\EvolutionPhotoController;
 use App\Http\Controllers\api\FamilyController;
 use App\Http\Controllers\api\GraphController;
 use App\Http\Controllers\api\HomeController;
+use App\Http\Controllers\api\HomeMembersController;
 use App\Http\Controllers\api\MapController;
 use App\Http\Controllers\api\ProcedureController;
 use App\Http\Controllers\api\ProcedureTypeController;
@@ -77,6 +78,8 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::get('/login/data/{email}', [UserController::class, 'data_email'])->name('api.data_email');
     
     Route::post('/home/request/{codeHome}', [HomeController::class, 'requestAccessHome'])->name('api.request_home');
+    Route::get('/homemembers/accept/{id_home}/{id_member}', [HomeMembersController::class,'accept'])->name('api.homemembers.accept');
+    Route::get('/homemembers/reject/{id_home}/{id_member}', [HomeMembersController::class,'reject'])->name('api.homemembers.reject');
     Route::get('/zone/search', [ZoneController::class, 'getZoneByCoordinates'])->name('api.zone_search');
 
     Route::get('home/{user_id}', [HomeController::class, 'homeByUser']) ->name('api.homes_by_user');

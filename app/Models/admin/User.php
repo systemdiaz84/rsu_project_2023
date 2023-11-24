@@ -27,4 +27,8 @@ class User extends Authenticatable
     {
         return $this->notifyTokens()->where('is_active', 1)->pluck('token')->toArray();
     }
+    public function hasActiveNotificationTokens()
+    {
+        return $this->notifyTokens()->where('is_active', 1)->exists();
+    }
 }

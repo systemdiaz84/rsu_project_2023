@@ -171,29 +171,33 @@ class HomeController extends Controller
                     $homeMember->save();
                     
                     
-
                     $data = new stdClass();
                     $data->username = strtoupper($user->name . ' ' . $user->lastname);
                     $data->homename = $home->name;
                     $data->codehome = $home->code;
                     $data->data = [
                         'home' => [
+                            'id' => $home->id,
                             'name' => $home->name,
                             'code' => $home->code,
                             'direction' => $home->direction,
                         ],
                         'user' => [
+                            'id' => $user->id,
                             'name' => $user->name . ' ' . $user->lastname,
                             'lastname' => $user->lastname,
                             'email' => $user->email,
                             'n_doc' => $user->n_doc,
+                            'profile_photo_path' => $user->profile_photo_path,
                         ]
                     ];
 
                     $homeBoss = HomeMembers::where('home_id',$home->id)->where('is_active',1)->where('is_boss',1)->where('is_pending',0)->get();
                     foreach($homeBoss as $boss){
-                        $user = User::find($boss->user_id);
-                        $user->notify(new NotificationRequestAccessHome($data));
+                        $user_noti = User::find($boss->user_id);
+                        if ($user_noti->hasActiveNotificationTokens()) {
+                            $user_noti->notify(new NotificationRequestAccessHome($data));
+                        }
                     }
                     
                     return response()->json(['message' => 'Solicitud enviada correctamente', 'data' => $home, 'status' => true]);
