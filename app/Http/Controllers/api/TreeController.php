@@ -163,6 +163,7 @@ s
             'families.name as family_name',
             'species.name as species_name',
             'zones.name as zones_name', 
+            'home.name as homes_name',
             DB::raw('(select url from tree_photos where tree_id = trees.id limit 1) as url')
         )
             ->join('species', 'species.id', '=', 'specie_id')
