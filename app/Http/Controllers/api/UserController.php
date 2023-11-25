@@ -121,18 +121,11 @@ class UserController extends Controller
         ], 200);
     }
 
-    public function updatePassword($request) {
+    public function updatePassword(Request $request) {
         $user = auth()->user();
-        $user->password;
-        if ($request->oldPassword == $user->password) {
-            //$user->update(['password' => $request->password]);
-            $password = $request->password;
-            $user->tokens()->updateExistingPivot($user->currentAccessToken()->id, ['tokenable_type' => get_class($user), 'tokenable_id' => $user->getKey(), 'name' => $password]);
-        } else {
-            return response()->json(['status' => false ,'message' => 'Contraseña antigua incorrecta', 'data' => null]);
-        }
 
-        return response()->json(['status' => true ,'message' => 'Contraseña actulizadad correctamente', 'data' => null]);
+        //AÑADIR LOGICA PARA CAMBIAR CONTRSEÑA
+
+        return response()->json(['status' => true ,'message' => 'Contraseña actulizadad correctamente', 'data' => $request->all()]);
     }
-
 }
