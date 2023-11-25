@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\admin\HomeMembers;
 use App\Models\admin\HomeTree;
 use App\Models\admin\Tree;
 use Illuminate\Http\Request;
@@ -164,6 +165,7 @@ s
             'species.name as species_name',
             'zones.name as zones_name', 
             'home.name as homes_name',
+            'home.id as home_id',
             DB::raw('(select url from tree_photos where tree_id = trees.id limit 1) as url')
         )
             ->join('species', 'species.id', '=', 'specie_id')
@@ -196,8 +198,21 @@ s
         }
 
         $tree = Tree::find($id);
-        $tree->update($request->all());
-        
+        $tree->update($request->except('home_id'));
+
+        //Verificamos si se actualizará el hogar asignado
+        if ($request->has('home_id')) {
+            //modificamos el estado de los hogares anteriores
+            HomeTree::where( "tree_id", $tree->id)->update(['is_active' => 0]);
+
+
+            //Creamos la nueva relación 
+            $homeTree = new HomeTree();
+            $homeTree->tree_id = $tree->id;
+            $homeTree->home_id = $request->input("home_id");
+            $homeTree->is_active = 1;
+            $homeTree->save();
+        }
 
         return response()->json(['status' => true ,'message' => 'Árbol actualizado correctamente', 'data' => $tree]);
 
