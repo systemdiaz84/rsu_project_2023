@@ -83,5 +83,6 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::get('/zone/search', [ZoneController::class, 'getZoneByCoordinates'])->name('api.zone_search');
 
     Route::get('home/{user_id}', [HomeController::class, 'homeByUser']) ->name('api.homes_by_user');
+    Route::post('user/password', [UserController::class,'updatePassword'])->name('api.user.updatePassword');
 });
 
