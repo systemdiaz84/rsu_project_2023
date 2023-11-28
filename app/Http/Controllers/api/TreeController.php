@@ -131,6 +131,8 @@ s
                 'email' => $user->email,
                 'n_doc' => $user->n_doc,
                 'profile_photo_path' => $user->profile_photo_path,
+                'homename' => $home->name,
+                'homedirection' => $home->direction,
             ],
             'tree' => [
                 'id' => $tree->id,
@@ -144,7 +146,7 @@ s
                 ],
                 'description' => $tree->description,
                 // TODO: MANDAR IMAGEN
-                // 'image' => TreePhotos::where('tree_id', $tree->id)->first()->url ?? null, 
+                'image' => TreePhotos::where('tree_id', $tree->id)->first()->url ?? null, 
                 'code' => $tree->qr_code,
             ]
         ];
