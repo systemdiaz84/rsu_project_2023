@@ -11,6 +11,7 @@ use App\Models\admin\ZoneResponsible;
 use App\Notifications\NotificationBasic;
 use App\Notifications\NotificationRequestAccessHome;
 use App\Notifications\NotificationRequestCreateHome;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use stdClass;
 
@@ -256,7 +257,11 @@ class HomeController extends Controller
                             'home.is_public', 
                             'home.direction', 
                             'zones.id as zone_id',
-                            'zones.name as zonename'
+                            'zones.name as zonename',
+                            //Obtener algunos datos del jefe del hogar
+                            //DB::raw('(select concat(u.name, " ", u.lastname) from users u where u.id = home_members.user_id and home_members.is_boss = 1) as boss_name'),
+                            DB::raw('(select u.email from users u where u.id = (select user_id from home_members hm where hm.id = home_members.home_id and hm.is_boss = 1)) as boss_email'),
+                            DB::raw('(select user_id from home_members hm where hm.home_id = home_members.home_id and hm.is_boss = 1) as boss_id'),
                             )
                         ->join('zones', 'home.zone_id', '=', 'zones.id')
                         ->join('home_members', 'home.id', '=', 'home_members.home_id')

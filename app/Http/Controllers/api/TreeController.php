@@ -145,8 +145,7 @@ s
                     'lng' => $tree->longitude
                 ],
                 'description' => $tree->description,
-                // TODO: MANDAR IMAGEN
-                'image' => TreePhotos::where('tree_id', $tree->id)->first()->url ?? null, 
+                'image' => TreePhotos::where('tree_id', $tree->id)->first()->url ?? 'null', 
                 'code' => $tree->qr_code,
             ]
         ];
