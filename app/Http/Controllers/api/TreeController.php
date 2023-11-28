@@ -143,7 +143,9 @@ s
                     'lng' => $tree->longitude
                 ],
                 'description' => $tree->description,
-                // 'image' => TreePhotos::where('tree_id', $tree->id)->first()->url ?? null,
+                // TODO: MANDAR IMAGEN
+                // 'image' => TreePhotos::where('tree_id', $tree->id)->first()->url ?? null, 
+                'code' => $tree->qr_code,
             ]
         ];
         $zoneBoss = ZoneResponsible::where('zone_id', $home->zone_id)->where('is_active', 1)->get();
