@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Admin;
+namespace App\Models\admin;
 
 use App\Models\admin\Familyphoto;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

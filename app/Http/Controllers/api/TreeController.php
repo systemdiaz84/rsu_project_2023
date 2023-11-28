@@ -3,13 +3,23 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\admin\Family;
+use App\Models\admin\Home;
 use App\Models\admin\HomeMembers;
 use App\Models\admin\HomeTree;
+use App\Models\admin\Specie;
 use App\Models\admin\Tree;
+use App\Models\admin\TreePhotos;
+use App\Models\admin\Zone;
+use App\Models\admin\ZoneResponsible;
+use App\Models\admin\User;
+use App\Notifications\NotificationBasic;
+use App\Notifications\NotificationRequestCreateTree;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use PhpOption\None;
+use stdClass;
 
 class TreeController extends Controller
 {
@@ -104,7 +114,46 @@ s
             'name' => $name
         ]);
         */
-        return response()->json(['status' => true ,'message' => 'Árbol registrado correctamente', 'data' => $tree, 'tree_id' => $tree->id]);
+
+        // SE CONTEMPLA QUE EL ÁRBOL SOLO PERTENECE A UN HOGAR AL MISMO TIEMPO
+        // NO SE VA A MOSTRAR FOTO PORQUE AÚN NO SE REGISTRA, PENDIENTE DE EVALUACIÓN REQ
+        $home = Home::find($homeTree->home_id);
+        $data = new stdClass();
+        $data->username = strtoupper($user->name . ' ' . $user->last_name);
+        $data->treename = $tree->name;
+        $data->homename = $home->name;
+        $data->homedirection = $home->direction;
+        $data->data = [
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->name . ' ' . $user->lastname,
+                'lastname' => $user->lastname,
+                'email' => $user->email,
+                'n_doc' => $user->n_doc,
+                'profile_photo_path' => $user->profile_photo_path,
+            ],
+            'tree' => [
+                'id' => $tree->id,
+                'name' => $tree->name,
+                'family' => Family::find($tree->family_id)->name,
+                'specie' => Specie::find($tree->specie_id)->name,
+                'zone' => Zone::find($home->zone_id)->name,
+                'location' => [
+                    'lat' => $tree->latitude,
+                    'lng' => $tree->longitude
+                ],
+                'description' => $tree->description,
+                // 'image' => TreePhotos::where('tree_id', $tree->id)->first()->url ?? null,
+            ]
+        ];
+        $zoneBoss = ZoneResponsible::where('zone_id', $home->zone_id)->where('is_active', 1)->get();
+        foreach ($zoneBoss as $boss) {
+            $user_noti = User::find($boss->user_id);
+            if ($user_noti->hasActiveNotificationTokens()) {
+                $user_noti->notify(new NotificationRequestCreateTree($data));
+            }
+        }
+        return response()->json(['status' => true ,'message' => 'Árbol registrado correctamente, pendiente de aprobación.', 'data' => $tree, 'tree_id' => $tree->id]);
     }
 
     /**
@@ -316,5 +365,40 @@ s
         }
 
         return $families;
+    }
+    public function accept($id)
+    {
+        $tree = Tree::find($id);
+        $tree->is_pending = 0;
+        $tree->is_active = 1;
+        $tree->save();
+
+        $user = User::find($tree->user_id);
+        if($user->hasActiveNotificationTokens()){
+            $data = new stdClass();
+            $data->title = 'Soliciud aceptada';
+            $data->body = 'Su solicitud de registro de árbol fue aceptada correctamente.';
+            $user->notify(new NotificationBasic($data));
+        }
+
+        return response()->json(['status' => true ,'message' => 'Solicitud de registro de árbol fue aceptado correctamente.', 'data' => $tree]);
+    }
+
+    public function reject($id)
+    {
+        $tree = Tree::find($id);
+        $tree->is_pending = 0;
+        $tree->is_active = 0;
+        $tree->save();
+
+        $user = User::find($tree->user_id);
+        if($user->hasActiveNotificationTokens()){
+            $data = new stdClass();
+            $data->title = 'Soliciud rechazada';
+            $data->body = 'Su solicitud de registro de árbol fue rechazada.';
+            $user->notify(new NotificationBasic($data));
+        }
+
+        return response()->json(['status' => true ,'message' => 'Solicitud de registro de árbol fue rechazado correctamente.', 'data' => $tree]);
     }
 }

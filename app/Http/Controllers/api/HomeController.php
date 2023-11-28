@@ -7,7 +7,10 @@ use App\Models\admin\Home;
 use App\Models\admin\HomeMembers;
 use App\Models\admin\Zone;
 use App\Models\admin\User;
+use App\Models\admin\ZoneResponsible;
+use App\Notifications\NotificationBasic;
 use App\Notifications\NotificationRequestAccessHome;
+use App\Notifications\NotificationRequestCreateHome;
 use Illuminate\Http\Request;
 use stdClass;
 
@@ -65,7 +68,39 @@ class HomeController extends Controller
         $homeMember->user_id = $home->user_id;
         $homeMember->save();
 
-        return response()->json(['message' => 'Hogar creado correctamente', 'data' => $home, 'status' => true]); 
+        $user = User::find($home->user_id);
+
+        $data = new stdClass();
+        $data->username = strtoupper($user->name . ' ' . $user->lastname);
+        $data->homename = $home->name;
+        $data->codehome = $home->code;
+        $data->direction = $home->direction;
+        $data->data = [
+            'home' => [
+                'id' => $home->id,
+                'name' => $home->name,
+                'code' => $home->code,
+                'direction' => $home->direction,
+                'zone' => Zone::find($home->zone_id)->name,
+            ],
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'lastname' => $user->lastname,
+                'email' => $user->email,
+                'n_doc' => $user->n_doc,
+                'profile_photo_path' => $user->profile_photo_path,
+            ]
+        ];
+        $zoneBoss = ZoneResponsible::where('zone_id',$home->zone_id)->where('is_active',1)->get();
+        foreach($zoneBoss as $boss){
+            $user_noti = User::find($boss->user_id);
+            if ($user_noti->hasActiveNotificationTokens()) {
+                $user_noti->notify(new NotificationRequestCreateHome($data));
+            }
+        }
+
+        return response()->json(['message' => 'Se solicitó la creación del hogar correctamente', 'data' => $home, 'status' => true]); 
     }
     
     function checkCode($code){
@@ -226,11 +261,48 @@ class HomeController extends Controller
                         ->join('zones', 'home.zone_id', '=', 'zones.id')
                         ->join('home_members', 'home.id', '=', 'home_members.home_id')
                         ->where([['home.is_active', 1], ['home_members.user_id', $user_id]])
-                        //->andWhere('home_members.user_id', $user_id)
+                        ->Where('home_members.is_active', 1)
+                        ->Where('home_members.user_id', $user_id)
                         ->get();
             
         return $homes;
 
+    }
+
+    public function accept($id)
+    {
+        $home = Home::find($id);
+        $home->is_active = 1;
+        $home->is_pending = 0;
+        $home->save();
+
+        $user = User::find($home->user_id);
+        if($user->hasActiveNotificationTokens()){
+            $data = new stdClass();
+            $data->title = 'Solicitud aceptada';
+            $data->message = 'Tu solicitud para crear el hogar "' . $home->name . '" ha sido aceptada.';
+            $user->notify(new NotificationBasic($data));
+        }
+
+        return response()->json(['message' => 'Solicitud aceptada correctamente', 'data' => '', 'status' => true]); 
+    }
+
+    public function reject($id)
+    {
+        $home = Home::find($id);
+        $home->is_active = 0;
+        $home->is_pending = 0;
+        $home->save();
+
+        $user = User::find($home->user_id);
+        if($user->hasActiveNotificationTokens()){
+            $data = new stdClass();
+            $data->title = 'Solicitud rechazada';
+            $data->message = 'Tu solicitud para crear el hogar "' . $home->name . '" ha sido rechazada. Puedes volver a intentarlo.';
+            $user->notify(new NotificationBasic($data));
+        }
+
+        return response()->json(['message' => 'Solicitud rechazada correctamente', 'data' => '', 'status' => true]);
     }
 
 }

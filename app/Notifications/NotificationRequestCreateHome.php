@@ -17,6 +17,12 @@ use NotificationChannels\Fcm\Resources\AndroidNotification;
 class NotificationRequestCreateHome extends Notification
 {
     use Queueable;
+    private $data;
+
+    public function __construct($data)
+    {
+        $this->data = $data;
+    }
 
     public function via($notifiable)
     {
@@ -26,12 +32,11 @@ class NotificationRequestCreateHome extends Notification
     {
         return FcmMessage::create()
             ->setData([
-                "title" => "Test Notification", 
-                'message' => 'This is a test notification', 
+                'title' => 'Solicitud de creación de hogar', 
+                'message' => 'El ciudadano '.$this->data->username.' ha solicitado la creación del hogar "'.$this->data->homename.'" con código "'.$this->data->codehome.'" en la dirección "'.$this->data->direction.'".', 
+                'deep_link' => 'frg-request-new-home',
                 'timestamp' => now()->toDateTimeString(),
-                // 'image' => 'http://www.usat.edu.pe/web/wp-content/uploads/2015/07/logousat.jpg',
-                'sound' => 'default',
-                'channel_id' => 'test-channel'
+                'data' => json_encode($this->data->data),
             ])
             ->setAndroid(
                 AndroidConfig::create()
