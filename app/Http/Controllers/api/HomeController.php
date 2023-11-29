@@ -258,10 +258,6 @@ class HomeController extends Controller
                             'home.direction', 
                             'zones.id as zone_id',
                             'zones.name as zonename',
-                            //Obtener algunos datos del jefe del hogar
-                            //DB::raw('(select concat(u.name, " ", u.lastname) from users u where u.id = home_members.user_id and home_members.is_boss = 1) as boss_name'),
-                            DB::raw('(select u.email from users u where u.id = (select user_id from home_members hm where hm.id = home_members.home_id and hm.is_boss = 1)) as boss_email'),
-                            DB::raw('(select user_id from home_members hm where hm.home_id = home_members.home_id and hm.is_boss = 1) as boss_id'),
                             )
                         ->join('zones', 'home.zone_id', '=', 'zones.id')
                         ->join('home_members', 'home.id', '=', 'home_members.home_id')
@@ -269,7 +265,25 @@ class HomeController extends Controller
                         ->Where('home_members.is_active', 1)
                         ->Where('home_members.user_id', $user_id)
                         ->get();
-            
+        
+        //Obtener algunos datos del jefe del hogar  
+        foreach ($homes as $home_id => $home){
+            $bosses = User::select(
+                'users.id',
+                'name',
+                'lastname',
+                'email',
+                )
+                ->join('home_members', 'home_members.user_id', '=', 'users.id')
+                ->where('home_members.home_id', $home->id)
+                ->where('home_members.is_boss', '1')
+                ->get();
+
+            //echo ($bosses);
+            $home->bosses = $bosses;
+        }
+    
+                        
         return $homes;
 
     }
