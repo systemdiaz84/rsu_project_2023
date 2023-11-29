@@ -30,6 +30,8 @@ class TreeController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
+    
         $trees = Tree::select(
             'trees.id',
             'trees.name',
@@ -49,7 +51,9 @@ class TreeController extends Controller
             ->join('families', 'families.id', '=', 'species.family_id')
             ->join('home_trees', 'home_trees.tree_id', '=', 'trees.id')
             ->join('home', 'home.id', '=', 'home_trees.home_id')
+            ->join('home_members', 'home_members.home_id', '=', 'home.id')
             ->join('zones', 'zones.id', '=', 'home.zone_id')
+            ->where('home_members.user_id', $user->id)
             ->orderBy('trees.id', 'desc')
             ->get();
 
@@ -93,10 +97,10 @@ class TreeController extends Controller
         $tree->specie_id = $request->input("specie_id");
 
         $user = Auth::user();
-        
+        // SEGÚN ROL SE DEBE ASIGNAR LOS ESTADOS CORRESPONDIENTES
         $tree->user_id = $user->id;
-        $tree->is_pending = 0;
-        $tree->is_active = 1;
+        $tree->is_pending = 1;
+        $tree->is_active = 0;
         $tree->save();
 
         //$trees = Tree::create($request->except('home_id'));
@@ -380,7 +384,7 @@ s
         if($user->hasActiveNotificationTokens()){
             $data = new stdClass();
             $data->title = 'Soliciud aceptada';
-            $data->body = 'Su solicitud de registro de árbol fue aceptada correctamente.';
+            $data->message = 'Su solicitud de registro de árbol fue aceptada correctamente.';
             $user->notify(new NotificationBasic($data));
         }
 
@@ -398,7 +402,7 @@ s
         if($user->hasActiveNotificationTokens()){
             $data = new stdClass();
             $data->title = 'Soliciud rechazada';
-            $data->body = 'Su solicitud de registro de árbol fue rechazada.';
+            $data->message = 'Su solicitud de registro de árbol fue rechazada.';
             $user->notify(new NotificationBasic($data));
         }
 
