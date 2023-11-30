@@ -53,8 +53,10 @@ class TreeController extends Controller
             ->join('home', 'home.id', '=', 'home_trees.home_id')
             ->join('home_members', 'home_members.home_id', '=', 'home.id')
             ->join('zones', 'zones.id', '=', 'home.zone_id')
-            ->where('home_members.user_id', $user->id)
+            ->where([['home_members.user_id', $user->id], ['home_members.is_active', 1]])
+            ->where([['trees.is_active', 1], ['trees.is_pending', 0]])
             ->orderBy('trees.id', 'desc')
+            ->distinct()
             ->get();
 
             return $trees;

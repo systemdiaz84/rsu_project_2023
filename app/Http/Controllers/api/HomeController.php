@@ -295,6 +295,11 @@ class HomeController extends Controller
         $home->is_pending = 0;
         $home->save();
 
+        $boss = HomeMembers::where('home_id',$home->id)->where('is_active',0)->where('is_boss',1)->where('is_pending',1)->first();
+        $boss->is_pending = 0;
+        $boss->is_active = 1;
+        $boss->save();
+
         $user = User::find($home->user_id);
         if($user->hasActiveNotificationTokens()){
             $data = new stdClass();

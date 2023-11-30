@@ -6,6 +6,7 @@ use App\Models\admin\User;
 use App\Http\Controllers\Controller;
 use App\Models\NotifyToken;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -122,10 +123,19 @@ class UserController extends Controller
     }
 
     public function updatePassword(Request $request) {
+        $request->validate([
+            'old_password' => 'required',
+            'password' => 'required|min:8',
+        ]);    
         $user = auth()->user();
-
-        //AÑADIR LOGICA PARA CAMBIAR CONTRSEÑA
-
-        return response()->json(['status' => true ,'message' => 'Contraseña actulizadad correctamente', 'data' => $request->all()]);
+    
+        if (!Hash::check($request->old_password, $user->password)) {
+            return response()->json(['status' => false, 'message' => 'La contraseña actual es incorrecta'], 200);
+        }
+    
+        $user->password = Hash::make($request->password);
+        $user->save();
+    
+        return response()->json(['status' => true, 'message' => 'Contraseña actualizada correctamente', 'data' => $request->all()]);
     }
 }
