@@ -101,6 +101,8 @@ class UserController extends Controller
                     ->first();
 
         if ($token) {
+            $token->is_active = 1;
+            $token->save();
             return response()->json([
                 'status' => True,
                 'data' => '',
