@@ -96,7 +96,17 @@ class UserController extends Controller
 
         $user = auth()->user();
 
-        // save token in table notify_tokens
+        $token = NotifyToken::where('user_id', $user->id)
+                    ->where('token', $request->token)
+                    ->first();
+
+        if ($token) {
+            return response()->json([
+                'status' => True,
+                'data' => '',
+                'message' => 'Token device already exists'
+            ], 200);
+        }
         NotifyToken::create([
             'user_id' => $user->id,
             'token' => $request->token,
