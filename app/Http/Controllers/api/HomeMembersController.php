@@ -57,4 +57,28 @@ class HomeMembersController extends Controller
         return response()->json(['message' => 'Solicitud rechazada correctamente', 'data' => '', 'status' => true]); 
     }
 
+    public function pendingRequests() {
+        //obtenemos el usuario
+        $user = auth()->user();
+
+        //Obtenemos los hogares donde es jefe este usuario
+        $home_members = HomeMembers::where('user_id', $user->id)->where('is_boss', 1);
+
+        //Obtenemos los homeMembers que estan pendientes de los hogares donde el es jefe
+        if ($home_members === null) {
+            return response()->json(['message'=> 'No es jefe de ningun hogar', 'data'=> '', 'status'=> false]);
+        } 
+
+        $pending_requests = array();
+
+        foreach ($home_members as $member) {
+            $pending_request = HomeMembers::where('home_id', $member->home_id)->where('is_pending', 1);
+            if ($pending_request != null) {
+                $pending_requests[] = $pending_request;
+            }
+        }
+
+        return $pending_requests;
+    }
+
 }
