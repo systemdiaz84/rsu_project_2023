@@ -383,6 +383,11 @@ return [
             ],
         ],
         [
+            'text' => 'Publicaciones',
+            'route'  => 'admin.posts.index',
+            'icon' => 'fas fa-fw fa-newspaper',
+        ],
+        [
             'text' => 'Usuarios',
             'route'  => 'admin.users.index',
             'icon' => 'fas fa-fw fa-user-plus',

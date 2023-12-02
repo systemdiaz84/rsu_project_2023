@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\PostController;
 use App\Http\Controllers\admin\SpecieController;
 use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\EvolutionController;
@@ -89,5 +90,6 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::get('/home/{user_id}', [HomeController::class, 'homeByUser']) ->name('api.homes_by_user');
     Route::post('/home', [HomeController::class, 'store']) ->name('api.home.store');
     Route::post('user/password', [UserController::class,'updatePassword'])->name('api.user.updatePassword');
+    Route::get('/posts', [PostController::class, 'listApi'])->name('api.posts.index');
 });
 

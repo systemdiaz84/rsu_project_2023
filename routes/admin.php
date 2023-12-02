@@ -6,6 +6,7 @@ use App\Http\Controllers\admin\FamilyphotoController;
 use App\Http\Controllers\admin\HomeController;
 use App\Http\Controllers\admin\HomeMembersController;
 use App\Http\Controllers\admin\MapController;
+use App\Http\Controllers\admin\PostController;
 use App\Http\Controllers\admin\ProcedureTypeController;
 use App\Http\Controllers\admin\SpecieController;
 use App\Http\Controllers\admin\StateController;
@@ -65,4 +66,5 @@ Route::get('homes_zone/{zone_id}', [ZoneController::class, 'homes_zone'])->name(
 Route::get('users/search/{search}', [UserController::class, 'search'])->name('admin.users.search');
 Route::delete('trees/photos/{id}', [TreeController::class,'deletePhoto'])->name('admin.trees.destroy_photo');
 Route::post('trees/photos', [TreeController::class,'addPhoto'])->name('admin.trees.add_photo');
+Route::resource('posts', PostController::class)->names('admin.posts');
 ?>
