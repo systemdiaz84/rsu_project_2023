@@ -81,6 +81,7 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::post('/home/request/{codeHome}', [HomeController::class, 'requestAccessHome'])->name('api.request_home');
     Route::get('/home/accept/{id}', [HomeController::class, 'accept'])->name('api.home.accept');
     Route::get('/home/reject/{id}', [HomeController::class, 'reject'])->name('api.home.reject');
+    Route::get('/homemembers/pending', [HomeMembersController::class, 'pendingRequests'])->name('api.homemembers.pending');
     Route::get('/homemembers/accept/{id_home}/{id_member}', [HomeMembersController::class,'accept'])->name('api.homemembers.accept');
     Route::get('/homemembers/reject/{id_home}/{id_member}', [HomeMembersController::class,'reject'])->name('api.homemembers.reject');
     Route::get('/trees/accept/{id}', [TreeController::class,'accept'])->name('api.trees.accept');
