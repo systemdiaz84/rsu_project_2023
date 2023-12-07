@@ -199,7 +199,14 @@ class UserController extends Controller
                         ]
                     ];
 
-                    array_push($pending_requests_home_acces, $data);
+                    $request_data = new stdClass();
+                    $request_data->title = 'Acceso a hogar';
+                    $request_data->message = 'El ciudadano '.$data->username.' ha solicitado acceso al hogar "'.$data->homename.'" de código '.$data->codehome.'.';
+                    $request_data->deep_link = 'frg-request-new-member';
+                    $request_data->timestamp = now()->toDateTimeString();
+                    $request_data->data = $data;
+
+                    array_push($pending_requests_home_acces, $request_data);
                 }
 
             }
