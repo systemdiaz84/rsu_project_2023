@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\api;
 
+use App\Models\admin\Home;
+use App\Models\admin\HomeMembers;
 use App\Models\admin\User;
 use App\Http\Controllers\Controller;
 use App\Models\NotifyToken;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use stdClass;
 
 class UserController extends Controller
 {
@@ -150,4 +153,60 @@ class UserController extends Controller
     
         return response()->json(['status' => true, 'message' => 'Contraseña actualizada correctamente', 'data' => $request->all()]);
     }
+
+
+    
+    public function pendingRequests() {
+        //obtenemos el usuario
+        $user = auth()->user();
+
+        //Obtenemos los hogares donde es jefe este usuario
+        $home_members = HomeMembers::where('user_id', $user->id)->where('is_boss', 1)->where('is_active', 1)->get();
+
+        //Obtenemos los homeMembers que estan pendientes de los hogares donde el es jefe
+        if (count($home_members) == 0) {
+            return response()->json(['message'=> 'No es jefe de ningun hogar', 'data'=> '', 'status'=> true]);
+        } 
+
+        $pending_requests_home_acces = array();
+
+        foreach ($home_members as $member) {
+            $pending_request = HomeMembers::where('home_id', $member->home_id)->where('is_pending', 1)->get();
+
+            if (count($pending_request) != 0) {
+                foreach ($pending_request as $request) {
+                    $home = Home::where('id', $request->home_id)->where('is_active',1)->first();
+                    $user_request = User::find( $request->user_id );
+
+                    $data = new stdClass();
+                    $data->username = strtoupper($user_request->name . ' ' . $user_request->lastname);
+                    $data->homename = $home->name;
+                    $data->codehome = $home->code;
+                    $data->data = [
+                        'home' => [
+                            'id' => $home->id,
+                            'name' => $home->name,
+                            'code' => $home->code,
+                            'direction' => $home->direction,
+                        ],
+                        'user' => [
+                            'id' => $user_request->id,
+                            'name' => $user_request->name . ' ' . $user_request->lastname,
+                            'lastname' => $user_request->lastname,
+                            'email' => $user_request->email,
+                            'n_doc' => $user_request->n_doc,
+                            'profile_photo_path' => $user_request->profile_photo_path,
+                        ]
+                    ];
+
+                    array_push($pending_requests_home_acces, $data);
+                }
+
+            }
+        }
+
+        return response()->json(['status' => true, 'message' => 'Solicitudes obtenidas correctamente', 'home_access_requests' =>  $pending_requests_home_acces, 'home_create_requests' => '',  'tree_create_requests' => '']);
+
+    }
+
 }
