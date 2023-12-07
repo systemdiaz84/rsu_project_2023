@@ -204,7 +204,7 @@ class UserController extends Controller
                     $request_data->message = 'El ciudadano '.$data->username.' ha solicitado acceso al hogar "'.$data->homename.'" de código '.$data->codehome.'.';
                     $request_data->deep_link = 'frg-request-new-member';
                     $request_data->timestamp = now()->toDateTimeString();
-                    $request_data->data = $data;
+                    $request_data->data = $data->data;
 
                     array_push($pending_requests_home_acces, $request_data);
                 }
