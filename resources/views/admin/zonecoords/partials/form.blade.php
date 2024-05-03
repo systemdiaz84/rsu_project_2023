@@ -172,7 +172,7 @@
         const area = $('input[name="area"]').val();
 
         $.ajax({
-            url: '/admin/zonecoords',
+            url: "{{ route('admin.zonecoords.store') }}",
             type: 'POST',
             data: {
                 "zone_id": zoneId,
