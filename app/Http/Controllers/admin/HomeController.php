@@ -22,7 +22,7 @@ class HomeController extends Controller
             ->join('zones', 'home.zone_id', '=', 'zones.id')
             ->join('users', 'home.user_id', '=', 'users.id')
             ->where('home.is_active', 1)
-            ->where('home.is_pending', 1)
+            ->orWhere('home.is_pending', 1)
             ->get();
     
         return view('admin.home.index', compact('homes'));
