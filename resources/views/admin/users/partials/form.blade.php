@@ -32,6 +32,14 @@
     ]) !!}
 </div>
 <div class="form-group">
+    {!! Form::label('n_doc', 'DNI') !!}
+    {!! Form::text('n_doc', null, [
+        'class' => 'form-control',
+        'placeholder' => 'Ingrese el DNI',
+        'required',
+    ]) !!}
+</div>
+<div class="form-group">
     {!! Form::label('role', 'Roles', ['class' => 'form-label']) !!}
     @foreach($roles as $role)
         <div class="checkbox">
