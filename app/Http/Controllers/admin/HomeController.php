@@ -18,8 +18,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $homes = Home::select('home.id', 'home.code', 'home.name', 'home.user_id', 'home.is_pending', 'home.is_public', 'home.direction', 'zones.name as zonename','users.name as username','users.lastname as userlastname')->join('zones', 'home.zone_id', '=', 'zones.id')->join('users', 'home.user_id', '=', 'users.id')->where('home.is_active', 1)->get();
-
+        $homes = Home::select('home.id', 'home.code', 'home.name', 'home.user_id', 'home.is_pending', 'home.is_public', 'home.direction', 'zones.name as zonename','users.name as username','users.lastname as userlastname')
+            ->join('zones', 'home.zone_id', '=', 'zones.id')
+            ->join('users', 'home.user_id', '=', 'users.id')
+            ->where('home.is_active', 1)
+            ->where('home.is_pending', 1)
+            ->get();
+    
         return view('admin.home.index', compact('homes'));
     }
 
