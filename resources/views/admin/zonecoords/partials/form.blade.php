@@ -185,7 +185,7 @@
             },success: function(response) {
                 $("#Modal .modal-body").html(response);
                 $("#Modal").modal('show');
-                window.location.replace(`/admin/zones/${zoneId}`)
+                window.location.replace(`{{ route('admin.zones.show', ':id') }}`.replace(':id', zoneId));
             }
         });
     });
