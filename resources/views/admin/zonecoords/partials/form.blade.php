@@ -38,7 +38,12 @@
         }
     }
     function viewArea(polygon){
-        $('input[name="area"]').val(google.maps.geometry.spherical.computeArea(polygon.getPath()))
+        var path = polygon.getPath();
+        if (path && path.getLength() > 0) {
+            $('input[name="area"]').val(google.maps.geometry.spherical.computeArea(path));
+        } else {
+            $('input[name="area"]').val(0);
+        }
     }
     function eventClick(marker,perimeterPolygon,infowindow,map){
         google.maps.event.addListener(marker, 'click', function (event) {
