@@ -9,6 +9,7 @@ use App\Models\admin\Province;
 use App\Models\admin\Tree;
 use App\Models\admin\Zone;
 use App\Models\admin\ZoneCoord;
+use App\Models\admin\ZoneResponsible;
 use Illuminate\Http\Request;
 
 class ZoneController extends Controller
@@ -44,7 +45,13 @@ class ZoneController extends Controller
      */
     public function store(Request $request)
     {
-        Zone::create($request->except('province_id'));
+        $zone = Zone::create($request->except('province_id'));
+
+        ZoneResponsible::create([
+            'zone_id' => $zone->id,
+            'user_id' => $request->user()->id,
+        ]);
+
         return redirect()->route('admin.zones.index')->with('success', 'Zona Registrada');
     }
 
